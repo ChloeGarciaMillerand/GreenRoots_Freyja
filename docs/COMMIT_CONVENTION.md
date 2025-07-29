@@ -49,6 +49,18 @@ Fixes #567
 
 Les co-auteurs peuvent être ajouté aux pieds de page : `Co-authored-by: Name <email>`
 
+```
+docs(conception): specifications document
+
+Complete specifications document
+
+Co-authored-by: ChloeGarciaMillerand <ChloeGarciaMillerand@users.noreply.github.com>
+Co-authored-by: VincentVautier <vincent.vautier@oclock.school>
+Co-authored-by: Adam Benyekkou <adam-benyekkou@users.noreply.github.com>
+Co-authored-by: JohanRozanOclock <JohanRozanOclock@users.noreply.github.com>
+Co-authored-by: Cédric FAMIBELLE-PRONZOLA <contact@cedric-pronzola.dev>
+```
+
 ## Breaking Changes
 
 Lorsqu'un changement "casse" la compatibilité, le type doit être suivi d'un point d'exclamation :
