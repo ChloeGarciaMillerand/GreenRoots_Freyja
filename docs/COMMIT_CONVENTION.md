@@ -61,6 +61,12 @@ Co-authored-by: JohanRozanOclock <JohanRozanOclock@users.noreply.github.com>
 Co-authored-by: Cédric FAMIBELLE-PRONZOLA <contact@cedric-pronzola.dev>
 ```
 
+Pour utiliser le template prédéfini, définir une seule fois le template par défaut dans le repo :
+`git config commit.template .gitmessage`
+
+Pour utiliser le template faire la commande :
+`git commit`
+
 ## Breaking Changes
 
 Lorsqu'un changement "casse" la compatibilité, le type doit être suivi d'un point d'exclamation :
