@@ -1,34 +1,35 @@
 # Cahier des charges
 
 ## Présentation du projet:
-Plateforme e-commerce dédiée à la vente de certains arbres, en vue de l’aide à la lutte contre la déforestation. L’application est destinée aux particuliers et institutions qui souhaitent apporter leur contribution.
+Plateforme e-commerce dédiée à la vente d'arbres dans le cadre de projets de reforestation. Les utilisateurs pourront donc contribuer à ces projets en achetant des arbres qui seront plantés par Greenroots qui fournira en retour un suivi de l'évolution des arbres aux clients. 
 
 ## Public cible
 Public éco-conscient, entreprises responsables, associations engagées, etc.
 
 ## Vision d’ensemble
 Une attention particulière sera apportée au respect des normes d’écoconception.
-L’accessibilité est un enjeu du développement de l’application en proposant une navigation du site “droit au but”, réduire le nombre de pages naviguées pour accéder aux produits et au panier.
+L’accessibilité est un enjeu du développement de l’application en proposant une navigation “droit au but” afin de réduire le nombre de pages visitées pour accéder aux produits et au panier.
 
-Traçabilité et transparence des produits, peut être avec un exemple des émissions carbones absorbées.
+Traçabilité et transparence des produits seront des critères de conceptionn et de développement (peut être avec un exemple des émissions carbones absorbées).
 
-Secure by design, notamment pour les données à caractère personnel.
+Le développement sera secure by design notamment pour les données à caractère personnel.
 
 ## Vision par feature
 
 _Côté client_
 
-Informer les visiteurs sur la raison-d’être de GreenRoots
-Possibilité d’acheter des arbres au détail, en masse, via des bundle ? (achète en 10 => une ristourne).
-Consulter le catalogue
-Consulter un arbre au détail
-Connexion et création de compte, se déconnecter
-Suivi de commande
-Contacter l’équipe du site par mail
+- Informer les visiteurs sur la raison-d’être de GreenRoots.
+- Possibilité d’acheter des arbres au détail ou par lot selon les projets proposés (possbilité de d'opérations promotionnelles).
+- Consulter le catalogue.
+- Consulter la fiche spécifique d'un arbre. 
+- Connexion,création de compte et déconnexion. 
+- Suivi de commande.
+- Contacter l’équipe du site par mail.
 
 _Côté GreenRoots (admin)_:
 
-Gestion des arbres à l’achat: création, édition, suppression
+- Gestion CRUD des arbres à l’achat.
+- Gestion CRUD des comptes utilisateurs. 
 
 ## Vision technologique
 
