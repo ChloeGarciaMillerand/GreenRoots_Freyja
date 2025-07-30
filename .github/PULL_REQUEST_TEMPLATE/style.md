@@ -1,4 +1,4 @@
-# Template de PR pour le Style/Refactoring
+# Style/Refactoring
 
 ## Résumé
 Décrivez brièvement les changements apportés.

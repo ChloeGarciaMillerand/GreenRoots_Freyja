@@ -1,4 +1,4 @@
-# Template de PR pour Mise à Jour de Documentation
+# Mise à Jour de Documentation
 
 ## Résumé
 Brève description de la mise à jour de documentation et de son objectif.
