@@ -11,7 +11,7 @@ Remplacez `VOTRE_BRANCHE` par le nom de votre branche et `TEMPLATE.md` par l'un 
 - **feature.md** : Pour les nouvelles fonctionnalités
 - **docs.md** : Pour les améliorations de documentation
 - **fix.md** : Pour les corrections de bugs
-- **style.md** : Pour les modifications de style/design
+- **style.md** : Pour les modifications de style/design ou du refactoring
 
 **Exemple :**
 ```
