@@ -1,4 +1,4 @@
-# Template de PR pour Correction de Bug
+# Correction de Bug
 
 ## Résumé
 Fournissez une description concise du bug et de sa correction.

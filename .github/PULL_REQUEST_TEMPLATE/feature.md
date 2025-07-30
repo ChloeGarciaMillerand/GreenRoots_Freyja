@@ -1,4 +1,4 @@
-# Template de PR pour Ajout de Fonctionnalité
+# Ajout de Fonctionnalité
 
 ## Résumé
 Décrivez brièvement la fonctionnalité introduite.
