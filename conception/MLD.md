@@ -6,7 +6,7 @@
 - Utilisateur (<u>CodeUtilisateur</u>, Nom, Prénom, E-mail, Téléphone, Rôle  )
 
 
-- Region (<u>CodeRégion</u>, Pays, Continent )
+- Localisation (<u>CodeLocalisation</u>, Pays, Continent )
 
 
 - Panier (<u>CodePanier</u>, Date de création, Statut )
@@ -20,7 +20,7 @@
 - Arbre Planté (<u>CodeArbrePlanté</u>, Date, Nom, Type, Miniature, Continent, Pays)
 
 
-- SE SITUER (<u>#CodeRégion</u>, <u>#CodeArbre</u>)
+- SE SITUER (<u>#CodeLocalisation</u>, <u>#CodeArbre</u>)
 
 
 - CONTENIR (<u>#CodeArbre</u>, <u>#CodePanier</u>, Quantité)
