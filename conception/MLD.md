@@ -20,12 +20,16 @@
 - Arbre Planté (<u>CodeArbrePlanté</u>, Date, Nom, Type, Miniature, Continent, Pays)
 
 
-- SE SITUER (<u>#CodeRégion</u>, #CodeArbre)
+- SE SITUER (<u>#CodeRégion</u>, <u>#CodeArbre</u>)
 
 
-- CONTENIR (<u>#CodeArbre</u>, #CodePanier)
+- CONTENIR (<u>#CodeArbre</u>, <u>#CodePanier</u>, Quantité)
+
+- INCLURE (<u>#CodeArbre</u>, <u>#CodeCommande</u>, Quantité, Prix unitaire)
 
 
-- ACHETER (<u>#CodeArbre</u>, #CodeUtilisateur)
+- ACHETER (<u>#CodeArbre</u>, <u>#CodeUtilisateur</u>)
 
-- APPARTENIR (<u>#Codeprojet</u>, #CodeArbre)
+- APPARTENIR (<u>#Codeprojet</u>, <u>#CodeArbre</u>)
+
+- POSSÉDER (<u>#CodeCommande</u>, <u>#CodeArbrePlanté</u>)
