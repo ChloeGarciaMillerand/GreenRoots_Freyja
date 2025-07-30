@@ -1,5 +1,26 @@
 # Convention des Pull Request
 
+## Nommage des branches
+
+Utilisez le format suivant pour nommer vos branches :
+- **feature-[nom-descriptif]** : Pour les nouvelles fonctionnalités (ex: `feature-user-authentication`)
+- **docs-[nom-descriptif]** : Pour les améliorations de documentation (ex: `docs-improve-pr-convention`)
+- **fix-[nom-descriptif]** : Pour les corrections de bugs (ex: `fix-login-error`)
+- **style-[nom-descriptif]** : Pour les modifications de style/design (ex: `style-button-redesign`)
+- **refactor-[nom-descriptif]** : Pour le refactoring de code (ex: `refactor-user-service`)
+
+## Création de la PR
+
+### Titre de la PR
+Utilisez un titre court et descriptif en français qui décrit brièvement les changements apportés.
+
+**Exemples :**
+- `Ajout du système d'authentification utilisateur`
+- `Amélioration de la convention des PR`
+- `Correction de l'erreur de validation de connexion`
+- `Mise à jour du design des boutons`
+- `Refactorisation de l'architecture du service utilisateur`
+
 ### Lors de la création de la PR, sélectionnez et remplissez le template associé :
 
 Pour utiliser un template spécifique, utilisez une URL de la forme :
@@ -11,7 +32,9 @@ Remplacez `VOTRE_BRANCHE` par le nom de votre branche et `TEMPLATE.md` par l'un 
 - **feature.md** : Pour les nouvelles fonctionnalités
 - **docs.md** : Pour les améliorations de documentation
 - **fix.md** : Pour les corrections de bugs
-- **style.md** : Pour les modifications de style/design ou du refactoring
+- **style.md** : Pour les modifications de style/design
+- **refactor.md** : Pour le refactoring de code
+- **conception.md** : Pour les documents de conception et architecture
 
 **Exemple :**
 ```
