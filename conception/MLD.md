@@ -1,27 +1,31 @@
 # MLD
 
-Arbre (Code arbre,Nom,Type,Prix,Miniature )
+- Arbre (<u>CodeArbre</u>, Nom, Description ,Prix ,Miniature )
 
 
-Utilisateur (CodeUtilisateur, Nom, Prénom, E-mail, Téléphone, Rôle  )
+- Utilisateur (<u>CodeUtilisateur</u>, Nom, Prénom, E-mail, Téléphone, Rôle  )
 
 
-Region (Code région,Pays,Continent,Descriptif,Miniature ? )
+- Region (<u>CodeRégion</u>, Pays, Continent )
 
 
-Panier (CodePanier, Date de création, Statut )
+- Panier (<u>CodePanier</u>, Date de création, Statut )
 
 
-Commande (Code commande,Statut,date,Total )
+- Commande (<u>CodeCommande</u>, Statut, date, Total )
+
+- Projet (<u>CodeProjet</u>, Nom, Description, Miniature)
 
 
-Arbre Planté(CodeArbrePlanté, Date, Nom, Type, Miniature, Continent, Pays)
+- Arbre Planté (<u>CodeArbrePlanté</u>, Date, Nom, Type, Miniature, Continent, Pays)
 
 
-SE SITUER (#CodeRégion, #CodeArbre)
+- SE SITUER (<u>#CodeRégion</u>, #CodeArbre)
 
 
-CONTENIR (#)
+- CONTENIR (<u>#CodeArbre</u>, #CodePanier)
 
 
-ACHETER ( #CodeArbre, #CodeUtilisateur)
+- ACHETER (<u>#CodeArbre</u>, #CodeUtilisateur)
+
+- APPARTENIR (<u>#Codeprojet</u>, #CodeArbre)
