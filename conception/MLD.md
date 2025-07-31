@@ -3,7 +3,7 @@
 - Arbre (<u>CodeArbre</u>, Nom, Description ,Prix ,Miniature )
 
 
-- Utilisateur (<u>CodeUtilisateur</u>, Nom, Prénom, E-mail, Téléphone, Rôle  )
+- Utilisateur (<u>CodeUtilisateur</u>, Nom, Prénom, E-mail, Mot de passe, Téléphone, Rôle  )
 
 
 - Localisation (<u>CodeLocalisation</u>, Pays, Continent )
@@ -17,11 +17,7 @@
 - Projet (<u>CodeProjet</u>, Nom, Description, Miniature)
 
 
-- Arbre Planté (<u>CodeArbrePlanté</u>, Date, Nom, Type, Miniature, Continent, Pays)
-
-
-- SE SITUER (<u>#CodeLocalisation</u>, <u>#CodeArbre</u>)
-
+- Arbre Planté (<u>CodeArbrePlanté</u>, Date, Nom de l'arbre, Nom du projet, Description de l'arbre, Miniature, Continent, Pays)
 
 - CONTENIR (<u>#CodeArbre</u>, <u>#CodePanier</u>, Quantité)
 
@@ -33,3 +29,5 @@
 - APPARTENIR (<u>#Codeprojet</u>, <u>#CodeArbre</u>)
 
 - POSSÉDER (<u>#CodeCommande</u>, <u>#CodeArbrePlanté</u>)
+
+- DÉPENDRE (<u>#CodeProjet</u>, <u>#CodeArbrePlanté</u>)
