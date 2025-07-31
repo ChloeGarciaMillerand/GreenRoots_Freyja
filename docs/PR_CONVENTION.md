@@ -23,6 +23,7 @@ Utilisez un titre court et descriptif en français qui décrit brièvement les c
 
 ### Lors de la création de la PR, sélectionnez et remplissez le template associé :
 
+#### Méthode 1 : URL avec template automatique
 Pour utiliser un template spécifique, utilisez une URL de la forme :
 ```
 https://github.com/O-clock-Freyja/greenroots/compare/main...VOTRE_BRANCHE?quick_pull=1&template=TEMPLATE.md
@@ -40,6 +41,16 @@ Remplacez `VOTRE_BRANCHE` par le nom de votre branche et `TEMPLATE.md` par l'un 
 ```
 https://github.com/O-clock-Freyja/greenroots/compare/main...docs-improve-pr-convention?quick_pull=1&template=docs.md
 ```
+
+#### Méthode 2 : Copié-collé du template
+Si l'URL ne fonctionne pas, copiez-collez le contenu du template correspondant :
+
+- **[feature.md](../.github/PULL_REQUEST_TEMPLATE/feature.md)** : Pour les nouvelles fonctionnalités
+- **[docs.md](../.github/PULL_REQUEST_TEMPLATE/docs.md)** : Pour les améliorations de documentation
+- **[fix.md](../.github/PULL_REQUEST_TEMPLATE/fix.md)** : Pour les corrections de bugs
+- **[style.md](../.github/PULL_REQUEST_TEMPLATE/style.md)** : Pour les modifications de style/design
+- **[refactor.md](../.github/PULL_REQUEST_TEMPLATE/refactor.md)** : Pour le refactoring de code
+- **[conception.md](../.github/PULL_REQUEST_TEMPLATE/conception.md)** : Pour les documents de conception, architecture et éléments graphiques
 
 ### Ajoutez ou moins 2 reviewers.
 
