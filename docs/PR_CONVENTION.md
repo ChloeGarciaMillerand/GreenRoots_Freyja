@@ -34,7 +34,7 @@ Remplacez `VOTRE_BRANCHE` par le nom de votre branche et `TEMPLATE.md` par l'un 
 - **fix.md** : Pour les corrections de bugs
 - **style.md** : Pour les modifications de style/design
 - **refactor.md** : Pour le refactoring de code
-- **conception.md** : Pour les documents de conception et architecture
+- **conception.md** : Pour les documents de conception, architecture et éléments graphiques
 
 **Exemple :**
 ```
