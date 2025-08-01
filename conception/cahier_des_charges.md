@@ -105,7 +105,7 @@ Permettre aux utilisateurs de découvrir l’entreprise GreenRoots, et de choisi
   - Classements communautaires des plus gros contributeurs
 
 ## Architecture du projet
-Nous avons opté pour une architecture orientée services afin d’adapter le développement à la taille du projet et de l’équipe,
+Nous avons opté pour une architecture client-serveur afin d’adapter le développement à la taille du projet et de l’équipe,
 tout en respectant les principes d’éco-conception et en assurant de hautes performances.
 Cette approche privilégie la simplicité et l’efficacité.
 Par ailleurs, l’implémentation d’une API REST facilite la gestion des opérations CRUD de manière standardisée.
