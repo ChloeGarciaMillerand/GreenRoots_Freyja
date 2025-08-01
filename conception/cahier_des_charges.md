@@ -296,7 +296,7 @@ Ce qui est possible pour un *membre*, l’est pour un *administrateur*.
 
 ## Use cases
 
-`// TODO inclure les use cases`
+![Use cases](./use_cases/documents/use_cases.png)
 
 ## Analyse des risques
 
