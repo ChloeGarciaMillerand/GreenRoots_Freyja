@@ -35,7 +35,7 @@
     - [Rôles et responsables](#rôles-et-responsables)
 
 ## Présentation du projet:
-Plateforme e-commerce dédiée à la vente d'arbres dans le cadre de projets de reforestation. Les utilisateurs pourront donc contribuer à ces projets en achetant des arbres qui seront plantés par Greenroots qui fournira en retour un suivi de l'évolution des arbres aux clients.
+Plateforme e-commerce dédiée à la vente d'arbres dans le cadre de projets de reforestation. Ces projets correspondront à des zones de plantation. utilisateurs pourront donc contribuer à ces projets en achetant des arbres qui seront plantés par Greenroots. qui fournira en retour un suivi de l'évolution des arbres aux clients.
 
 ## Définition des besoins et des objectifs
 
