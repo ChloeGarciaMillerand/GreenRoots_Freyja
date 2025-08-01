@@ -173,7 +173,7 @@ Public éco-conscient, entreprises responsables, associations engagées, etc.
 
 ### Arborescence (MVP)
 
-`// TODO inclure l'arborescence`
+![Arborescence du front](./tree_structure/documents/front_tree_structure.png)
 
 ### Routes pour le front
 | **Route** | **Description** |
