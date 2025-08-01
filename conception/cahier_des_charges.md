@@ -111,7 +111,7 @@ Cette approche privilégie la simplicité et l’efficacité.
 Par ailleurs, l’implémentation d’une API REST facilite la gestion des opérations CRUD de manière standardisée.
 La sécurisation des données sera assurée grâce à un middleware intégré à l’application, garantissant un contrôle d’accès et une protection cohérente des données.
 
-`// TODO inclure le diagramme d'architecture`
+![Diagramme d'architecture](./architecture/documents/app_architecture.png)
 
 ## Liste des technologies et outils utilisés
 
