@@ -1,5 +1,39 @@
 # Cahier des charges du projet GreenRoots 🌳
 
+## Sommaire
+
+1. [Présentation du projet](#présentation-du-projet)
+2. [Définition des besoins et des objectifs](#définition-des-besoins-et-des-objectifs)
+   - [Besoin](#besoin)
+   - [Objectifs](#objectifs)
+3. [Les spécifications fonctionnelles](#les-spécifications-fonctionnelles)
+   - [MVP (Minimum Viable Product)](#mvp-minimum-viable-product)
+   - [Évolutions possibles (Post-MVP)](#évolutions-possibles-post-mvp)
+4. [Architecture du projet](#architecture-du-projet)
+5. [Liste des technologies et outils utilisés](#liste-des-technologies-et-outils-utilisés)
+6. [Public cible](#public-cible)
+7. [Navigateurs compatibles et versions](#navigateurs-compatibles-et-versions-au-30-juillet-2025)
+   - [Google Chrome](#google-chrome)
+   - [Mozilla Firefox](#mozilla-firefox)
+   - [Microsoft Edge](#microsoft-edge)
+   - [Apple Safari](#apple-safari)
+8. [Arborescence et routes](#arborescence-et-routes)
+   - [Arborescence (MVP)](#arborescence-mvp)
+   - [Routes pour le front](#routes-pour-le-front)
+   - [Routes pour l'API](#routes-pour-lapi)
+9. [Liste des User Stories](#liste-des-user-stories)
+   - [Visiteur](#visiteur)
+   - [Membre](#membre)
+   - [Administrateur](#administrateur)
+10. [Use cases](#use-cases)
+11. [Analyse des risques](#analyse-des-risques)
+    - [Phase de conception](#phase-de-conception)
+    - [Phase de développement](#phase-de-développement)
+    - [Phase de tests](#phase-de-tests)
+    - [Phase de déploiement](#phase-de-déploiement)
+12. [Équipe projet - Répartition des rôles](#équipe-projet---répartition-des-rôles)
+    - [Rôles et responsables](#rôles-et-responsables)
+
 ## Présentation du projet:
 Plateforme e-commerce dédiée à la vente d'arbres dans le cadre de projets de reforestation. Les utilisateurs pourront donc contribuer à ces projets en achetant des arbres qui seront plantés par Greenroots qui fournira en retour un suivi de l'évolution des arbres aux clients.
 
