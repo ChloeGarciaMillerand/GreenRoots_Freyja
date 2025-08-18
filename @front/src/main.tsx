@@ -1,6 +1,9 @@
-import { render } from 'preact'
-import { Home } from './app/features/home/Home'  // Import your Home component
+import { createRoot } from 'react-dom/client'
+import { Home } from './app/features/home/Home'
 import './style.scss'
 
-// Render the Home component to the DOM
-render(<Home />, document.getElementById('app')!)
+
+const container = document.getElementById('app')!
+
+const root = createRoot(container)
+root.render(<Home />)

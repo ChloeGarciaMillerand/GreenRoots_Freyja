@@ -63,8 +63,7 @@
   "json": {
     "formatter": {
       "indentStyle": "space",
-      "indentWidth": 2,
-      "trailingCommas": "none"
+      "indentWidth": 2
     }
   },
   "files": {
