@@ -22,8 +22,7 @@ dist-ssr
 *.sln
 *.sw?
 .env
-.DS_Store
-/node_modules/
+
 /.react-router/
 /build/
 node_modules/
