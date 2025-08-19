@@ -1,32 +1,60 @@
 .toggle-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
+	background: none;
+	border: none;
+	cursor: pointer;
 }
 
 .menu-icon {
-  font-size: 2.5rem;
-  color: #333;
-  transition: transform 0.3s ease;
+	font-size: 2.5rem;
+	color: #333;
+	transition: transform 0.3s ease;
 }
 
 nav {
-  position: relative; /* point de référence pour le menu */
+	position: relative; /* point de référence pour le menu */
 }
 
 nav ul {
-  position: absolute;  
-  top: 100%;           
-  left: 0;
-  margin: 0;
-  padding: 0.5rem 1rem;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  border-radius: 4px;
-  z-index: 100;        
-  width: max-content;   
+	position: absolute;
+	top: 100%;
+	left: 0;
+	margin: 0;
+	padding: 0.5rem 1rem;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	border-radius: 4px;
+	z-index: 100;
+	width: max-content;
 }
 
 /* Style des items */
 nav ul li {
-  margin: 0.3rem 0;
+	margin: 0.3rem 0;
+}
+
+/* Retire le marker par défaut du summary */
+summary {
+	list-style: none;
+	cursor: pointer;
+}
+
+/* Optionnel : personnaliser le triangle */
+summary::-webkit-details-marker {
+	display: none;
+}
+
+summary::before {
+	content: "▶"; /* triangle fermé */
+	display: inline-block;
+	margin-right: 0.5rem;
+	transition: transform 0.3s ease;
+}
+
+details[open] summary::before {
+	transform: rotate(90deg); /* triangle ouvert */
+}
+
+/* Sous-menu */
+details ul {
+	margin-top: 0.5rem;
+	padding-left: 1.5rem;
 }

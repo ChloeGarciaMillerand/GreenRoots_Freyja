@@ -10,7 +10,17 @@ function ToggleMenu({ className }: { className?: string }) {
 
 	const navLinks = [
 		{ to: "/home", label: "Accueil" },
-		{ to: "/catalog", label: "Catlogue" },
+		{
+			to: "/catalog",
+			label: "Catalogue",
+			subLinks: [
+				{ to: "/catalog/afrique", label: "Afrique" },
+				{ to: "/catalog/amerique", label: "Amérique" },
+				{ to: "/catalog/asie", label: "Asie" },
+				{ to: "/catalog/europe", label: "Europe" },
+				{ to: "/catalog/oceanie", label: "Océanie" },
+			],
+		},
 		{ to: "/about", label: "À propos" },
 	];
 
@@ -30,9 +40,24 @@ function ToggleMenu({ className }: { className?: string }) {
 				<ul style={{ listStyle: "none", paddingLeft: 0 }}>
 					{navLinks.map((link) => (
 						<li key={link.to}>
-							<Link to={link.to} onClick={() => setOpen(false)}>
-								{link.label}
-							</Link>
+							{link.subLinks ? (
+								<details>
+									<summary>{link.label}</summary>
+									<ul style={{ listStyle: "none", paddingLeft: "1rem" }}>
+										{link.subLinks.map((sub) => (
+											<li key={sub.to}>
+												<Link to={sub.to} onClick={() => setOpen(false)}>
+													{sub.label}
+												</Link>
+											</li>
+										))}
+									</ul>
+								</details>
+							) : (
+								<Link to={link.to} onClick={() => setOpen(false)}>
+									{link.label}
+								</Link>
+							)}
 						</li>
 					))}
 				</ul>
