@@ -12,7 +12,7 @@ header {
 }
 
 /* Burger menu, only for mobile */
-.header-burger-menu {
+.navbar-mobile {
 	display: block;
 }
 
@@ -39,7 +39,7 @@ header {
 	background-color: transparent !important;
 }
 
-.header-nav-desktop {
+.navbar-desktop {
 	display: none;
 }
 
@@ -52,7 +52,7 @@ header {
 		justify-content: space-between;
 	}
 
-	.header-burger-menu {
+	.navbar-mobile {
 		display: none;
 	}
 
@@ -60,7 +60,7 @@ header {
 		order: 1;
 	}
 
-	.header-nav-desktop {
+	.navbar-desktop {
 		display: block;
 		order: 2;
 		display: flex;
@@ -68,7 +68,7 @@ header {
 		height: 100%;
 	}
 
-	.header-nav-desktop ul {
+	.navbar-desktop ul {
 		box-shadow: none;
 		display: flex;
 		gap: 3rem;

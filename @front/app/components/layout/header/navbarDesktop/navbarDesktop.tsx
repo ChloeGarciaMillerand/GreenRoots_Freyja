@@ -19,7 +19,7 @@ function NavbarDesktop({ className }: { className?: string }) {
 	];
 
 	return (
-		<nav className="header-nav-desktop">
+		<nav className={className}>
 			<ul className="navlinks">
 				{navLinks.map((link) =>
 					link.subLinks ? (

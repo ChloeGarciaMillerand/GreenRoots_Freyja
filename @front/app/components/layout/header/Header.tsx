@@ -12,7 +12,7 @@ export function Header() {
 		<div>
 			<header>
 				{/* burger menu, only for mobile*/}
-				<NavbarMobile className="header-burger-menu" />
+				<NavbarMobile className="navbar-mobile" />
 
 				{/* logo */}
 				<Link to="/" className="header-logo">
@@ -20,7 +20,7 @@ export function Header() {
 				</Link>
 
 				{/* navbar, only for tablet and desktop*/}
-				<NavbarDesktop className="header-nav-desktop" />
+				<NavbarDesktop className="navbar-desktop" />
 
 				{/* account and cart */}
 				<div className="header-account-cart">

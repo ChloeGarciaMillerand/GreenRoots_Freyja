@@ -1,4 +1,4 @@
-.header-nav-desktop {
+.navbar-desktop {
 	color: var(--dark-green);
 }
 
@@ -42,7 +42,7 @@
 	position: absolute;
 	top: 100%;
 	left: 0;
-	background: white;
+	background: var(--pearl);
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 	border-radius: 4px;
 	padding: 0.5rem 1rem;
