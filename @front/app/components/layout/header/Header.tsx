@@ -1,5 +1,5 @@
 import "./Header.css";
-import ToggleMenu from "./toggleMenu/toggleMenu";
+import NavbarMobile from "./navbarMobile/navbarMobile";
 import NavbarDesktop from "./navbarDesktop/navbarDesktop";
 import { Link } from "react-router";
 
@@ -12,7 +12,7 @@ export function Header() {
 		<div>
 			<header>
 				{/* burger menu, only for mobile*/}
-				<ToggleMenu className="header-burger-menu" />
+				<NavbarMobile className="header-burger-menu" />
 
 				{/* logo */}
 				<Link to="/" className="header-logo">

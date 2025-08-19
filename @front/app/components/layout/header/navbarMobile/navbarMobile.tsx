@@ -1,11 +1,9 @@
 import { useState } from "react";
 import { Link } from "react-router";
 
-import "../../../../../styles/reset.css";
-import "../../../../../styles/global.css";
-import "./toggleMenu.css";
+import "./navbarMobile.css";
 
-function ToggleMenu({ className }: { className?: string }) {
+function NavbarMobile({ className }: { className?: string }) {
 	const [open, setOpen] = useState(false);
 
 	const navLinks = [
@@ -66,4 +64,4 @@ function ToggleMenu({ className }: { className?: string }) {
 	);
 }
 
-export default ToggleMenu;
+export default NavbarMobile;

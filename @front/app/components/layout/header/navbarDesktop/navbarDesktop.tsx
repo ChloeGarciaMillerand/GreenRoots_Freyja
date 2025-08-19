@@ -1,4 +1,5 @@
 import { Link } from "react-router";
+import "./navbarDesktop.css";
 
 function NavbarDesktop({ className }: { className?: string }) {
 	const navLinks = [

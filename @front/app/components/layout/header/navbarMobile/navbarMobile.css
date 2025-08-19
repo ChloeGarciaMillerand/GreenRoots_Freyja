@@ -1,20 +1,25 @@
-.toggle-btn {
+.header-burger-menu {
+	color: var(--dark-green);
+}
+
+.header-burger-menu .toggle-btn {
 	background: none;
 	border: none;
 	cursor: pointer;
 }
 
-.menu-icon {
+.header-burger-menu .menu-icon {
 	font-size: 2.5rem;
 	color: #333;
 	transition: transform 0.3s ease;
+	color: var(--dark-green);
 }
 
-nav {
+nav.header-burger-menu {
 	position: relative; /* point de référence pour le menu */
 }
 
-nav ul {
+nav.header-burger-menu > ul {
 	position: absolute;
 	top: 100%;
 	left: 0;
@@ -27,34 +32,34 @@ nav ul {
 }
 
 /* Style des items */
-nav ul li {
+nav.header-burger-menu ul li {
 	margin: 0.3rem 0;
 }
 
 /* Retire le marker par défaut du summary */
-summary {
+.header-burger-menu summary {
 	list-style: none;
 	cursor: pointer;
 }
 
 /* Optionnel : personnaliser le triangle */
-summary::-webkit-details-marker {
+.header-burger-menu summary::-webkit-details-marker {
 	display: none;
 }
 
-summary::before {
+.header-burger-menu summary::before {
 	content: "▶"; /* triangle fermé */
 	display: inline-block;
 	margin-right: 0.5rem;
 	transition: transform 0.3s ease;
 }
 
-details[open] summary::before {
+.header-burger-menu details[open] summary::before {
 	transform: rotate(90deg); /* triangle ouvert */
 }
 
 /* Sous-menu */
-details ul {
+.header-burger-menu details ul {
 	margin-top: 0.5rem;
 	padding-left: 1.5rem;
 }
