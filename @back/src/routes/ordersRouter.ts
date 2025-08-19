@@ -3,6 +3,7 @@ import { ordersController } from "../app/Controllers/ordersController.js";
 
 
 const ordersRouter = Router();
+
 ordersRouter.get('/api/orders', ordersController.index)
 ordersRouter.post('/api/orders', ordersController.create);
 
