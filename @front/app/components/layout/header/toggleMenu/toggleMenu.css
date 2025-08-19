@@ -9,3 +9,24 @@
   color: #333;
   transition: transform 0.3s ease;
 }
+
+nav {
+  position: relative; /* point de référence pour le menu */
+}
+
+nav ul {
+  position: absolute;  
+  top: 100%;           
+  left: 0;
+  margin: 0;
+  padding: 0.5rem 1rem;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  border-radius: 4px;
+  z-index: 100;        
+  width: max-content;   
+}
+
+/* Style des items */
+nav ul li {
+  margin: 0.3rem 0;
+}

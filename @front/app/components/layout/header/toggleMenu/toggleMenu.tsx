@@ -1,5 +1,8 @@
 import { useState } from "react";
 import { Link } from "react-router";
+
+import "../../../../../styles/reset.css";
+import "../../../../../styles/global.css";
 import "./toggleMenu.css";
 
 function ToggleMenu({ className }: { className?: string }) {
@@ -7,13 +10,12 @@ function ToggleMenu({ className }: { className?: string }) {
 
 	const navLinks = [
 		{ to: "/home", label: "Accueil" },
+		{ to: "/catalog", label: "Catlogue" },
 		{ to: "/about", label: "À propos" },
-		{ to: "/services", label: "Services" },
-		{ to: "/contact", label: "Contact" },
 	];
 
 	return (
-		<nav>
+		<nav className={className}>
 			<button
 				type="button"
 				onClick={() => {
