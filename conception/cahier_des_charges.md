@@ -19,7 +19,6 @@
    - [Apple Safari](#apple-safari)
 8. [Arborescence et routes](#arborescence-et-routes)
    - [Arborescence (MVP)](#arborescence-mvp)
-   - [Routes pour le front](#routes-pour-le-front)
    - [Routes pour l'API](#routes-pour-lapi)
 9. [Liste des User Stories](#liste-des-user-stories)
    - [Visiteur](#visiteur)
@@ -35,7 +34,7 @@
     - [Rôles et responsables](#rôles-et-responsables)
 
 ## Présentation du projet:
-Plateforme e-commerce dédiée à la vente d'arbres dans le cadre de projets de reforestation. Ces projets correspondront à des zones de plantation. utilisateurs pourront donc contribuer à ces projets en achetant des arbres qui seront plantés par Greenroots.
+Plateforme e-commerce dédiée à la vente d'arbres dans le cadre de projets de reforestation. Ces projets correspondront à des zones de plantation. Les utilisateurs pourront donc contribuer à ces projets en achetant des arbres qui seront plantés par Greenroots.
 
 ## Définition des besoins et des objectifs
 
@@ -81,7 +80,7 @@ Permettre aux utilisateurs de découvrir l’entreprise GreenRoots, et de choisi
 - Création de nouvelles fiches arbres (espèce, description, photos, prix)
 - Édition des informations produits existants
 - Suppression d'arbres du catalogue (gestion des stocks)
-- Gestion des catégories et filtres de recherche
+- Gestion des localisations et filtres de recherche
 - Configuration des bundles et systèmes de remises
 
 #### Évolutions possibles (Post-MVP)
@@ -105,7 +104,7 @@ Permettre aux utilisateurs de découvrir l’entreprise GreenRoots, et de choisi
   - Classements communautaires des plus gros contributeurs
 
 ## Architecture du projet
-Nous avons opté pour une architecture orientée services afin d’adapter le développement à la taille du projet et de l’équipe,
+Nous avons opté pour une architecture client-serveur avec une API et une SPA (Single Page Application), afin d’adapter le développement à la taille du projet et de l’équipe,
 tout en respectant les principes d’éco-conception et en assurant de hautes performances.
 Cette approche privilégie la simplicité et l’efficacité.
 Par ailleurs, l’implémentation d’une API REST facilite la gestion des opérations CRUD de manière standardisée.
@@ -119,14 +118,13 @@ La sécurisation des données sera assurée grâce à un middleware intégré à
 |---|---|---|
 | Postgresql | Base de données | Création et gestion de la base de données SQL, structure de données adaptée à un e-shop |
 | Express | Framework | Framework Node.js, rapide et flexible pour la création d'API REST. |
-| React | Framework | Dynamisation de l'interface utilisateur, utilisation d'un virtual DOM (amélioration des performances) et de composants réutilisables |
-| React Router | Framework | Front: rooting, SEO |
+| React | Librairie | Dynamisation de l'interface utilisateur, utilisation d'un virtual DOM (amélioration des performances) et de composants réutilisables |
+| React Router | Librairie | Front: rooting, SEO |
 | JS (TS) | Langage | Typage fort: lisibilité et maintenabilité du code, accès à l'auto complétion (aide au code) |
 | CSS | Langage | Intégration front: ajout de styles |
 | HTML | Langage | Intégration front: langage standard du web, utilisation des balises sémantiques |
 | Argon2 | Libraire | Hachage des mots de passe, recommandé par OWASP. |
 | Zustand | Librairie | Gestionnaire d'état pour React. Alternative à Redux avec moins de boilerplate. |
-| Sass | Librairie | Extension de CSS avec variables et fonctions. Faciliter l'intégration du style |
 | Helmet | Librairie | Middleware qui sécurise les en-têtes HTTP. Comble les failles XSS. |
 | Zod | Librairie | Bibliothèque de validation de schéma TypeScript-first. Validation robuste des données |
 | Jest | Librairie | Framework de tests unitaires JavaScript avec mocking intégré. Exécution rapide des tests. |
@@ -175,35 +173,33 @@ Public éco-conscient, entreprises responsables, associations engagées, etc.
 
 ![Arborescence du front](./tree_structure/documents/front_tree_structure.png)
 
-### Routes pour le front
-| **Route** | **Description** |
-|---|---|
-| **/** | Page d'accueil |
-| **/catalog** | Liste des arbres |
-| **/product** | Détail d'un arbre |
-| **/signin** | Page de connexion |
-| **/signup** | Page d'inscription |
-| **/cart** | Panier d'achat |
-| **/orders** | Processus de commande |
-| **/legal-notice** | Mentions légales |
-| **/about-us** | À propos de GreenRoots + contact |
-
 ### Routes pour l’API
 
 #### Produits & Catalogue
 
 | **Méthode** | **Endpoint** | **Description** |
 |---|---|---|
-| **GET** | `/api/home` | Page d'accueil |
 | **GET** | `/api/trees` | Lister tous les arbres (catalogue) |
-| **GET** | `/api/trees/:id` | Détails d'une plante |
+| **GET** | `/api/trees/:id` | Détails d'un arbre |
+
+#### Localisations
+
+| **Méthode** | **Endpoint** | **Description** |
+|---|---|---|
+| **GET** | `/api/locations` | Lister toutes les localisations |
+| **GET** | `/api/locations/:id` | Détails d'une localisation |
+
+#### Projets
+
+| **Méthode** | **Endpoint** | **Description** |
+|---|---|---|
+| **GET** | `/api/projects` | Lister tous les projets |
+| **GET** | `/api/projects/:id` | Détails d'un projet |
 
 #### Gestion des arbres
 
 | **Méthode** | **Endpoint** | **Description** |
 |---|---|---|
-| **GET** | `/api/admin/trees` | Lister tous les arbres (catalogue) |
-| **GET** | `/api/admin/trees/:id` | Détails d'une plante |
 | **POST** | `/api/admin/trees` | Ajouter un arbre |
 | **PUT** | `/api/admin/trees/:id` | Modifier les infos d'un arbre |
 | **DELETE** | `/api/admin/trees/:id` | Supprimer un arbre |
@@ -212,10 +208,11 @@ Public éco-conscient, entreprises responsables, associations engagées, etc.
 
 | **Méthode** | **Endpoint** | **Description** |
 |---|---|---|
+| **POST** | `/api/register` | Inscription utilisateur |
 | **POST** | `/api/login` | Connexion utilisateur |
 | **POST** | `/api/logout` | Déconnexion utilisateur |
 
-#### Panier (Cart)
+#### Panier
 
 | **Méthode** | **Endpoint** | **Description** |
 |---|---|---|
@@ -224,16 +221,19 @@ Public éco-conscient, entreprises responsables, associations engagées, etc.
 | **PUT** | `/api/cart/:itemId` | Modifier la quantité d'un produit dans le panier |
 | **DELETE** | `/api/cart/:itemId` | Retirer un produit du panier |
 
-#### Commande (Order)
+#### Commande
 
 | **Méthode** | **Endpoint** | **Description** |
 |---|---|---|
 | **POST** | `/api/orders` | Créer une nouvelle commande |
+| **GET** | `/api/orders` | historique des commandes |
 | **GET** | `/api/orders/:id` | Détails d'une commande |
 
 ## Liste des User Stories
 *Visiteur* : utilisateur non inscrit
+
 *Membre* : utilisateur inscrit
+
 *Administrateur* : utilisateur inscrit ayant le rôle administrateur
 
 Le *visiteur* est l’utilisateur ayant *le moins de droits*.
@@ -249,50 +249,38 @@ Ce qui est possible pour un *membre*, l’est pour un *administrateur*.
 | US001 | Visiteur | accéder à la landing page | découvrir GreenRoots | 1 |
 | US002 | Visiteur | consulter le catalogue des produits | voir les produits proposés | 1 |
 | US003 | Visiteur | consulter un produit individuel | connaître les détails du produit | 1 |
-| US004 | Visiteur | consulter les catégories d'arbres | voir les produits proposés par catégorie | 1 |
-| US005 | Visiteur | ajouter un ou plusieurs produits au panier | préparer ma commande | 2 |
-| US006 | Visiteur | consulter mon panier | supprimer / modifier / valider mon panier | 2 |
-| US007 | Visiteur | valider mon panier | passer commande | 2 |
+| US004 | Visiteur | consulter la localisation des arbres | voir les produits proposés par localisation | 1 |
+| US005 | Visiteur | consulter les projets | voir les projets proposés | 1 |
+| US006 | Visiteur | ajouter un ou plusieurs produits au panier | préparer ma commande | 2 |
+| US007 | Visiteur | consulter mon panier | supprimer / modifier / valider mon panier | 2 |
 | US008 | Visiteur | filtrer le catalogue sur certains critères | affiner ma recherche | 2 |
 | US009 | Visiteur | contacter l'équipe du site par mail | transmettre ou demander une information | 1 |
-| US010 | Visiteur | valider et payer ma commande | afin de recevoir mon dû | 2/3 |
-| US011 | Visiteur | accéder au site en anglais/français au choix | afin de répondre à un public international | 2 |
-| US012 | Visiteur | naviguer sur le site au clavier | afin de s'adapter aux personnes handicapées | 2 |
-| US013 | Visiteur | suivre le site avec des outils d'accessibilité | afin de s'adapter aux personnes handicapées | 2 |
-| US014 | Visiteur | localiser mes arbres | afin de suivre géographiquement mes arbres | 3 |
-| US015 | Visiteur | m'inscrire au site | bénéficier des avantages membre | 2 |
+| US010 | Visiteur | naviguer sur le site au clavier | afin de s'adapter aux personnes handicapées | 2 |
+| US011 | Visiteur | suivre le site avec des outils d'accessibilité | afin de s'adapter aux personnes handicapées | 2 |
+| US012 | Visiteur | m'inscrire sur le site | bénéficier des avantages membre | 2 |
 
 ### Membre
 
 | **ID** | **En tant que** | **Je veux** | **Afin de** | **Sprint** |
 |---|---|---|---|---|
-| US016 | Membre | me connecter au site | interagir avec mon espace personnel | 2 |
-| US017 | Membre | réinitialiser mon mot de passe | me connecter | 2 |
-| US018 | Membre | supprimer mon compte | ne plus avoir de compte | 2 |
-| US019 | Membre | consulter l'historique de mes commandes | consulter l'ensemble des commandes passées | 2 |
-| US020 | Membre | modifier mes informations personnelles | choisir les informations disponibles | 2 |
-| US021 | Membre | consulter le statut d'une de mes commandes | suivre mes commandes en cours | 2 |
-| US022 | Membre | lancer une invitation | de parrainer un futur utilisateur | 3 |
-| US023 | Membre | choisir une langue | améliorer l'accessibilité | 3 |
-| US024 | Membre | suivre l'avancée de mes avantages / achievements | suivre mes avantages | 3 |
+| US013 | Membre | me connecter au site | interagir avec mon espace personnel | 2 |
+| US014 | Membre | réinitialiser mon mot de passe | me connecter | 2 |
+| US015 | Membre | supprimer mon compte | ne plus avoir de compte | 2 |
+| US016 | Membre | consulter l'historique de mes commandes | consulter l'ensemble des commandes passées | 2 |
+| US017 | Membre | modifier mes informations personnelles | choisir les informations disponibles | 2 |
+| US018 | Membre | consulter le statut d'une de mes commandes | suivre mes commandes en cours | 2 |
 
 ### Administrateur
 
 | **ID** | **En tant que** | **Je veux** | **Afin de** | **Sprint** |
 |---|---|---|---|---|
-| US025 | Administrateur | ajouter un produit | rendre le produit disponible pour les utilisateurs | 3 |
-| US026 | Administrateur | modifier un produit | modifier les informations du produit | 2 |
-| US027 | Administrateur | supprimer un produit | supprimer un produit | 2 |
-| US028 | Administrateur | ajouter une quantité de produit (dispo/indispo) | l'utilisateur puisse ajuster sa commande | 2 |
-| US029 | Administrateur | supprimer un compte utilisateur | retirer un utilisateur | 2 |
-| US030 | Administrateur | consulter les stocks de produits | suivre l'état des stocks | 2 |
-| US031 | Administrateur | consulter le statut des commandes | suivre son statut | 3 |
-| US032 | Administrateur | modifier le statut d'une commande | mettre à jour son statut | 3 |
-| US033 | Administrateur | contacter un client par mail | lui transmettre des informations | 3 |
-| US034 | Administrateur | déclencher une campagne/event sur le site | attirer/fidéliser la clientèle | 3 |
-| US035 | Administrateur | accéder à la liste des utilisateurs | gérer | 3 |
-| US036 | Administrateur | ajouter une langue | améliorer l'accessibilité | 3 |
-| US037 | Administrateur | créer et envoyer des notifications | informer les utilisateurs des divers évènements | 3 |
+| US019 | Administrateur | ajouter un produit | rendre le produit disponible pour les utilisateurs | 3 |
+| US020 | Administrateur | modifier un produit | modifier les informations du produit | 2 |
+| US021 | Administrateur | supprimer un produit | supprimer un produit | 2 |
+| US022 | Administrateur | ajouter une quantité de produit | l'utilisateur puisse ajuster sa commande | 2 |
+| US023 | Administrateur | consulter les stocks de produits | suivre l'état des stocks | 2 |
+| US024 | Administrateur | consulter le statut des commandes | suivre son statut | 3 |
+| US025 | Administrateur | modifier le statut d'une commande | mettre à jour son statut | 3 |
 
 ## Use cases
 
