@@ -14,6 +14,14 @@ const authController = {
             status: '200'
         });
     },
+
+    register(req, res){
+        res.json({
+            message: 'GreenRoots API Server POST "/api/register"',
+            version: '1.0.0',
+            status: '200'
+        });
+    }
 }
 
 

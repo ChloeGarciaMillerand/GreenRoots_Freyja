@@ -1,19 +1,4 @@
 const adminController = {
-    index(req, res){
-        res.json({
-            message: 'GreenRoots API Server GET "/api/admin/trees"',
-            version: '1.0.0',
-            status: '200'
-        });
-    },
-
-    show(req, res) {
-        res.json({
-            message: 'GreenRoots API Server GET "api/admin/trees/:id"',
-            version: '1.0.0',
-            status: '200'
-        });
-    },
 
     create(req, res){
         res.json({

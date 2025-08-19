@@ -15,15 +15,6 @@ router.get('/', (req, res) => {
     });
 });
 
-router.get('/home', (req, res) => {
-    res.json({
-        message: 'GreenRoots API Server GET "/home"',
-        version: '1.0.0',
-        status: 'running'
-    });
-});
-
-
 router.get('/api/health', (req, res) => {
     res.json({
         status: 'healthy',
