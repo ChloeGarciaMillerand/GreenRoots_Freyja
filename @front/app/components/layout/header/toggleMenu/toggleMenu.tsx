@@ -3,7 +3,6 @@ import { Link } from "react-router";
 import "./toggleMenu.css";
 
 function ToggleMenu({ className }: { className?: string }) {
-	console.log("ToggleMenu monté");
 	const [open, setOpen] = useState(false);
 
 	const navLinks = [
@@ -18,15 +17,14 @@ function ToggleMenu({ className }: { className?: string }) {
 			<button
 				type="button"
 				onClick={() => {
-					console.log("clic");
-					setOpen(!open);
+					setOpen((previousOpen) => !previousOpen);
 				}}
 				aria-label="Ouvrir le menu"
 				className="toggle-btn"
 			>
 				<span className="menu-icon">{open ? "✖" : "☰"}</span>
 			</button>
-			{open && (
+			{open ? (
 				<ul style={{ listStyle: "none", paddingLeft: 0 }}>
 					{navLinks.map((link) => (
 						<li key={link.to}>
@@ -36,7 +34,7 @@ function ToggleMenu({ className }: { className?: string }) {
 						</li>
 					))}
 				</ul>
-			)}
+			) : null}
 		</nav>
 	);
 }
