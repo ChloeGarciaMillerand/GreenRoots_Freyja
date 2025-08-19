@@ -1,18 +1,33 @@
-import { useLocation } from 'preact-iso';
+import "./Header.css";
+import ToggleMenu from "./toggleMenu/toggleMenu";
+import { Link } from "react-router";
+
+import logo from "../../../../assets/icons/logo.svg";
+import iconAccount from "../../../../assets/icons/iconAccount.svg";
+import iconCart from "../../../../assets/icons/iconCart.svg";
 
 export function Header() {
-	const { url } = useLocation();
-
 	return (
-		<header>
-			<nav>
-				<a href="/" class={url == '/' && 'active'}>
-					Home
-				</a>
-				<a href="/404" class={url == '/404' && 'active'}>
-					404
-				</a>
-			</nav>
-		</header>
+		<div>
+			<header>
+				{/* burger menu*/}
+				<ToggleMenu className="header-burger-menu" />
+
+				{/* logo */}
+				<Link to="/" className="header-logo">
+					<img src={logo} alt="logo greenroots" />
+				</Link>
+
+				{/* account and cart */}
+				<div className="header-account-cart">
+					<Link to="/">
+						<img src={iconCart} alt="Panier" />
+					</Link>
+					<Link to="/">
+						<img src={iconAccount} alt="Compte personnel" />
+					</Link>
+				</div>
+			</header>
+		</div>
 	);
 }
