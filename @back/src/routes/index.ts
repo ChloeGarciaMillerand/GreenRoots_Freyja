@@ -1,5 +1,9 @@
 import { Router } from 'express';
 import { treesRouter } from "./treesRouter.js";
+import {adminRouter} from "./adminRouter.js";
+import {cartRouter} from "./cartRouter.js";
+import {authRouter} from "./authRouter.js";
+import {ordersRouter} from "./ordersRouter.js";
 
 const router = Router();
 
@@ -28,6 +32,10 @@ router.get('/api/health', (req, res) => {
     });
 });
 
+router.use(authRouter);
 router.use(treesRouter);
+router.use(adminRouter);
+router.use(cartRouter);
+router.use(ordersRouter);
 
 export { router };
