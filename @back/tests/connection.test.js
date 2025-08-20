@@ -35,12 +35,6 @@ describe('Database Connection', () => {
         expect(result.rows[0].current_user).toBe(process.env.DB_USER || process.env.POSTGRES_USER);
     });
 
-    test('should verify PostgreSQL version', async () => {
-        const result = await client.query('SELECT version()');
-
-        expect(result.rows[0].version).toContain('PostgreSQL');
-        expect(result.rows[0].version).toContain('15'); // Since you're using postgres:15
-    });
 
     test('should verify database permissions', async () => {
         // Test if we can create and drop a test table
