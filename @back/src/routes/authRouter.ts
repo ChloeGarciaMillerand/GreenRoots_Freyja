@@ -3,8 +3,8 @@ import { authController } from "../app/Controllers/authController.js";
 
 const authRouter = Router();
 
-authRouter.post('/login', authController.login);
-authRouter.post('/logout', authController.logout);
-authRouter.post('/register', authController.register);
+authRouter.post('/api/login', authController.login);
+authRouter.post('/api/login', authController.logout);
+authRouter.post('/api/login', authController.register);
 
 export { authRouter };

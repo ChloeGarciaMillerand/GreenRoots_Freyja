@@ -24,8 +24,8 @@ importers:
         specifier: 4.18.2
         version: 4.18.2
       express-rate-limit:
-        specifier: ^8.0.1
-        version: 8.0.1(express@4.18.2)
+        specifier: 6.10.0
+        version: 6.10.0(express@4.18.2)
       express-validator:
         specifier: ^7.2.1
         version: 7.2.1
@@ -1117,11 +1117,11 @@ packages:
     resolution: {integrity: sha512-P0te2pt+hHI5qLJkIR+iMvS+lYUZml8rKKsohVHAGY+uClp9XVbdyYNJOIjSRpHVp8s8YqxJCiHUkSYZGr8rtQ==}
     engines: {node: ^18.14.0 || ^20.0.0 || ^22.0.0 || >=24.0.0}
 
-  express-rate-limit@8.0.1:
-    resolution: {integrity: sha512-aZVCnybn7TVmxO4BtlmnvX+nuz8qHW124KKJ8dumsBsmv5ZLxE0pYu7S2nwyRBGHHCAzdmnGyrc5U/rksSPO7Q==}
-    engines: {node: '>= 16'}
+  express-rate-limit@6.10.0:
+    resolution: {integrity: sha512-CtGn2IyklQnIWpA4pcRaovXkNR8psDQ9Fa0y5u7Yhz5TL74dNsm7oXpfm1HPKUYiNe5w0TPEyNbIrvNVU/xUIg==}
+    engines: {node: '>= 14'}
     peerDependencies:
-      express: '>= 4.11'
+      express: ^4 || ^5
 
   express-validator@7.2.1:
     resolution: {integrity: sha512-CjNE6aakfpuwGaHQZ3m8ltCG2Qvivd7RHtVMS/6nVxOM7xVGqr4bhflsm4+N5FP5zI7Zxp+Hae+9RE+o8e3ZOQ==}
@@ -1322,10 +1322,6 @@ packages:
 
   inquirer@0.11.4:
     resolution: {integrity: sha512-QR+2TW90jnKk9LUUtbcA3yQXKt2rDEKMh6+BAZQIeumtzHexnwVLdPakSslGijXYLJCzFv7GMXbFCn0pA00EUw==}
-
-  ip-address@10.0.1:
-    resolution: {integrity: sha512-NWv9YLW4PoW2B7xtzaS3NCot75m6nK7Icdv0o3lfMceJVRfSoQwqD4wEH5rLwoKJwUiZ/rfpiVBhnaF0FK4HoA==}
-    engines: {node: '>= 12'}
 
   ipaddr.js@1.9.1:
     resolution: {integrity: sha512-0KI/607xoxSToH7GjN1FfSbLoU0+btTicjsQSWQlh/hZykN8KpmMf7uYwPW3R+akZ6R/w18ZlXSHBYXiYUPO3g==}
@@ -3509,10 +3505,9 @@ snapshots:
       jest-mock: 30.0.5
       jest-util: 30.0.5
 
-  express-rate-limit@8.0.1(express@4.18.2):
+  express-rate-limit@6.10.0(express@4.18.2):
     dependencies:
       express: 4.18.2
-      ip-address: 10.0.1
 
   express-validator@7.2.1:
     dependencies:
@@ -3762,8 +3757,6 @@ snapshots:
       string-width: 1.0.2
       strip-ansi: 3.0.1
       through: 2.3.8
-
-  ip-address@10.0.1: {}
 
   ipaddr.js@1.9.1: {}
 

@@ -1,9 +1,7 @@
-
-
-const treesController = {
+const localizationsController = {
     index(req, res){
         res.json({
-            message: 'GreenRoots API Server GET "/api//trees"',
+            message: 'GreenRoots API Server GET "/api/locations"',
             version: '1.0.0',
             status: '200'
         });
@@ -11,11 +9,11 @@ const treesController = {
 
     show(req, res){
         res.json({
-            message: 'GreenRoots API Server GET "/api/trees/:id"',
+            message: 'GreenRoots API Server GET "/api/locations/:id"',
             version: '1.0.0',
             status: '200'
         });
     }
 }
 
-export {treesController};
+export {localizationsController};
