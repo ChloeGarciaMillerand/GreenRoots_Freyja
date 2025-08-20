@@ -7,6 +7,8 @@ services:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     volumes:
       - db_data:/var/lib/postgresql/data
+      - ./@back/database/migration/create-tables.sql:/docker-entrypoint-initdb.d/01-create-tables.sql
+      - ./@back/database/seeders/sample-data.sql:/docker-entrypoint-initdb.d/02-sample-data.sql
 
   backend:
     build:
