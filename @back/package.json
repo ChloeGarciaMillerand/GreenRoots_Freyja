@@ -14,6 +14,7 @@
     "test:security": "NODE_OPTIONS='--experimental-vm-modules' jest tests/security.test.js",
     "test:validation": "NODE_OPTIONS='--experimental-vm-modules' jest tests/validation.test.js",
     "test:errorHandler": "NODE_OPTIONS='--experimental-vm-modules' jest tests/errorHandler.test.js",
+    "test:treeController": "NODE_OPTIONS='--experimental-vm-modules' jest tests/treeController.test.js",
     "test:watch": "NODE_OPTIONS='--experimental-vm-modules' jest --watch",
     "test:e2e": "playwright test",
     "lint": "biome lint .",
