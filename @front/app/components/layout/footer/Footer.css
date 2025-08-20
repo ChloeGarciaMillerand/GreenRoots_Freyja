@@ -22,11 +22,9 @@ a {
     width: auto;
 }
 
-
 @media (min-width: 768px) {
     footer {
     flex-direction: row;
     justify-content: right;
+    }
 }
-}
-
