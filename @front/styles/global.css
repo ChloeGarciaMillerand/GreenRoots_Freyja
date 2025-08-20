@@ -48,17 +48,19 @@ h3 {
 a {
 	text-decoration: none;
 	color: var(--dark-green);
+
+	&:hover {
+		background-color: var(--light-green);
+	}
 }
 
-a:hover {
-	background-color: var(--light-green);
-}
+li {
+	a {
+		text-decoration: none;
+		color: var(--dark-green);
 
-li a {
-	text-decoration: none;
-	color: var(--dark-green);
-}
-
-li a:hover {
-	color: var(--dark-grey);
+		&:hover {
+			color: var(--dark-grey);
+		}
+	}
 }
