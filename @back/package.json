@@ -18,7 +18,10 @@
     "test:e2e": "playwright test",
     "lint": "biome lint .",
     "format": "biome format --write .",
-    "check": "biome check --apply ."
+    "check": "biome check --apply .",
+    "db:create": "node database/migration/migrate.js",
+    "db:seed": "node database/seeders/seed.js",
+    "db:reset": "pnpm db:create && pnpm db:seed"
   },
   "keywords": [
     "ecommerce",
