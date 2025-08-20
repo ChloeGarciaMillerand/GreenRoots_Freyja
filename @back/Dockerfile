@@ -1,6 +1,7 @@
 FROM node:22-slim
 
 RUN corepack enable
+RUN corepack prepare pnpm@10.13.1 --activate
 
 WORKDIR /app
 

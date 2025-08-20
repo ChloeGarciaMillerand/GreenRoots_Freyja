@@ -4,6 +4,8 @@ import {adminRouter} from "./adminRouter.js";
 import {cartRouter} from "./cartRouter.js";
 import {authRouter} from "./authRouter.js";
 import {ordersRouter} from "./ordersRouter.js";
+import {projectsRouter} from "./projectsRouter.js";
+import {localizationsRouter} from "./localizationsRouter.js";
 
 const router = Router();
 
@@ -28,5 +30,7 @@ router.use(treesRouter);
 router.use(adminRouter);
 router.use(cartRouter);
 router.use(ordersRouter);
+router.use(projectsRouter);
+router.use(localizationsRouter);
 
 export { router };

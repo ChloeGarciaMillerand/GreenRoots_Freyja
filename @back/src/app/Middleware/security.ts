@@ -1,7 +1,7 @@
 import helmet from 'helmet';
 import cors from 'cors';
-import rateLimit from 'express-rate-limit';
-import { Express } from 'express';
+import { rateLimit } from 'express-rate-limit';
+import type { Express } from 'express';
 
 export const setupSecurity = (app: Express) => {
     // Helmet
