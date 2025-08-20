@@ -10,7 +10,7 @@ class DatabaseService {
             host: process.env.DB_HOST || 'localhost',
             database: process.env.DB_NAME || process.env.POSTGRES_DB,
             password: process.env.DB_PASSWORD || process.env.POSTGRES_PASSWORD,
-            port: process.env.DB_PORT || 5433,
+            port: process.env.DB_PORT || 5432,
             max: 20,
             min: 5,
             idleTimeoutMillis: 10000,
