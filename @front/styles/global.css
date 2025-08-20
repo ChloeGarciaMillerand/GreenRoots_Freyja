@@ -1,29 +1,28 @@
 /* Global CSS */
 
 * {
-	box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 :root {
-	--dark-green: #455e46;
-	--dark-grey: #212529;
-	--black: #000000;
-	--pearl: #faf2e4;
-	--light-grey: #f6f7f9;
-	--light-yellow: #f0ddb5;
-	--light-green: #c9caba;
-	--light-red: #eeded2;
-	--light-blue: #cce7f0;
-	--light-brown: #ebeed2;
+    --dark-green: #455E46;
+    --dark-grey: #212529;
+    --black: #000000;
+    --pearl: #FAF2E4;
+    --light-grey:  #F6F7F9;
+    --light-yellow: #F0DDB5;
+    --light-green: #C9CABA;
+    --light-red: #EEDED2;
+    --light-blue: #CCE7F0;
+    --light-brown: #EBEED2;
 }
 
 body {
-	font-family: sans-serif;
-	background-color: var(--pearl);
+    font-family: sans-serif;
 }
 
 main {
-	width: 100%;
+    width: 100%;
 }
 
 /* Titles */
