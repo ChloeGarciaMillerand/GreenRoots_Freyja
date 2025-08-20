@@ -1,38 +1,26 @@
 import 'dotenv/config';
 import express from 'express';
-import cors from 'cors';
-import helmet from 'helmet';
+import { router } from "./routes/index.js";
+import { setupSecurity } from './app/Middleware/security.js';
+import { errorHandler } from './app/Middleware/errorHandler.js';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-app.use(helmet());
-app.use(cors({
-    origin: process.env.FRONTEND_URL || 'http://localhost:3000',
-    credentials: true
-}));
-app.use(express.json());
+// Security middleware
+setupSecurity(app);
+
+// Body parsing
+app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
 
-app.get('/', (req, res) => {
-    res.json({
-        message: 'GreenRoots API Server',
-        version: '1.0.0',
-        status: 'running'
-    });
-});
+// Routes
+app.use(router);
 
-
-app.get('/api/health', (req, res) => {
-    res.json({
-        status: 'healthy',
-        timestamp: new Date().toISOString(),
-        uptime: process.uptime()
-    });
-});
+// Error handling
+app.use(errorHandler);
 
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
-    console.log(`Health check: http://localhost:${PORT}/api/health`);
-    console.log(` Environment: ${process.env.NODE_ENV || 'development'}`);
+    console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
 });
