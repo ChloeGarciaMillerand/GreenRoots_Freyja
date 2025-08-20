@@ -16,6 +16,7 @@
     "test:errorHandler": "NODE_OPTIONS='--experimental-vm-modules' jest tests/errorHandler.test.js",
     "test:treeController": "NODE_OPTIONS='--experimental-vm-modules' jest tests/treeController.test.js",
     "test:projectController": "NODE_OPTIONS='--experimental-vm-modules' jest tests/projectController.test.js",
+    "test:localizationController": "NODE_OPTIONS='--experimental-vm-modules' jest tests/localizationController.test.js",
     "test:watch": "NODE_OPTIONS='--experimental-vm-modules' jest --watch",
     "test:e2e": "playwright test",
     "lint": "biome lint .",
