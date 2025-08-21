@@ -1,12 +1,12 @@
 import { useState } from "react";
 import type { HomePageTreeCardProps } from "@types";
 import { QuantitySelector } from "~/components/shared/components/quantitySelector/quantitySelector";
-import "./HomePageTreeCard.css";
+import "./TreeCard.css";
 import { Form, useNavigation } from "react-router";
 import localizationIcon from "./icons/localization.svg";
 import projectIcon from "./icons/project.svg";
 
-function HomePageTreeCard({
+function TreeCard({
 	treeId,
 	name,
 	price,
@@ -55,4 +55,4 @@ function HomePageTreeCard({
 	);
 }
 
-export default HomePageTreeCard;
+export default TreeCard;

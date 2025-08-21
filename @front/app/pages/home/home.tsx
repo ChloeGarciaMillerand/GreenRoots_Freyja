@@ -4,7 +4,7 @@ import type { Route } from "./+types/home";
 import homePageSeed from "./images/homePage_seed_growing.webp";
 
 import trees from "./data/data";
-import HomePageTreeCard from "./HomePageTreeCard/HomePageTreeCard";
+import TreeCard from "~/components/shared/components/TreeCard/TreeCard";
 import type { TreeHomePage } from "@types";
 
 export function meta() {
@@ -48,7 +48,7 @@ export default function Home(props: Route.ComponentProps) {
 					<ul>
 						{loaderData.trees.map((tree: TreeHomePage) => (
 							<li key={tree.tree_id}>
-								<HomePageTreeCard
+								<TreeCard
 									treeId={tree.tree_id}
 									name={tree.name}
 									price={tree.price}
