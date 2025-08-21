@@ -1,6 +1,7 @@
 import type { Key } from "react";
 
 export type HomePageTreeCardProps = {
+	treeId: number;
 	name: string;
 	price: number;
 	image: string;

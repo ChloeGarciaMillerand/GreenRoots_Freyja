@@ -1,6 +1,8 @@
 import type { HomePageTreeCardProps } from "@types";
+import { AddCartButton } from "~/components/shared/components/addCartButton";
 
 function HomePageTreeCard({
+	treeId,
 	name,
 	price,
 	image,
@@ -14,6 +16,7 @@ function HomePageTreeCard({
 			<p>Prix : {price} €</p>
 			<p>Localisation : {localization}</p>
 			<p>Projet : {project_name}</p>
+			<AddCartButton treeId={treeId} />
 		</div>
 	);
 }
