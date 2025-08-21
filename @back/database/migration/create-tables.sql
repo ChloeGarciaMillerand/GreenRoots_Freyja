@@ -117,6 +117,20 @@ CREATE TABLE payment_transaction (
         ON DELETE RESTRICT
 );
 
+-- Ajout des tables nécessaires à la gestion des rôles et des token password + email - WIP
+CREATE TABLE password_reset_tokens (
+                                       email TEXT PRIMARY KEY,
+                                       token TEXT NOT NULL,
+                                       expires_at TIMESTAMPTZ NOT NULL,
+                                       created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE email_verification_tokens (
+                                           email TEXT PRIMARY KEY,
+                                           token TEXT NOT NULL,
+                                           created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+);
+
 -- Création des index pour améliorer les performances
 CREATE INDEX idx_project_localization ON project(localization_id);
 CREATE INDEX idx_project_tree_tree ON project_tree(tree_id);
