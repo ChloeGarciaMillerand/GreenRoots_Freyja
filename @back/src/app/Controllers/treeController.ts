@@ -10,16 +10,21 @@ const treeController = {
             const limit = parseInt(req.query.limit as string) || 10;
             const offset = (page - 1) * limit;
 
-            const result = await treeModel.findWithPagination(limit, offset);
+            // Get all trees with projects and localizations
+            const allTrees = await treeModel.findAllWithProjectsAndLocalizations();
+
+            // Apply pagination manually
+            const total = allTrees.length;
+            const trees = allTrees.slice(offset, offset + limit);
 
             res.json({
                 message: 'Trees retrieved successfully',
-                data: result.trees,
+                data: trees,
                 pagination: {
                     page,
                     limit,
-                    total: result.total,
-                    pages: Math.ceil(result.total / limit)
+                    total,
+                    pages: Math.ceil(total / limit)
                 },
                 status: 200
             });
@@ -43,7 +48,7 @@ const treeController = {
                 });
             }
 
-            const tree = await treeModel.findById(id);
+            const tree = await treeModel.findByIdWithProjectsAndLocalizations(id);
 
             if (!tree) {
                 return res.status(404).json({
@@ -67,5 +72,4 @@ const treeController = {
     },
 }
 
-export {treeController};
-
+export { treeController };
