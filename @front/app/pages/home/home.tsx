@@ -7,7 +7,7 @@ import trees from "./data/data";
 import HomePageTreeCard from "./HomePageTreeCard/HomePageTreeCard";
 import type { TreeHomePage } from "@types";
 
-export function meta({}: Route.MetaArgs) {
+export function meta() {
 	return [
 		{
 			title:
