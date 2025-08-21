@@ -13,15 +13,22 @@ type Pages = {
   "/": {
     params: {};
   };
+  "/add-to-shopping-cart": {
+    params: {};
+  };
 };
 
 type RouteFiles = {
   "root.tsx": {
     id: "root";
-    page: "/";
+    page: "/" | "/add-to-shopping-cart";
   };
   "pages/home/home.tsx": {
     id: "pages/home/home";
     page: "/";
+  };
+  "pages/addToShoppingCart.tsx": {
+    id: "pages/addToShoppingCart";
+    page: "/add-to-shopping-cart";
   };
 };
