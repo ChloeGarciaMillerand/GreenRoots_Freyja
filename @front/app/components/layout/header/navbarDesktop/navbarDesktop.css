@@ -37,7 +37,7 @@
 }
 
 /* Sous-menu en absolu, hidden par défaut */
-.submenu {
+.navlinks li .submenu {
 	display: none;
 	position: absolute;
 	top: 100%;
@@ -52,7 +52,7 @@
 }
 
 /* Afficher sous-menu si details ouvert */
-.navlinks li details[open] > .submenu {
+details[open] > .submenu {
 	display: block;
 }
 

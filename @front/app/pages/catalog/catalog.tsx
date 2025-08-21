@@ -1,10 +1,13 @@
-import { Link } from "react-router";
+import { Form, Link, useSubmit } from "react-router";
 import type { Route } from "./+types/catalog";
 
 import HomePageTreeCard from "../home/HomePageTreeCard/HomePageTreeCard";
 import type { TreeHomePage } from "@types";
 
 import "./catalog.css";
+
+import { continents } from "~/continents";
+
 
 export function meta() {
 	return [
@@ -42,7 +45,6 @@ export async function loader(params: Route.LoaderArgs) {
 	if (continent) {
 		treeApiUrl = `${apiUrl}/api/trees/continent/${continent}`;
 	}
-	console.log(treeApiUrl);
 	// get data from api
 	const response = await fetch(
 		`${treeApiUrl}?limit=${limit}&page=${page}`,
@@ -56,14 +58,28 @@ export async function loader(params: Route.LoaderArgs) {
 	// access to pages = total number of available pages
 	const pages = json.pagination.pages;
 
-	return { trees, pages, page, limit };
+	return { trees, pages, page, limit, continent };
 }
 
 export default function Catalog(props: Route.ComponentProps) {
 	const { loaderData } = props;
+
 	return (
 		<main>
 			<h1>Nos arbres</h1>
+
+			<details>
+				<summary className="summary">Filtrer par continent</summary>
+				<ul className="submenu">
+					{continents.map((continent) => (
+						<li key={continent.value}>
+							<Link to={`/catalog/${continent.value}`}>{continent.label}</Link>
+						</li>
+					))}
+				</ul>
+			</details>
+
+			
 			<div className="tree-card-container">
 				<ul>
 					{loaderData.trees.map((tree: TreeHomePage) => (
