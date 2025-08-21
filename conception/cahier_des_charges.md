@@ -211,9 +211,9 @@ Public éco-conscient, entreprises responsables, associations engagées, etc.
 
 | **Méthode** | **Endpoint** | **Description** |
 |---|---|---|
-| **POST** | `/api/register` | Inscription utilisateur |
-| **POST** | `/api/login` | Connexion utilisateur |
-| **POST** | `/api/logout` | Déconnexion utilisateur |
+| **POST** | `/api/auth/register` | Inscription utilisateur |
+| **POST** | `/api/auth/login` | Connexion utilisateur |
+| **POST** | `/api/auth/logout` | Déconnexion utilisateur |
 
 #### Panier
 
