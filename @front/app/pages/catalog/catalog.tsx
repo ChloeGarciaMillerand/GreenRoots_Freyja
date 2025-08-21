@@ -4,16 +4,17 @@ import type { Route } from "./+types/catalog";
 import HomePageTreeCard from "../home/HomePageTreeCard/HomePageTreeCard";
 import type { TreeHomePage } from "@types";
 
+import "./catalog.css";
+
 export function meta() {
 	return [
 		{
-			title:
-				"GreenRoots - plantez des arbres pour lutter contre la déforestation",
+			title: "GreenRoots - catalogue d'arbres",
 		},
 		{
 			name: "description",
 			content:
-				"Parrainez un arbre dans un de nos projets de notre reforestation à travers le monde",
+				"Découvrez notre sélection d'arbres à parrainer dans nos projets de reforestation à travers le monde. Choisissez une espèce, un lieu et participez dès aujourd’hui à la lutte contre la déforestation.",
 		},
 	];
 }
@@ -21,21 +22,30 @@ export function meta() {
 export async function loader(params: Route.LoaderArgs) {
 	const apiUrl = "http://localhost:3000";
 
+	// get the url params
 	const url = new URL(params.request.url);
 
+	// get the params value in the URL (limit per page)
 	const limitParam = url.searchParams.get("limit");
+	// otherwise, the default value 6 is used
 	const limit = limitParam ? Number.parseInt(limitParam) : 6;
 
+	// get the params value in the URL (current page)
 	const pageParam = url.searchParams.get("page");
+	// otherwise, the default value 1 is used
 	const page = pageParam ? Number.parseInt(pageParam) : 1;
 
+	// get data from api
 	const response = await fetch(
 		`${apiUrl}/api/trees?limit=${limit}&page=${page}`,
 	);
 
+	// waits for the JSON response from the server and converts it into a JavaScript object
 	const json = await response.json();
+	// access to data = list of trees
 	const trees = json.data;
 
+	// access to pages = total number of available pages
 	const pages = json.pagination.pages;
 
 	return { trees, pages, page, limit };
@@ -63,14 +73,20 @@ export default function Catalog(props: Route.ComponentProps) {
 				</ul>
 				<div>
 					{loaderData.page > 1 ? (
-						<Link to={`?page=${loaderData.page - 1}&limit=${loaderData.limit}`}>
+						<Link
+							to={`?page=${loaderData.page - 1}&limit=${loaderData.limit}`}
+							className="navigation-pages-links"
+						>
 							Page précédente
 						</Link>
 					) : null}
 				</div>
 				<div>
 					{loaderData.page < loaderData.pages ? (
-						<Link to={`?page=${loaderData.page + 1}&limit=${loaderData.limit}`}>
+						<Link
+							to={`?page=${loaderData.page + 1}&limit=${loaderData.limit}`}
+							className="navigation-pages-links"
+						>
 							Page suivante
 						</Link>
 					) : null}
