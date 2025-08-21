@@ -1,36 +1,31 @@
 import type { Request, Response } from 'express';
-import { TreeModel } from '../Models/treeModel.js';
+import { ProjectModel } from '../Models/projectModel.js';
 
-const treeModel = new TreeModel();
+const projectModel = new ProjectModel();
 
-const treeController = {
+const projectController = {
     async index(req: Request, res: Response) {
         try {
             const page = parseInt(req.query.page as string) || 1;
             const limit = parseInt(req.query.limit as string) || 10;
             const offset = (page - 1) * limit;
 
-            // Get all trees with projects and localizations
-            const allTrees = await treeModel.findAllWithProjectsAndLocalizations();
-
-            // Apply pagination manually
-            const total = allTrees.length;
-            const trees = allTrees.slice(offset, offset + limit);
+            const result = await projectModel.findWithPagination(limit, offset);
 
             res.json({
-                message: 'Trees retrieved successfully',
-                data: trees,
+                message: 'Projects retrieved successfully',
+                data: result.projects,
                 pagination: {
                     page,
                     limit,
-                    total,
-                    pages: Math.ceil(total / limit)
+                    total: result.total,
+                    pages: Math.ceil(result.total / limit)
                 },
                 status: 200
             });
         } catch (error) {
             res.status(500).json({
-                message: 'Error retrieving trees',
+                message: 'Error retrieving projects',
                 error: error instanceof Error ? error.message : 'Unknown error',
                 status: 500
             });
@@ -43,28 +38,28 @@ const treeController = {
 
             if (isNaN(id)) {
                 return res.status(400).json({
-                    message: 'Invalid tree ID',
+                    message: 'Invalid project ID',
                     status: 400
                 });
             }
 
-            const tree = await treeModel.findByIdWithProjectsAndLocalizations(id);
+            const project = await projectModel.findById(id);
 
-            if (!tree) {
+            if (!project) {
                 return res.status(404).json({
-                    message: 'Tree not found',
+                    message: 'Project not found',
                     status: 404
                 });
             }
 
             res.json({
-                message: 'Tree retrieved successfully',
-                data: tree,
+                message: 'Project retrieved successfully',
+                data: project,
                 status: 200
             });
         } catch (error) {
             res.status(500).json({
-                message: 'Error retrieving tree',
+                message: 'Error retrieving project',
                 error: error instanceof Error ? error.message : 'Unknown error',
                 status: 500
             });
@@ -72,4 +67,5 @@ const treeController = {
     },
 }
 
-export { treeController };
+export {projectController};
+

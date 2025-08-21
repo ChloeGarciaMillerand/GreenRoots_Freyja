@@ -1,10 +1,10 @@
 import { Router } from 'express';
-import { projectsController } from "../app/Controllers/projectsController.js";
+import { projectController } from "../app/Controllers/projectController.js";
 
 const projectRouter = Router();
 
-projectRouter.get('/api/projects', projectsController.index);
-projectRouter.get('/api/projects/:id', projectsController.show);
+projectRouter.get('/api/projects', projectController.index);
+projectRouter.get('/api/projects/:id', projectController.show);
 
 
 
