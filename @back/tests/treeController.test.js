@@ -3,8 +3,8 @@ import { jest, describe, it, beforeEach, expect } from '@jest/globals';
 
 // Mock TreeModel
 const mockTreeModel = {
-    findWithPagination: jest.fn(),
-    findById: jest.fn()
+    findAllWithProjectsAndLocalizations: jest.fn(),
+    findByIdWithProjectsAndLocalizations: jest.fn()
 };
 
 // Create a mock controller that simulates your actual controller logic
@@ -15,16 +15,21 @@ const createMockController = () => ({
             const limit = parseInt(req.query.limit) || 10;
             const offset = (page - 1) * limit;
 
-            const result = await mockTreeModel.findWithPagination(limit, offset);
+            // Get all trees with projects and localizations
+            const allTrees = await mockTreeModel.findAllWithProjectsAndLocalizations();
+
+            // Apply pagination manually
+            const total = allTrees.length;
+            const trees = allTrees.slice(offset, offset + limit);
 
             res.json({
                 message: 'Trees retrieved successfully',
-                data: result.trees,
+                data: trees,
                 pagination: {
                     page,
                     limit,
-                    total: result.total,
-                    pages: Math.ceil(result.total / limit)
+                    total,
+                    pages: Math.ceil(total / limit)
                 },
                 status: 200
             });
@@ -48,7 +53,7 @@ const createMockController = () => ({
                 });
             }
 
-            const tree = await mockTreeModel.findById(id);
+            const tree = await mockTreeModel.findByIdWithProjectsAndLocalizations(id);
 
             if (!tree) {
                 return res.status(404).json({
@@ -90,31 +95,77 @@ describe('TreeController Logic Tests', () => {
     });
 
     describe('index method', () => {
-        it('should return trees with pagination', async () => {
+        it('should return trees with pagination and projects/localizations', async () => {
             // Arrange
             req.query = { page: '1', limit: '10' };
             const mockTrees = [
-                { tree_id: 1, name: 'Oak Tree', price: 50.00 },
-                { tree_id: 2, name: 'Pine Tree', price: 35.00 }
+                {
+                    tree_id: 1,
+                    name: 'Oak Tree',
+                    price: 50.00,
+                    projects: [
+                        {
+                            project_id: 1,
+                            name: 'Forest Restoration',
+                            localization: {
+                                localization_id: 1,
+                                country: 'France',
+                                continent: 'Europe'
+                            }
+                        }
+                    ]
+                },
+                {
+                    tree_id: 2,
+                    name: 'Pine Tree',
+                    price: 35.00,
+                    projects: []
+                }
             ];
-            mockTreeModel.findWithPagination.mockResolvedValue({
-                trees: mockTrees,
-                total: 25
-            });
+            mockTreeModel.findAllWithProjectsAndLocalizations.mockResolvedValue(mockTrees);
 
             // Act
             await treeController.index(req, res);
 
             // Assert
-            expect(mockTreeModel.findWithPagination).toHaveBeenCalledWith(10, 0);
+            expect(mockTreeModel.findAllWithProjectsAndLocalizations).toHaveBeenCalledWith();
             expect(res.json).toHaveBeenCalledWith({
                 message: 'Trees retrieved successfully',
                 data: mockTrees,
                 pagination: {
                     page: 1,
                     limit: 10,
-                    total: 25,
-                    pages: 3
+                    total: 2,
+                    pages: 1
+                },
+                status: 200
+            });
+        });
+
+        it('should apply pagination correctly with larger dataset', async () => {
+            // Arrange
+            req.query = { page: '2', limit: '3' };
+            const mockTrees = Array.from({ length: 10 }, (_, i) => ({
+                tree_id: i + 1,
+                name: `Tree ${i + 1}`,
+                price: 25.00 + i,
+                projects: []
+            }));
+            mockTreeModel.findAllWithProjectsAndLocalizations.mockResolvedValue(mockTrees);
+
+            // Act
+            await treeController.index(req, res);
+
+            // Assert
+            expect(mockTreeModel.findAllWithProjectsAndLocalizations).toHaveBeenCalledWith();
+            expect(res.json).toHaveBeenCalledWith({
+                message: 'Trees retrieved successfully',
+                data: mockTrees.slice(3, 6), // Page 2, limit 3 = items 3-5 (0-indexed)
+                pagination: {
+                    page: 2,
+                    limit: 3,
+                    total: 10,
+                    pages: 4
                 },
                 status: 200
             });
@@ -123,16 +174,13 @@ describe('TreeController Logic Tests', () => {
         it('should use default pagination when no query params', async () => {
             // Arrange
             req.query = {};
-            mockTreeModel.findWithPagination.mockResolvedValue({
-                trees: [],
-                total: 0
-            });
+            mockTreeModel.findAllWithProjectsAndLocalizations.mockResolvedValue([]);
 
             // Act
             await treeController.index(req, res);
 
             // Assert
-            expect(mockTreeModel.findWithPagination).toHaveBeenCalledWith(10, 0);
+            expect(mockTreeModel.findAllWithProjectsAndLocalizations).toHaveBeenCalledWith();
             expect(res.json).toHaveBeenCalledWith({
                 message: 'Trees retrieved successfully',
                 data: [],
@@ -146,35 +194,37 @@ describe('TreeController Logic Tests', () => {
             });
         });
 
-        it('should handle custom pagination parameters', async () => {
+        it('should handle empty results correctly', async () => {
             // Arrange
-            req.query = { page: '2', limit: '5' };
-            mockTreeModel.findWithPagination.mockResolvedValue({
-                trees: [],
-                total: 12
-            });
+            req.query = { page: '5', limit: '10' };
+            const mockTrees = Array.from({ length: 3 }, (_, i) => ({
+                tree_id: i + 1,
+                name: `Tree ${i + 1}`,
+                projects: []
+            }));
+            mockTreeModel.findAllWithProjectsAndLocalizations.mockResolvedValue(mockTrees);
 
             // Act
             await treeController.index(req, res);
 
             // Assert
-            expect(mockTreeModel.findWithPagination).toHaveBeenCalledWith(5, 5);
-            expect(res.json).toHaveBeenCalledWith(
-                expect.objectContaining({
-                    pagination: {
-                        page: 2,
-                        limit: 5,
-                        total: 12,
-                        pages: 3
-                    }
-                })
-            );
+            expect(res.json).toHaveBeenCalledWith({
+                message: 'Trees retrieved successfully',
+                data: [], // Page 5 of 3 items = empty
+                pagination: {
+                    page: 5,
+                    limit: 10,
+                    total: 3,
+                    pages: 1
+                },
+                status: 200
+            });
         });
 
         it('should handle database errors', async () => {
             // Arrange
             req.query = {};
-            mockTreeModel.findWithPagination.mockRejectedValue(new Error('Database connection failed'));
+            mockTreeModel.findAllWithProjectsAndLocalizations.mockRejectedValue(new Error('Database connection failed'));
 
             // Act
             await treeController.index(req, res);
@@ -187,25 +237,94 @@ describe('TreeController Logic Tests', () => {
                 status: 500
             });
         });
+
+        it('should handle invalid page/limit values gracefully', async () => {
+            // Arrange
+            req.query = { page: 'invalid', limit: 'bad' };
+            const mockTrees = [{ tree_id: 1, name: 'Test Tree', projects: [] }];
+            mockTreeModel.findAllWithProjectsAndLocalizations.mockResolvedValue(mockTrees);
+
+            // Act
+            await treeController.index(req, res);
+
+            // Assert
+            expect(res.json).toHaveBeenCalledWith({
+                message: 'Trees retrieved successfully',
+                data: mockTrees,
+                pagination: {
+                    page: 1, // Defaults to 1 when NaN
+                    limit: 10, // Defaults to 10 when NaN
+                    total: 1,
+                    pages: 1
+                },
+                status: 200
+            });
+        });
     });
 
     describe('show method', () => {
-        it('should return single tree when found', async () => {
+        it('should return single tree with projects and localizations when found', async () => {
             // Arrange
             req.params = { id: '1' };
             const mockTree = {
                 tree_id: 1,
                 name: 'Oak Tree',
                 price: 50.00,
-                description: 'A beautiful oak tree'
+                description: 'A beautiful oak tree',
+                projects: [
+                    {
+                        project_id: 1,
+                        name: 'Forest Restoration',
+                        description: 'Restoring forest ecosystem',
+                        localization: {
+                            localization_id: 1,
+                            country: 'France',
+                            continent: 'Europe'
+                        }
+                    },
+                    {
+                        project_id: 2,
+                        name: 'Urban Greening',
+                        description: 'City tree planting',
+                        localization: {
+                            localization_id: 2,
+                            country: 'Germany',
+                            continent: 'Europe'
+                        }
+                    }
+                ]
             };
-            mockTreeModel.findById.mockResolvedValue(mockTree);
+            mockTreeModel.findByIdWithProjectsAndLocalizations.mockResolvedValue(mockTree);
 
             // Act
             await treeController.show(req, res);
 
             // Assert
-            expect(mockTreeModel.findById).toHaveBeenCalledWith(1);
+            expect(mockTreeModel.findByIdWithProjectsAndLocalizations).toHaveBeenCalledWith(1);
+            expect(res.json).toHaveBeenCalledWith({
+                message: 'Tree retrieved successfully',
+                data: mockTree,
+                status: 200
+            });
+        });
+
+        it('should return tree with empty projects array when no projects exist', async () => {
+            // Arrange
+            req.params = { id: '2' };
+            const mockTree = {
+                tree_id: 2,
+                name: 'Pine Tree',
+                price: 35.00,
+                description: 'A tall pine tree',
+                projects: []
+            };
+            mockTreeModel.findByIdWithProjectsAndLocalizations.mockResolvedValue(mockTree);
+
+            // Act
+            await treeController.show(req, res);
+
+            // Assert
+            expect(mockTreeModel.findByIdWithProjectsAndLocalizations).toHaveBeenCalledWith(2);
             expect(res.json).toHaveBeenCalledWith({
                 message: 'Tree retrieved successfully',
                 data: mockTree,
@@ -216,13 +335,13 @@ describe('TreeController Logic Tests', () => {
         it('should return 404 when tree not found', async () => {
             // Arrange
             req.params = { id: '999' };
-            mockTreeModel.findById.mockResolvedValue(null);
+            mockTreeModel.findByIdWithProjectsAndLocalizations.mockResolvedValue(null);
 
             // Act
             await treeController.show(req, res);
 
             // Assert
-            expect(mockTreeModel.findById).toHaveBeenCalledWith(999);
+            expect(mockTreeModel.findByIdWithProjectsAndLocalizations).toHaveBeenCalledWith(999);
             expect(res.status).toHaveBeenCalledWith(404);
             expect(res.json).toHaveBeenCalledWith({
                 message: 'Tree not found',
@@ -243,13 +362,13 @@ describe('TreeController Logic Tests', () => {
                 message: 'Invalid tree ID',
                 status: 400
             });
-            expect(mockTreeModel.findById).not.toHaveBeenCalled();
+            expect(mockTreeModel.findByIdWithProjectsAndLocalizations).not.toHaveBeenCalled();
         });
 
         it('should handle database errors', async () => {
             // Arrange
             req.params = { id: '1' };
-            mockTreeModel.findById.mockRejectedValue(new Error('Database connection failed'));
+            mockTreeModel.findByIdWithProjectsAndLocalizations.mockRejectedValue(new Error('Database connection failed'));
 
             // Act
             await treeController.show(req, res);
@@ -266,14 +385,29 @@ describe('TreeController Logic Tests', () => {
         it('should parse numeric string IDs correctly', async () => {
             // Arrange
             req.params = { id: '42' };
-            const mockTree = { tree_id: 42, name: 'Test Tree', price: 25.00 };
-            mockTreeModel.findById.mockResolvedValue(mockTree);
+            const mockTree = {
+                tree_id: 42,
+                name: 'Test Tree',
+                price: 25.00,
+                projects: [
+                    {
+                        project_id: 3,
+                        name: 'Test Project',
+                        localization: {
+                            localization_id: 3,
+                            country: 'Spain',
+                            continent: 'Europe'
+                        }
+                    }
+                ]
+            };
+            mockTreeModel.findByIdWithProjectsAndLocalizations.mockResolvedValue(mockTree);
 
             // Act
             await treeController.show(req, res);
 
             // Assert
-            expect(mockTreeModel.findById).toHaveBeenCalledWith(42);
+            expect(mockTreeModel.findByIdWithProjectsAndLocalizations).toHaveBeenCalledWith(42);
             expect(res.json).toHaveBeenCalledWith({
                 message: 'Tree retrieved successfully',
                 data: mockTree,
