@@ -201,8 +201,11 @@ Public éco-conscient, entreprises responsables, associations engagées, etc.
 | **Méthode** | **Endpoint** | **Description** |
 |---|---|---|
 | **POST** | `/api/admin/trees` | Ajouter un arbre |
+| **POST** | `/api/admin/projects` | Ajouter un projet |
 | **PUT** | `/api/admin/trees/:id` | Modifier les infos d'un arbre |
+| **PUT** | `/api/admin/projects/:id` | Modifier les infos d'un projet |
 | **DELETE** | `/api/admin/trees/:id` | Supprimer un arbre |
+| **DELETE** | `/api/admin/projects/:id` | Supprimer un projet |
 
 #### Authentification
 
