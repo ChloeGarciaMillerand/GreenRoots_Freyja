@@ -283,31 +283,33 @@ class TreeModel {
     async findByContinent(continent: string): Promise<any[]> {
         try {
             const query = `
-            SELECT DISTINCT
-                t.tree_id,
-                t.name as tree_name,
-                t.description as tree_description,
-                t.price,
-                t.image as tree_image,
-                t.created_at as tree_created_at,
-                t.updated_at as tree_updated_at,
-                p.project_id,
-                p.name as project_name,
-                p.description as project_description,
-                p.image as project_image,
-                p.localization_id,
-                p.created_at as project_created_at,
-                p.updated_at as project_updated_at,
-                l.country,
-                l.continent
-            FROM tree t
-            INNER JOIN project_tree pt ON t.tree_id = pt.tree_id
-            INNER JOIN project p ON pt.project_id = p.project_id
-            INNER JOIN localization l ON p.localization_id = l.localization_id
-            WHERE l.continent = $1
-            ORDER BY t.created_at DESC, p.created_at DESC
-        `;
+                SELECT DISTINCT
+                    t.tree_id,
+                    t.name as tree_name,
+                    t.description as tree_description,
+                    t.price,
+                    t.image as tree_image,
+                    t.created_at as tree_created_at,
+                    t.updated_at as tree_updated_at,
+                    p.project_id,
+                    p.name as project_name,
+                    p.description as project_description,
+                    p.image as project_image,
+                    p.localization_id,
+                    p.created_at as project_created_at,
+                    p.updated_at as project_updated_at,
+                    l.country,
+                    l.continent
+                FROM tree t
+                         INNER JOIN project_tree pt ON t.tree_id = pt.tree_id
+                         INNER JOIN project p ON pt.project_id = p.project_id
+                         INNER JOIN localization l ON p.localization_id = l.localization_id
+                WHERE LOWER(l.continent) = LOWER($1)
+                ORDER BY t.created_at DESC, p.created_at DESC
+            `;
             const result = await this.db.query(query, [continent]);
+
+            console.log(`Raw query result: ${result.rows.length} rows`); // Debug log
 
             // Group the results by tree to avoid duplication
             const treesMap = new Map();
@@ -344,7 +346,9 @@ class TreeModel {
                 });
             });
 
-            return Array.from(treesMap.values());
+            const finalResult = Array.from(treesMap.values());
+            console.log(`Grouped result: ${finalResult.length} trees`); // Debug log
+            return finalResult;
         } catch (error) {
             throw new Error(`Error fetching trees by continent ${continent}: ${error}`);
         }
