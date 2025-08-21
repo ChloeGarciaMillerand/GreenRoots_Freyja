@@ -1,5 +1,6 @@
 import type { HomePageTreeCardProps } from "@types";
-import { AddCartButton } from "~/components/shared/components/addCartButton";
+import { AddCartButton } from "~/components/shared/components/addCartButton/addCartButton";
+import { QuantitySelector } from "~/components/shared/components/quantitySelector/quantitySelector";
 
 function HomePageTreeCard({
 	treeId,
@@ -22,6 +23,7 @@ function HomePageTreeCard({
 					<p>Projet : {project_name}</p>
 				</div>
 				<div className="tree-card-add-cart">
+					<QuantitySelector />
 					<AddCartButton treeId={treeId} />
 				</div>
 			</div>

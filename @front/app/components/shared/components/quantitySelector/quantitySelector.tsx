@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "./quantitySelector.css";
 
 export const QuantitySelector = () => {
 	const [count, setCount] = useState(1);
