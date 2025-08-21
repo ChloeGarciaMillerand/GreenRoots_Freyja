@@ -3,6 +3,7 @@ import "./addCartButton.css";
 
 type AddCartButtonProps = {
 	treeId: number;
+	quantity: number;
 };
 
 export const AddCartButton = ({ treeId }: AddCartButtonProps) => {

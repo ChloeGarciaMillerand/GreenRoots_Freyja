@@ -1,3 +1,4 @@
+import { useState } from "react";
 import type { HomePageTreeCardProps } from "@types";
 import { AddCartButton } from "~/components/shared/components/addCartButton/addCartButton";
 import { QuantitySelector } from "~/components/shared/components/quantitySelector/quantitySelector";
@@ -10,6 +11,7 @@ function HomePageTreeCard({
 	localization,
 	project_name,
 }: HomePageTreeCardProps) {
+	const [quantity, setQuantity] = useState(1);
 	return (
 		<div className="tree-card">
 			<img src={image} alt={name} />
@@ -23,8 +25,8 @@ function HomePageTreeCard({
 					<p>Projet : {project_name}</p>
 				</div>
 				<div className="tree-card-add-cart">
-					<QuantitySelector />
-					<AddCartButton treeId={treeId} />
+					<QuantitySelector value={quantity} onChange={setQuantity} />
+					<AddCartButton treeId={treeId} quantity={quantity} />
 				</div>
 			</div>
 		</div>

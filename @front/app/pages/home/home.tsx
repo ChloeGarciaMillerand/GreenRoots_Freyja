@@ -49,6 +49,7 @@ export default function Home(props: Route.ComponentProps) {
 						{loaderData.trees.map((tree: TreeHomePage) => (
 							<li key={tree.tree_id}>
 								<HomePageTreeCard
+									treeId={tree.tree_id}
 									name={tree.name}
 									price={tree.price}
 									image={tree.image}
