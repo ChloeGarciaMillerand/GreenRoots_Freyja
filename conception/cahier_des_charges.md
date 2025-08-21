@@ -181,6 +181,9 @@ Public éco-conscient, entreprises responsables, associations engagées, etc.
 |---|---|---|
 | **GET** | `/api/trees` | Lister tous les arbres (catalogue) |
 | **GET** | `/api/trees/:id` | Détails d'un arbre |
+| **POST** | `/api/trees` | Ajouter un arbre |
+| **PUT** | `/api/trees/:id` | Modifier les infos d'un arbre |
+| **DELETE** | `/api/trees/:id` | Supprimer un arbre |
 
 #### Localisations
 
@@ -195,17 +198,9 @@ Public éco-conscient, entreprises responsables, associations engagées, etc.
 |---|---|---|
 | **GET** | `/api/projects` | Lister tous les projets |
 | **GET** | `/api/projects/:id` | Détails d'un projet |
-
-#### Gestion des arbres
-
-| **Méthode** | **Endpoint** | **Description** |
-|---|---|---|
-| **POST** | `/api/admin/trees` | Ajouter un arbre |
-| **POST** | `/api/admin/projects` | Ajouter un projet |
-| **PUT** | `/api/admin/trees/:id` | Modifier les infos d'un arbre |
-| **PUT** | `/api/admin/projects/:id` | Modifier les infos d'un projet |
-| **DELETE** | `/api/admin/trees/:id` | Supprimer un arbre |
-| **DELETE** | `/api/admin/projects/:id` | Supprimer un projet |
+| **POST** | `/api/projects` | Ajouter un projet |
+| **PUT** | `/api/projects/:id` | Modifier les infos d'un projet |
+| **DELETE** | `/api/projects/:id` | Supprimer un projet |
 
 #### Authentification
 
