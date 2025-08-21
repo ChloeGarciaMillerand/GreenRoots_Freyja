@@ -3,6 +3,8 @@ import type { HomePageTreeCardProps } from "@types";
 import { QuantitySelector } from "~/components/shared/components/quantitySelector/quantitySelector";
 import "./HomePageTreeCard.css";
 import { Form, useNavigation } from "react-router";
+import localizationIcon from "./icons/localization.svg";
+import projectIcon from "./icons/project.svg";
 
 function HomePageTreeCard({
 	treeId,
@@ -24,8 +26,17 @@ function HomePageTreeCard({
 					<p>Prix : {price} €</p>
 				</div>
 				<div className="tree-card-localization-project">
-					<p>Localisation : {localization}</p>
-					<p>Projet : {project_name}</p>
+					<div className="tree-card-localization">
+						<img
+							src={localizationIcon}
+							alt="picto représentant la localisation"
+						/>
+						<p>Localisation : {localization}</p>
+					</div>
+					<div className="tree-card-project">
+						<img src={projectIcon} alt="picto représentant le projet" />
+						<p>Projet : {project_name}</p>
+					</div>
 				</div>
 				<div className="tree-card-add-cart">
 					<QuantitySelector value={quantity} onChange={setQuantity} />
