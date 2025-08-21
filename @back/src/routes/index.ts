@@ -1,8 +1,7 @@
 import { Router } from 'express';
 import { treeRouter } from "./treeRouter.js";
-import {adminRouter} from "./adminRouter.js";
 import {cartRouter} from "./cartRouter.js";
-import {authRouter} from "./authRouter.js";
+import {userRouter} from "./userRouter.js";
 import {orderRouter} from "./orderRouter.js";
 import {projectRouter} from "./projectRouter.js";
 import {localizationRouter} from "./localizationRouter.js";
@@ -25,9 +24,8 @@ router.get('/api/health', (req, res) => {
     });
 });
 
-router.use(authRouter);
+router.use(userRouter);
 router.use(treeRouter);
-router.use(adminRouter);
 router.use(cartRouter);
 router.use(orderRouter);
 router.use(projectRouter);

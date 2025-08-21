@@ -15,3 +15,4 @@ interface Order {
 }
 
 export type { Order };
+export { OrderStatus };

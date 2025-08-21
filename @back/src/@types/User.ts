@@ -1,6 +1,6 @@
 enum UserRole {
     ADMIN = 'admin',
-    USER = 'user',
+    USER = 'client',
 }
 interface User {
     user_id?: number;
@@ -15,4 +15,5 @@ interface User {
 }
 
 export type { User };
+export { UserRole }
 
