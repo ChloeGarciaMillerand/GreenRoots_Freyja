@@ -138,7 +138,6 @@ class TreeModel {
         }
     }
 
-    // Add this method to your TreeModel class
 
     // Get trees with their associated projects and localizations
     async findAllWithProjectsAndLocalizations(): Promise<any[]> {
@@ -348,77 +347,6 @@ class TreeModel {
             return Array.from(treesMap.values());
         } catch (error) {
             throw new Error(`Error fetching trees by continent ${continent}: ${error}`);
-        }
-    }
-
-    // Get trees by country
-    async findByCountry(country: string): Promise<any[]> {
-        try {
-            const query = `
-            SELECT DISTINCT
-                t.tree_id,
-                t.name as tree_name,
-                t.description as tree_description,
-                t.price,
-                t.image as tree_image,
-                t.created_at as tree_created_at,
-                t.updated_at as tree_updated_at,
-                p.project_id,
-                p.name as project_name,
-                p.description as project_description,
-                p.image as project_image,
-                p.localization_id,
-                p.created_at as project_created_at,
-                p.updated_at as project_updated_at,
-                l.country,
-                l.continent
-            FROM tree t
-            INNER JOIN project_tree pt ON t.tree_id = pt.tree_id
-            INNER JOIN project p ON pt.project_id = p.project_id
-            INNER JOIN localization l ON p.localization_id = l.localization_id
-            WHERE l.country = $1
-            ORDER BY t.created_at DESC, p.created_at DESC
-        `;
-            const result = await this.db.query(query, [country]);
-
-            // Group the results by tree to avoid duplication
-            const treesMap = new Map();
-
-            result.rows.forEach(row => {
-                const treeId = row.tree_id;
-
-                if (!treesMap.has(treeId)) {
-                    treesMap.set(treeId, {
-                        tree_id: row.tree_id,
-                        name: row.tree_name,
-                        description: row.tree_description,
-                        price: row.price,
-                        image: row.tree_image,
-                        created_at: row.tree_created_at,
-                        updated_at: row.tree_updated_at,
-                        projects: []
-                    });
-                }
-
-                treesMap.get(treeId).projects.push({
-                    project_id: row.project_id,
-                    name: row.project_name,
-                    description: row.project_description,
-                    image: row.project_image,
-                    localization_id: row.localization_id,
-                    created_at: row.project_created_at,
-                    updated_at: row.project_updated_at,
-                    localization: {
-                        localization_id: row.localization_id,
-                        country: row.country,
-                        continent: row.continent
-                    }
-                });
-            });
-
-            return Array.from(treesMap.values());
-        } catch (error) {
-            throw new Error(`Error fetching trees by country ${country}: ${error}`);
         }
     }
 }
