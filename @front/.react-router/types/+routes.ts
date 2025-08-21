@@ -16,12 +16,15 @@ type Pages = {
   "/add-to-shopping-cart": {
     params: {};
   };
+  "/catalog": {
+    params: {};
+  };
 };
 
 type RouteFiles = {
   "root.tsx": {
     id: "root";
-    page: "/" | "/add-to-shopping-cart";
+    page: "/" | "/add-to-shopping-cart" | "/catalog";
   };
   "pages/home/home.tsx": {
     id: "pages/home/home";
@@ -30,5 +33,9 @@ type RouteFiles = {
   "pages/addToShoppingCart.tsx": {
     id: "pages/addToShoppingCart";
     page: "/add-to-shopping-cart";
+  };
+  "pages/catalog/catalog.tsx": {
+    id: "pages/catalog/catalog";
+    page: "/catalog";
   };
 };
