@@ -35,9 +35,17 @@ export async function loader(params: Route.LoaderArgs) {
 	// otherwise, the default value 1 is used
 	const page = pageParam ? Number.parseInt(pageParam) : 1;
 
+	const continent = params.params.continent;
+
+	let treeApiUrl = `${apiUrl}/api/trees`;
+
+	if (continent) {
+		treeApiUrl = `${apiUrl}/api/trees/continent/${continent}`;
+	}
+	console.log(treeApiUrl);
 	// get data from api
 	const response = await fetch(
-		`${apiUrl}/api/trees?limit=${limit}&page=${page}`,
+		`${treeApiUrl}?limit=${limit}&page=${page}`,
 	);
 
 	// waits for the JSON response from the server and converts it into a JavaScript object
