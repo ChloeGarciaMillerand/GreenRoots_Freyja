@@ -15,6 +15,7 @@ import "../styles/global.css";
 
 
 import { Header } from "./components/layout/header/Header";
+import { Footer } from "./components/layout/footer/Footer";
 
 export function Layout({ children }: { children: React.ReactNode }) {
 	return (
@@ -28,6 +29,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
 			<body>
 				<Header />
 				{children}
+				<Footer />
 				<ScrollRestoration />
 				<Scripts />
 			</body>
