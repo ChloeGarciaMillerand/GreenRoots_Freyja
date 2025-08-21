@@ -191,6 +191,9 @@ Public éco-conscient, entreprises responsables, associations engagées, etc.
 |---|---|---|
 | **GET** | `/api/locations` | Lister toutes les localisations |
 | **GET** | `/api/locations/:id` | Détails d'une localisation |
+| **POST** | `/api/locations/` | Ajouter une localisation |
+| **PUT** | `/api/locations/:id` | Modifier les infos d'une localisation |
+| **DELETE** | `/api/locations/:id` | Supprimer une localisation |
 
 #### Projets
 
