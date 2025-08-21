@@ -181,6 +181,9 @@ Public éco-conscient, entreprises responsables, associations engagées, etc.
 |---|---|---|
 | **GET** | `/api/trees` | Lister tous les arbres (catalogue) |
 | **GET** | `/api/trees/:id` | Détails d'un arbre |
+| **POST** | `/api/trees` | Ajouter un arbre |
+| **PUT** | `/api/trees/:id` | Modifier les infos d'un arbre |
+| **DELETE** | `/api/trees/:id` | Supprimer un arbre |
 
 #### Localisations
 
@@ -188,6 +191,9 @@ Public éco-conscient, entreprises responsables, associations engagées, etc.
 |---|---|---|
 | **GET** | `/api/locations` | Lister toutes les localisations |
 | **GET** | `/api/locations/:id` | Détails d'une localisation |
+| **POST** | `/api/locations/` | Ajouter une localisation |
+| **PUT** | `/api/locations/:id` | Modifier les infos d'une localisation |
+| **DELETE** | `/api/locations/:id` | Supprimer une localisation |
 
 #### Projets
 
@@ -195,22 +201,17 @@ Public éco-conscient, entreprises responsables, associations engagées, etc.
 |---|---|---|
 | **GET** | `/api/projects` | Lister tous les projets |
 | **GET** | `/api/projects/:id` | Détails d'un projet |
-
-#### Gestion des arbres
-
-| **Méthode** | **Endpoint** | **Description** |
-|---|---|---|
-| **POST** | `/api/admin/trees` | Ajouter un arbre |
-| **PUT** | `/api/admin/trees/:id` | Modifier les infos d'un arbre |
-| **DELETE** | `/api/admin/trees/:id` | Supprimer un arbre |
+| **POST** | `/api/projects` | Ajouter un projet |
+| **PUT** | `/api/projects/:id` | Modifier les infos d'un projet |
+| **DELETE** | `/api/projects/:id` | Supprimer un projet |
 
 #### Authentification
 
 | **Méthode** | **Endpoint** | **Description** |
 |---|---|---|
-| **POST** | `/api/register` | Inscription utilisateur |
-| **POST** | `/api/login` | Connexion utilisateur |
-| **POST** | `/api/logout` | Déconnexion utilisateur |
+| **POST** | `/api/auth/register` | Inscription utilisateur |
+| **POST** | `/api/auth/login` | Connexion utilisateur |
+| **POST** | `/api/auth/logout` | Déconnexion utilisateur |
 
 #### Panier
 

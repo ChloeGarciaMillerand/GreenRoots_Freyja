@@ -10,6 +10,9 @@ services:
       - "5432:5432"
     volumes:
       - db_data:/var/lib/postgresql/data
+      - ./@back/database/migration/create-tables.sql:/docker-entrypoint-initdb.d/01-create-tables.sql
+      - ./@back/database/seeders/sample-data.sql:/docker-entrypoint-initdb.d/02-sample-data.sql
+
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
       interval: 5s
