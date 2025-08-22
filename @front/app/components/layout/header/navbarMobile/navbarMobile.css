@@ -48,14 +48,14 @@ nav.navbar-mobile ul li {
 	display: none;
 }
 
-.navbar-mobile summary::before {
+.navbar-mobile summary::after {
 	content: "▶"; /* triangle fermé */
 	display: inline-block;
-	margin-right: 0.5rem;
+	margin-left: 0.5rem;
 	transition: transform 0.3s ease;
 }
 
-.navbar-mobile details[open] summary::before {
+.navbar-mobile details[open] summary::after {
 	transform: rotate(90deg); /* triangle ouvert */
 }
 
