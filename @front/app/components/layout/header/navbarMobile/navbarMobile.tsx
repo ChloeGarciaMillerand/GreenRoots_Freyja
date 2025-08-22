@@ -8,7 +8,7 @@ function NavbarMobile({ className }: { className?: string }) {
 	const [open, setOpen] = useState(false);
 
 	const navLinks = [
-		{ to: "/home", label: "Accueil" },
+		{ to: "/", label: "Accueil" },
 		{
 			to: "/catalog",
 			label: "Catalogue",

@@ -4,7 +4,7 @@ import { continents } from "~/continents";
 
 function NavbarDesktop({ className }: { className?: string }) {
 	const navLinks = [
-		{ to: "/home", label: "Accueil" },
+		{ to: "/", label: "Accueil" },
 		{
 			to: "/catalog",
 			label: "Catalogue",

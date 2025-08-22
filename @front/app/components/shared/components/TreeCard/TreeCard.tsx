@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { HomePageTreeCardProps } from "@types";
+import type { TreeCardProps } from "@types";
 import { QuantitySelector } from "~/components/shared/components/quantitySelector/quantitySelector";
 import "./TreeCard.css";
 import { Form, useNavigation } from "react-router";
@@ -7,13 +7,13 @@ import localizationIcon from "./icons/localization.svg";
 import projectIcon from "./icons/project.svg";
 
 function TreeCard({
-	treeId,
+	tree_id,
 	name,
 	price,
 	image,
 	localization,
 	project_name,
-}: HomePageTreeCardProps) {
+}: TreeCardProps) {
 	const [quantity, setQuantity] = useState(1);
 	const navigation = useNavigation();
 	const isSubmitting = navigation.formAction === "/add-to-shopping-cart";
@@ -41,7 +41,7 @@ function TreeCard({
 				<div className="tree-card-add-cart">
 					<QuantitySelector value={quantity} onChange={setQuantity} />
 					<input name="quantity" value={quantity} type="hidden" />
-					<input name="treeId" value={treeId} type="hidden" />
+					<input name="treeId" value={tree_id} type="hidden" />
 					<button
 						type="submit"
 						className="add-cart-button"
