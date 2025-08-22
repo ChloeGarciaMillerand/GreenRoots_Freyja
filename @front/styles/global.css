@@ -50,7 +50,7 @@ a {
 	color: var(--dark-green);
 
 	&:hover {
-		background-color: var(--light-green);
+		text-decoration: underline;
 	}
 }
 
@@ -60,7 +60,7 @@ li {
 		color: var(--dark-green);
 
 		&:hover {
-			color: var(--dark-grey);
+			text-decoration: underline;
 		}
 	}
 }
