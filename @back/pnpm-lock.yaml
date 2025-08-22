@@ -11,6 +11,9 @@ importers:
 
   .:
     dependencies:
+      '@types/morgan':
+        specifier: ^1.9.10
+        version: 1.9.10
       argon2:
         specifier: ^0.44.0
         version: 0.44.0
@@ -662,6 +665,11 @@ packages:
 
   '@types/node@24.3.0':
     resolution: {integrity: sha512-aPTXCrfwnDLj4VvXrm+UUCQjNEvJgNA8s5F1cvwQU+3KNltTOkBm1j30uNLyqqPNe7gE3KFzImYoZEfLhp4Yow==}
+  '@types/morgan@1.9.10':
+    resolution: {integrity: sha512-sS4A1zheMvsADRVfT0lYbJ4S9lmsey8Zo2F7cnbYjWHP67Q0AwMYuuzLlkIM2N8gAbb9cubhIVFwcIN2XyYCkA==}
+
+  '@types/node@24.2.1':
+    resolution: {integrity: sha512-DRh5K+ka5eJic8CjH7td8QpYEV6Zo10gfRkjHCO3weqZHWDtAaSTFtl4+VMqOJ4N5jcuhZ9/l+yy8rVgw7BQeQ==}
 
   '@types/pg@8.15.5':
     resolution: {integrity: sha512-LF7lF6zWEKxuT3/OR8wAZGzkg4ENGXFNyiV/JeOt9z5B+0ZVwbql9McqX5c/WStFq1GaGso7H1AzP/qSzmlCKQ==}
@@ -3081,6 +3089,11 @@ snapshots:
   '@types/ms@2.1.0': {}
 
   '@types/node@24.3.0':
+  '@types/morgan@1.9.10':
+    dependencies:
+      '@types/node': 24.2.1
+
+  '@types/node@24.2.1':
     dependencies:
       undici-types: 7.10.0
 
