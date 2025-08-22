@@ -81,7 +81,7 @@ export default function Catalog(props: Route.ComponentProps) {
 					{loaderData.trees.map((tree: TreeCardProps) => (
 						<li key={tree.tree_id}>
 							<TreeCard
-								treeId={tree.tree_id}
+								tree_id={tree.tree_id}
 								name={tree.name}
 								price={tree.price}
 								image={tree.image}
