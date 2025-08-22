@@ -23,7 +23,7 @@ export function meta() {
 }
 
 export async function loader(args: Route.LoaderArgs) {
-	const apiUrl = "http://localhost:3000";
+	const apiUrl = "http://backend:3001";
 
 	const { params } = args;
 	const treeId = params.id;
