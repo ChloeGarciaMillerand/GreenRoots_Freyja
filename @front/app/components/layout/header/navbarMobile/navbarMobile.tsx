@@ -17,7 +17,7 @@ function NavbarMobile({ className }: { className?: string }) {
 				to: `/catalog/${continent.value}`,
 			})),
 		},
-		{ to: "/about", label: "À propos" },
+		{ to: "/about", label: "À propos / Contact" },
 	];
 
 	return (
