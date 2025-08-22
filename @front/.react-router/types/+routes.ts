@@ -32,7 +32,6 @@ type RouteFiles = {
   "root.tsx": {
     id: "root";
     page: "/" | "/add-to-shopping-cart" | "/catalog/:continent?" | "/tree/:id";
-
   };
   "pages/home/home.tsx": {
     id: "pages/home/home";
@@ -46,7 +45,6 @@ type RouteFiles = {
     id: "pages/catalog/catalog";
     page: "/catalog/:continent?";
   };
-
   "pages/tree/tree.tsx": {
     id: "pages/tree/tree";
     page: "/tree/:id";

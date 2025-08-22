@@ -23,7 +23,7 @@ export function meta() {
 }
 
 export async function loader(params: Route.LoaderArgs) {
-	const apiUrl = "http://localhost:3000";
+	const apiUrl = "http://backend:3001";
 
 	// get the url params
 	const url = new URL(params.request.url);
