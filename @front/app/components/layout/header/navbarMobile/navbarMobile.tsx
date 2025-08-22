@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router";
+import { continents } from "~/continents";
 
 import "./navbarMobile.css";
 
@@ -11,13 +12,10 @@ function NavbarMobile({ className }: { className?: string }) {
 		{
 			to: "/catalog",
 			label: "Catalogue",
-			subLinks: [
-				{ to: "/catalog/afrique", label: "Afrique" },
-				{ to: "/catalog/amerique", label: "Amérique" },
-				{ to: "/catalog/asie", label: "Asie" },
-				{ to: "/catalog/europe", label: "Europe" },
-				{ to: "/catalog/oceanie", label: "Océanie" },
-			],
+			subLinks: continents.map((continent) => ({
+				label: continent.label,
+				to: `/catalog/${continent.value}`,
+			})),
 		},
 		{ to: "/about", label: "À propos" },
 	];
