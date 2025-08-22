@@ -8,7 +8,6 @@ import {
 } from "react-router";
 
 import type { Route } from "./+types/root";
-import "./app.scss";
 
 import "../styles/reset.css";
 import "../styles/global.css";
