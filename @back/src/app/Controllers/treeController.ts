@@ -71,28 +71,54 @@ const treeController = {
         }
     },
 
-    create(req, res){
-        res.json({
-            message: 'GreenRoots API Server POST "api/trees/:id"',
-            version: '1.0.0',
-            status: '200'
-        });
-    },
+    async findByContinent(req: Request, res: Response) {
+        try {
+            const continent = req.params.continent;
 
-    update(req, res){
-        res.json({
-            message: 'GreenRoots API Server PUT "api/trees/:id"',
-            version: '1.0.0',
-            status: '200'
-        });
-    },
+            if (!continent || typeof continent !== 'string') {
+                return res.status(400).json({
+                    message: 'Continent parameter is required',
+                    status: 400
+                });
+            }
 
-    delete(req, res){
-        res.json({
-            message: 'GreenRoots API Server DELETE "api/trees/:id"',
-            version: '1.0.0',
-            status: '200'
-        });
+            // Optional: Add continent validation
+            const validContinents = ['Asia', 'Europe', 'North America', 'South America', 'Africa', 'Australia', 'Antarctica'];
+            if (!validContinents.includes(continent)) {
+                return res.status(400).json({
+                    message: 'Invalid continent. Valid continents are: ' + validContinents.join(', '),
+                    status: 400
+                });
+            }
+
+            const trees = await treeModel.findByContinent(continent);
+
+            // Optional pagination for continent results
+            const page = parseInt(req.query.page as string) || 1;
+            const limit = parseInt(req.query.limit as string) || 10;
+            const offset = (page - 1) * limit;
+
+            const total = trees.length;
+            const paginatedTrees = trees.slice(offset, offset + limit);
+
+            res.json({
+                message: `Trees from ${continent} retrieved successfully`,
+                data: paginatedTrees,
+                pagination: {
+                    page,
+                    limit,
+                    total,
+                    pages: Math.ceil(total / limit)
+                },
+                status: 200
+            });
+        } catch (error) {
+            res.status(500).json({
+                message: 'Error retrieving trees by continent',
+                error: error instanceof Error ? error.message : 'Unknown error',
+                status: 500
+            });
+        }
     }
 }
 

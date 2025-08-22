@@ -11,7 +11,7 @@ class UserModel {
         try {
             const query = `
                 SELECT user_id, first_name, last_name, email, phone_number, role, created_at, updated_at
-                FROM users
+                FROM "user"
                 ORDER BY created_at DESC
             `;
             const result: QueryResult<User> = await this.db.query(query);
@@ -26,7 +26,7 @@ class UserModel {
         try {
             const query = `
                 SELECT user_id, first_name, last_name, email, phone_number, role, created_at, updated_at
-                FROM users
+                FROM "user"
                 WHERE user_id = $1
             `;
             const result: QueryResult<User> = await this.db.query(query, [id]);
@@ -41,7 +41,7 @@ class UserModel {
         try {
             const query = `
                 SELECT user_id, first_name, last_name, email, password, phone_number, role, created_at, updated_at
-                FROM users
+                FROM "user"
                 WHERE email = $1
             `;
             const result: QueryResult<User> = await this.db.query(query, [email]);
@@ -56,7 +56,7 @@ class UserModel {
         try {
             const query = `
                 SELECT user_id, first_name, last_name, email, phone_number, role, created_at, updated_at
-                FROM users
+                FROM "user"
                 WHERE email = $1
             `;
             const result: QueryResult<User> = await this.db.query(query, [email]);
@@ -70,7 +70,7 @@ class UserModel {
     async create(userData: Omit<User, 'user_id' | 'created_at' | 'updated_at'>): Promise<User> {
         try {
             const query = `
-                INSERT INTO users (first_name, last_name, email, password, phone_number, role, created_at, updated_at)
+                INSERT INTO "user" (first_name, last_name, email, password, phone_number, role, created_at, updated_at)
                 VALUES ($1, $2, $3, $4, $5, $6, NOW(), NOW())
                     RETURNING user_id, first_name, last_name, email, phone_number, role, created_at, updated_at
             `;
@@ -80,7 +80,7 @@ class UserModel {
                 userData.email,
                 userData.password,
                 userData.phone_number || null,
-                userData.role || UserRole.USER
+                userData.role || UserRole.CLIENT
             ];
             const result: QueryResult<User> = await this.db.query(query, values);
             return result.rows[0];
@@ -97,27 +97,27 @@ class UserModel {
             let paramCount = 1;
 
             if (userData.first_name !== undefined) {
-                updateFields.push(`first_name = ${paramCount++}`);
+                updateFields.push(`first_name = $${paramCount++}`);
                 values.push(userData.first_name);
             }
             if (userData.last_name !== undefined) {
-                updateFields.push(`last_name = ${paramCount++}`);
+                updateFields.push(`last_name = $${paramCount++}`);
                 values.push(userData.last_name);
             }
             if (userData.email !== undefined) {
-                updateFields.push(`email = ${paramCount++}`);
+                updateFields.push(`email = $${paramCount++}`);
                 values.push(userData.email);
             }
             if (userData.password !== undefined) {
-                updateFields.push(`password = ${paramCount++}`);
+                updateFields.push(`password = $${paramCount++}`);
                 values.push(userData.password);
             }
             if (userData.phone_number !== undefined) {
-                updateFields.push(`phone_number = ${paramCount++}`);
+                updateFields.push(`phone_number = $${paramCount++}`);
                 values.push(userData.phone_number);
             }
             if (userData.role !== undefined) {
-                updateFields.push(`role = ${paramCount++}`);
+                updateFields.push(`role = $${paramCount++}`);
                 values.push(userData.role);
             }
 
@@ -129,9 +129,9 @@ class UserModel {
             values.push(id);
 
             const query = `
-                UPDATE users
+                UPDATE "user"
                 SET ${updateFields.join(', ')}
-                WHERE user_id = ${paramCount}
+                WHERE user_id = $${paramCount}
                     RETURNING user_id, first_name, last_name, email, phone_number, role, created_at, updated_at
             `;
 
@@ -145,7 +145,7 @@ class UserModel {
     // Delete user account
     async deleteById(id: number): Promise<boolean> {
         try {
-            const query = `DELETE FROM users WHERE user_id = $1`;
+            const query = `DELETE FROM "user" WHERE user_id = $1`;
             const result = await this.db.query(query, [id]);
             return result.rowCount !== null && result.rowCount > 0;
         } catch (error) {
@@ -157,7 +157,7 @@ class UserModel {
     async updatePassword(id: number, passwordHash: string): Promise<boolean> {
         try {
             const query = `
-                UPDATE users
+                UPDATE "user"
                 SET password = $1, updated_at = NOW()
                 WHERE user_id = $2
             `;
@@ -172,7 +172,7 @@ class UserModel {
     async verifyUserExists(id: number): Promise<boolean> {
         try {
             const query = `
-                SELECT user_id FROM users
+                SELECT user_id FROM "user"
                 WHERE user_id = $1
             `;
             const result = await this.db.query(query, [id]);
@@ -186,7 +186,7 @@ class UserModel {
     async updateRole(id: number, role: UserRole): Promise<User | null> {
         try {
             const query = `
-                UPDATE users
+                UPDATE "user"
                 SET role = $1, updated_at = NOW()
                 WHERE user_id = $2
                     RETURNING user_id, first_name, last_name, email, phone_number, role, created_at, updated_at
@@ -202,7 +202,7 @@ class UserModel {
     async isAdmin(id: number): Promise<boolean> {
         try {
             const query = `
-                SELECT role FROM users
+                SELECT role FROM "user"
                 WHERE user_id = $1
             `;
             const result = await this.db.query(query, [id]);
@@ -216,14 +216,14 @@ class UserModel {
     async findWithPagination(limit: number = 10, offset: number = 0): Promise<{users: User[], total: number}> {
         try {
             // Get total count
-            const countQuery = `SELECT COUNT(*) as total FROM users`;
+            const countQuery = `SELECT COUNT(*) as total FROM "user"`;
             const countResult = await this.db.query(countQuery);
             const total = parseInt(countResult.rows[0].total);
 
             // Get paginated results
             const query = `
                 SELECT user_id, first_name, last_name, email, phone_number, role, created_at, updated_at
-                FROM users
+                FROM "user"
                 ORDER BY created_at DESC
                     LIMIT $1 OFFSET $2
             `;

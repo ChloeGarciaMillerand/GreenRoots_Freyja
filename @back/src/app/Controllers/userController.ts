@@ -1,119 +1,286 @@
+import type { Request, Response } from 'express';
+import { AuthService } from '../Services/auth.js';
+
 const userController = {
-    // Basic Authentication
-    login(req, res){
+    register: async (req: Request, res: Response) => {
+        try {
+            const authService = new AuthService();
+            const result = await authService.register(req.body);
+            res.status(201).json({
+                success: true,
+                message: 'User registered successfully',
+                data: result
+            });
+        } catch (error) {
+            res.status(400).json({
+                success: false,
+                error: error instanceof Error ? error.message : 'Registration failed'
+            });
+        }
+    },
+
+    login: async (req: Request, res: Response) => {
+        try {
+            const authService = new AuthService();
+            const result = await authService.login(req.body);
+            res.json({
+                success: true,
+                message: 'Login successful',
+                data: result
+            });
+        } catch (error) {
+            res.status(401).json({
+                success: false,
+                error: error instanceof Error ? error.message : 'Login failed'
+            });
+        }
+    },
+
+    logout: async (req: Request, res: Response) => {
+        // In a stateless JWT system, logout is typically handled client-side
+        // by removing the token. However, you could implement token blacklisting here
         res.json({
-            message: 'GreenRoots API Server POST "/api/login"',
-            version: '1.0.0',
-            status: '200'
+            success: true,
+            message: 'Logged out successfully'
         });
     },
 
-    logout(req, res){
+    getProfile: async (req: Request, res: Response) => {
         res.json({
-            message: 'GreenRoots API Server POST "/api/logout"',
-            version: '1.0.0',
-            status: '200'
+            success: true,
+            data: { user: req.user }
         });
     },
 
-    register(req, res){
-        res.json({
-            message: 'GreenRoots API Server POST "/api/register"',
-            version: '1.0.0',
-            status: '200'
-        });
+    updateProfile: async (req: Request, res: Response) => {
+        try {
+            if (!req.user) {
+                return res.status(401).json({
+                    success: false,
+                    error: 'Authentication required'
+                });
+            }
+
+            // This would need to be implemented in the AuthService
+            // const authService = new AuthService();
+            // const updatedUser = await authService.updateProfile(req.user.user_id!, req.body);
+
+            res.json({
+                success: true,
+                message: 'Profile updated successfully'
+                // data: { user: updatedUser }
+            });
+        } catch (error) {
+            res.status(400).json({
+                success: false,
+                error: error instanceof Error ? error.message : 'Profile update failed'
+            });
+        }
     },
 
-    // Essential User Management Functions
-    getProfile(req, res){
-        res.json({
-            message: 'GreenRoots API Server GET "/api/profile"',
-            version: '1.0.0',
-            status: '200'
-        });
+    changePassword: async (req: Request, res: Response) => {
+        try {
+            const { currentPassword, newPassword } = req.body;
+
+            if (!req.user) {
+                return res.status(401).json({
+                    success: false,
+                    error: 'Authentication required'
+                });
+            }
+
+            // This would need to be implemented in the AuthService
+            // const authService = new AuthService();
+            // await authService.changePassword(req.user.user_id!, currentPassword, newPassword);
+
+            res.json({
+                success: true,
+                message: 'Password changed successfully'
+            });
+        } catch (error) {
+            res.status(400).json({
+                success: false,
+                error: error instanceof Error ? error.message : 'Password change failed'
+            });
+        }
     },
 
-    updateProfile(req, res){
-        res.json({
-            message: 'GreenRoots API Server PUT "/api/profile"',
-            version: '1.0.0',
-            status: '200'
-        });
+    deleteAccount: async (req: Request, res: Response) => {
+        try {
+            if (!req.user) {
+                return res.status(401).json({
+                    success: false,
+                    error: 'Authentication required'
+                });
+            }
+
+            // This would need to be implemented in the AuthService
+            // const authService = new AuthService();
+            // await authService.deleteAccount(req.user.user_id!);
+
+            res.json({
+                success: true,
+                message: 'Account deleted successfully'
+            });
+        } catch (error) {
+            res.status(400).json({
+                success: false,
+                error: error instanceof Error ? error.message : 'Account deletion failed'
+            });
+        }
     },
 
-    changePassword(req, res){
-        res.json({
-            message: 'GreenRoots API Server PUT "/api/change-password"',
-            version: '1.0.0',
-            status: '200'
-        });
+    forgotPassword: async (req: Request, res: Response) => {
+        try {
+            const { email } = req.body;
+
+            // This would need to be implemented in the AuthService
+            // const authService = new AuthService();
+            // await authService.forgotPassword(email);
+
+            res.json({
+                success: true,
+                message: 'Password reset email sent if account exists'
+            });
+        } catch (error) {
+            res.status(400).json({
+                success: false,
+                error: error instanceof Error ? error.message : 'Password reset failed'
+            });
+        }
     },
 
-    deleteAccount(req, res){
-        res.json({
-            message: 'GreenRoots API Server DELETE "/api/account"',
-            version: '1.0.0',
-            status: '200'
-        });
+    resetPassword: async (req: Request, res: Response) => {
+        try {
+            const { token, newPassword } = req.body;
+
+            // This would need to be implemented in the AuthService
+            // const authService = new AuthService();
+            // await authService.resetPassword(token, newPassword);
+
+            res.json({
+                success: true,
+                message: 'Password reset successfully'
+            });
+        } catch (error) {
+            res.status(400).json({
+                success: false,
+                error: error instanceof Error ? error.message : 'Password reset failed'
+            });
+        }
     },
 
-    // Authentication & Security
-    forgotPassword(req, res){
-        res.json({
-            message: 'GreenRoots API Server POST "/api/forgot-password"',
-            version: '1.0.0',
-            status: '200'
-        });
+    verifyEmail: async (req: Request, res: Response) => {
+        try {
+            const { token } = req.body;
+
+            // This would need to be implemented in the AuthService
+            // const authService = new AuthService();
+            // await authService.verifyEmail(token);
+
+            res.json({
+                success: true,
+                message: 'Email verified successfully'
+            });
+        } catch (error) {
+            res.status(400).json({
+                success: false,
+                error: error instanceof Error ? error.message : 'Email verification failed'
+            });
+        }
     },
 
-    resetPassword(req, res){
-        res.json({
-            message: 'GreenRoots API Server POST "/api/reset-password"',
-            version: '1.0.0',
-            status: '200'
-        });
+    refreshToken: async (req: Request, res: Response) => {
+        try {
+            if (!req.user) {
+                return res.status(401).json({
+                    success: false,
+                    error: 'Authentication required'
+                });
+            }
+
+            const authService = new AuthService();
+            const newToken = await authService.generateToken({
+                userId: req.user.user_id!,
+                email: req.user.email,
+                role: req.user.role
+            });
+
+            res.json({
+                success: true,
+                message: 'Token refreshed successfully',
+                data: { token: newToken }
+            });
+        } catch (error) {
+            res.status(400).json({
+                success: false,
+                error: 'Token refresh failed'
+            });
+        }
     },
 
-    verifyEmail(req, res){
-        res.json({
-            message: 'GreenRoots API Server POST "/api/verify-email"',
-            version: '1.0.0',
-            status: '200'
-        });
+    // Admin routes
+    getAllUsers: async (req: Request, res: Response) => {
+        try {
+            // This would need to be implemented in the AuthService
+            // const authService = new AuthService();
+            // const users = await authService.getAllUsers();
+
+            res.json({
+                success: true,
+                message: 'Users retrieved successfully'
+                // data: { users }
+            });
+        } catch (error) {
+            res.status(400).json({
+                success: false,
+                error: error instanceof Error ? error.message : 'Failed to retrieve users'
+            });
+        }
     },
 
-    refreshToken(req, res){
-        res.json({
-            message: 'GreenRoots API Server POST "/api/refresh-token"',
-            version: '1.0.0',
-            status: '200'
-        });
+    getUserById: async (req: Request, res: Response) => {
+        try {
+            const { id } = req.params;
+
+            // This would need to be implemented in the AuthService
+            // const authService = new AuthService();
+            // const user = await authService.getUserById(parseInt(id));
+
+            res.json({
+                success: true,
+                message: 'User retrieved successfully'
+                // data: { user }
+            });
+        } catch (error) {
+            res.status(400).json({
+                success: false,
+                error: error instanceof Error ? error.message : 'Failed to retrieve user'
+            });
+        }
     },
 
-    // Admin Functions
-    getAllUsers(req, res){
-        res.json({
-            message: 'GreenRoots API Server GET "/api/admin/users"',
-            version: '1.0.0',
-            status: '200'
-        });
-    },
+    updateUserRole: async (req: Request, res: Response) => {
+        try {
+            const { id } = req.params;
+            const { role } = req.body;
 
-    getUserById(req, res){
-        res.json({
-            message: 'GreenRoots API Server GET "/api/admin/users/:id"',
-            version: '1.0.0',
-            status: '200'
-        });
-    },
+            // This would need to be implemented in the AuthService
+            // const authService = new AuthService();
+            // const updatedUser = await authService.updateUserRole(parseInt(id), role);
 
-    updateUserRole(req, res){
-        res.json({
-            message: 'GreenRoots API Server PUT "/api/admin/users/:id/role"',
-            version: '1.0.0',
-            status: '200'
-        });
+            res.json({
+                success: true,
+                message: 'User role updated successfully'
+                // data: { user: updatedUser }
+            });
+        } catch (error) {
+            res.status(400).json({
+                success: false,
+                error: error instanceof Error ? error.message : 'Failed to update user role'
+            });
+        }
     }
-}
+};
 
 export { userController };

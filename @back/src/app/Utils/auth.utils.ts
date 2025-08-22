@@ -76,55 +76,6 @@ export const generateRandomString = (length: number = 32): string => {
     return result;
 };
 
-// Rate limiting utilities
-export class RateLimiter {
-    private attempts: Map<string, { count: number; resetTime: number }> = new Map();
-    private blocked: Map<string, number> = new Map();
-
-    isBlocked(identifier: string): boolean {
-        const blockTime = this.blocked.get(identifier);
-        if (!blockTime) return false;
-
-        if (Date.now() > blockTime) {
-            this.blocked.delete(identifier);
-            this.attempts.delete(identifier);
-            return false;
-        }
-
-        return true;
-    }
-
-    recordAttempt(identifier: string, windowMs: number = 900000, maxAttempts: number = 5): boolean {
-        if (this.isBlocked(identifier)) {
-            return false;
-        }
-
-        const now = Date.now();
-        const attempt = this.attempts.get(identifier);
-
-        if (!attempt || now > attempt.resetTime) {
-            this.attempts.set(identifier, { count: 1, resetTime: now + windowMs });
-            return true;
-        }
-
-        attempt.count++;
-
-        if (attempt.count > maxAttempts) {
-            this.blocked.set(identifier, now + 1800000); // Block for 30 minutes
-            return false;
-        }
-
-        return true;
-    }
-
-    getRemainingAttempts(identifier: string, maxAttempts: number = 5): number {
-        const attempt = this.attempts.get(identifier);
-        if (!attempt) return maxAttempts;
-
-        return Math.max(0, maxAttempts - attempt.count);
-    }
-}
-
 // Token extraction from headers
 export const extractTokenFromHeader = (authHeader: string | undefined): string | null => {
     if (!authHeader) return null;
