@@ -4,7 +4,7 @@ import './home.scss';
 export function Home() {
     return (<>
             <h1>Greenroots Front</h1>
-        <div class="home">
+        <div className="home">
             <a href="https://preactjs.com" target="_blank">
                 <img src={preactLogo} alt="Preact logo" height="160" width="160" />
             </a>
@@ -31,9 +31,9 @@ export function Home() {
     );
 }
 
-function Resource(props) {
+function Resource(props: any) {
     return (
-        <a href={props.href} target="_blank" class="resource">
+        <a href={props.href} target="_blank" className="resource">
             <h2>{props.title}</h2>
             <p>{props.description}</p>
         </a>
