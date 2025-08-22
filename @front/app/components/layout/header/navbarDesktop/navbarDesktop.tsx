@@ -4,16 +4,16 @@ import { continents } from "~/continents";
 
 function NavbarDesktop({ className }: { className?: string }) {
 	const navLinks = [
-		{ to: "/home", label: "Accueil" },
+		{ to: "/", label: "Accueil" },
 		{
 			to: "/catalog",
 			label: "Catalogue",
 			subLinks: continents.map((continent) => ({
 				label: continent.label,
-				to: `/catalog/${continent.value}`
+				to: `/catalog/${continent.value}`,
 			})),
 		},
-		{ to: "/about", label: "À propos" },
+		{ to: "/about", label: "À propos / Contact" },
 	];
 
 	return (

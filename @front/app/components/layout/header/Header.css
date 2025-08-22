@@ -3,12 +3,14 @@ header {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	padding: 12px 16px;
+	padding: 0.75rem 1rem;
 	background-color: #fff;
 	position: sticky;
 	top: 0;
 	z-index: 1000;
 	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+	background-color: var(--pearl);
+	border-bottom: 1px solid var(--light-green);
 }
 
 /* Burger menu, only for mobile */
@@ -25,11 +27,11 @@ header {
 /* Account + Cart */
 .header-account-cart {
 	display: flex;
-	gap: 16px;
+	gap: 1rem;
 }
 
 .header-account-cart img {
-	height: 28px;
+	height: 2rem;
 	width: auto;
 	cursor: pointer;
 }
@@ -46,7 +48,7 @@ header {
 /* Responsive: tablet and desktop */
 @media (min-width: 768px) {
 	header {
-		padding: 16px 32px;
+		padding: 1rem 2rem;
 		display: flex;
 		align-items: center;
 		justify-content: space-between;

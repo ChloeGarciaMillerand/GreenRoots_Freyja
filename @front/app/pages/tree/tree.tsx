@@ -2,8 +2,6 @@ import type { Route } from "./+types/tree";
 import { useState } from "react";
 import { useNavigation } from "react-router";
 
-import type { TreeHomePage } from "@types";
-
 import localizationIcon from "./icons/localisation.svg";
 import projectIcon from "./icons/project.svg";
 
