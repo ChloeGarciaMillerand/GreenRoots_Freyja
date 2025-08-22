@@ -1,5 +1,6 @@
 import { Link } from "react-router";
 import "./navbarDesktop.css";
+import { continents } from "~/continents";
 
 function NavbarDesktop({ className }: { className?: string }) {
 	const navLinks = [
@@ -7,13 +8,10 @@ function NavbarDesktop({ className }: { className?: string }) {
 		{
 			to: "/catalog",
 			label: "Catalogue",
-			subLinks: [
-				{ to: "/catalog/afrique", label: "Afrique" },
-				{ to: "/catalog/asie", label: "Asie" },
-				{ to: "/catalog/europe", label: "Europe" },
-				{ to: "/catalog/amerique", label: "Amérique" },
-				{ to: "/catalog/oceanie", label: "Océanie" },
-			],
+			subLinks: continents.map((continent) => ({
+				label: continent.label,
+				to: `/catalog/${continent.value}`
+			})),
 		},
 		{ to: "/about", label: "À propos" },
 	];
