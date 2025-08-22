@@ -5,7 +5,7 @@ import homePageSeed from "./images/homePage_seed_growing.webp";
 
 import trees from "./data/data";
 import TreeCard from "~/components/shared/components/TreeCard/TreeCard";
-import type { TreeHomePage } from "@types";
+import type { TreeCardProps } from "@types";
 
 export function meta() {
 	return [
@@ -46,7 +46,7 @@ export default function Home(props: Route.ComponentProps) {
 				<h2>Nos arbres autour du monde</h2>
 				<div className="tree-card-container">
 					<ul>
-						{loaderData.trees.map((tree: TreeHomePage) => (
+						{loaderData.trees.map((tree: TreeCardProps) => (
 							<li key={tree.tree_id}>
 								<TreeCard
 									treeId={tree.tree_id}

@@ -7,7 +7,7 @@ export type HomePageTreeCardProps = {
 	project_name: string;
 };
 
-export type TreeHomePage = {
+export type TreeCardProps = {
 	tree_id: number;
 	name: string;
 	price: number;

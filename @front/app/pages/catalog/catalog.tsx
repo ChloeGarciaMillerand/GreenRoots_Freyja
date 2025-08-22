@@ -1,13 +1,12 @@
 import { Form, Link, useSubmit } from "react-router";
 import type { Route } from "./+types/catalog";
 
-import HomePageTreeCard from "../home/HomePageTreeCard/HomePageTreeCard";
-import type { TreeHomePage } from "@types";
+import TreeCard from "~/components/shared/components/TreeCard/TreeCard";
+import type { TreeCardProps } from "@types";
 
 import "./catalog.css";
 
 import { continents } from "~/continents";
-
 
 export function meta() {
 	return [
@@ -46,9 +45,7 @@ export async function loader(params: Route.LoaderArgs) {
 		treeApiUrl = `${apiUrl}/api/trees/continent/${continent}`;
 	}
 	// get data from api
-	const response = await fetch(
-		`${treeApiUrl}?limit=${limit}&page=${page}`,
-	);
+	const response = await fetch(`${treeApiUrl}?limit=${limit}&page=${page}`);
 
 	// waits for the JSON response from the server and converts it into a JavaScript object
 	const json = await response.json();
@@ -79,12 +76,11 @@ export default function Catalog(props: Route.ComponentProps) {
 				</ul>
 			</details>
 
-			
 			<div className="tree-card-container">
 				<ul>
-					{loaderData.trees.map((tree: TreeHomePage) => (
+					{loaderData.trees.map((tree: TreeCardProps) => (
 						<li key={tree.tree_id}>
-							<HomePageTreeCard
+							<TreeCard
 								treeId={tree.tree_id}
 								name={tree.name}
 								price={tree.price}
