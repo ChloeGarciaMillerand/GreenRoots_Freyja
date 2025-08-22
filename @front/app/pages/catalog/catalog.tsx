@@ -66,6 +66,7 @@ export default function Catalog(props: Route.ComponentProps) {
 			<h1>Nos arbres</h1>
 
 			<details>
+				{/* filter by continent */}
 				<summary className="summary">Filtrer par continent</summary>
 				<ul className="submenu">
 					{continents.map((continent) => (
@@ -92,6 +93,7 @@ export default function Catalog(props: Route.ComponentProps) {
 					))}
 				</ul>
 				<div>
+					{/* pagination for desktop navigation*/}
 					{loaderData.page > 1 ? (
 						<Link
 							to={`?page=${loaderData.page - 1}&limit=${loaderData.limit}`}
