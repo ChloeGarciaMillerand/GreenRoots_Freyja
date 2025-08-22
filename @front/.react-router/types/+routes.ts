@@ -27,6 +27,7 @@ type RouteFiles = {
   "root.tsx": {
     id: "root";
     page: "/" | "/add-to-shopping-cart" | "/catalog/:continent?";
+
   };
   "pages/home/home.tsx": {
     id: "pages/home/home";
@@ -40,4 +41,5 @@ type RouteFiles = {
     id: "pages/catalog/catalog";
     page: "/catalog/:continent?";
   };
+
 };
