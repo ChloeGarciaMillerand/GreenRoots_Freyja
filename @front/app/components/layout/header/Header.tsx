@@ -27,9 +27,21 @@ export function Header() {
 					<Link to="/">
 						<img src={iconCart} alt="Panier" />
 					</Link>
-					<Link to="/">
-						<img src={iconAccount} alt="Compte personnel" />
-					</Link>
+					<ul className="navlinks">
+            <li>
+              <details>
+                <summary className="summary"><img src={iconAccount} alt="Compte personnel" /></summary>
+                <ul className="submenu">
+                  <li>
+                    <Link to='/login'>Se connecter</Link>
+                  </li>
+                  <li>
+                    <Link to='/register'>S'inscrire</Link>
+                  </li>
+                </ul>
+              </details>
+            </li>
+					</ul>
 				</div>
 			</header>
 		</div>
