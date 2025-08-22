@@ -21,12 +21,17 @@ type Pages = {
       "continent"?: string;
     };
   };
+  "/tree/:id": {
+    params: {
+      "id": string;
+    };
+  };
 };
 
 type RouteFiles = {
   "root.tsx": {
     id: "root";
-    page: "/" | "/add-to-shopping-cart" | "/catalog/:continent?";
+    page: "/" | "/add-to-shopping-cart" | "/catalog/:continent?" | "/tree/:id";
 
   };
   "pages/home/home.tsx": {
@@ -42,4 +47,8 @@ type RouteFiles = {
     page: "/catalog/:continent?";
   };
 
+  "pages/tree/tree.tsx": {
+    id: "pages/tree/tree";
+    page: "/tree/:id";
+  };
 };
