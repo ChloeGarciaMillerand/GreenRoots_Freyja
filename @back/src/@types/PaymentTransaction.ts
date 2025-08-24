@@ -16,3 +16,4 @@ interface PaymentTransaction {
 }
 
 export type { PaymentTransaction };
+export { PaymentStatus };
