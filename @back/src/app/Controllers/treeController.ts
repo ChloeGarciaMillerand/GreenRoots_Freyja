@@ -73,20 +73,30 @@ const treeController = {
 
     async findByContinent(req: Request, res: Response) {
         try {
-            const continent = req.params.continent;
+            const continentParam = req.params.continent;
 
-            if (!continent || typeof continent !== 'string') {
+            if (!continentParam || typeof continentParam !== 'string') {
                 return res.status(400).json({
                     message: 'Continent parameter is required',
                     status: 400
                 });
             }
 
-            // Optional: Add continent validation
-            const validContinents = ['Asia', 'Europe', 'North America', 'South America', 'Africa', 'Australia', 'Antarctica'];
-            if (!validContinents.includes(continent)) {
+            // Mapping URL française -> nom base de données française
+            const continentMapping: Record<string, string> = {
+                'europe': 'Europe',
+                'asie': 'Asie',
+                'amerique-nord': 'Amérique du Nord',
+                'amerique-sud': 'Amérique du Sud',
+                'afrique': 'Afrique',
+                'australie': 'Australie'
+            };
+
+            const continent = continentMapping[continentParam.toLowerCase()];
+
+            if (!continent) {
                 return res.status(400).json({
-                    message: 'Invalid continent. Valid continents are: ' + validContinents.join(', '),
+                    message: 'Continent invalide. Continents valides : ' + Object.keys(continentMapping).join(', '),
                     status: 400
                 });
             }

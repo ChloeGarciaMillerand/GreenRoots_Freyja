@@ -16,7 +16,7 @@ export function meta() {
 		{
 			name: "description",
 			content:
-				"Découvrez notre sélection d'arbres à parrainer dans nos projets de reforestation à travers le monde. Choisissez une espèce, un lieu et participez dès aujourd’hui à la lutte contre la déforestation.",
+				"Découvrez notre sélection d'arbres à parrainer dans nos projets de reforestation à travers le monde. Choisissez une espèce, un lieu et participez dès aujourd'hui à la lutte contre la déforestation.",
 		},
 	];
 }
@@ -29,8 +29,8 @@ export async function loader(params: Route.LoaderArgs) {
 
 	// get the params value in the URL (limit per page)
 	const limitParam = url.searchParams.get("limit");
-	// otherwise, the default value 6 is used
-	const limit = limitParam ? Number.parseInt(limitParam) : 6;
+	// otherwise, the default value 8 is used
+	const limit = limitParam ? Number.parseInt(limitParam) : 8;
 
 	// get the params value in the URL (current page)
 	const pageParam = url.searchParams.get("page");
@@ -44,75 +44,116 @@ export async function loader(params: Route.LoaderArgs) {
 	if (continent) {
 		treeApiUrl = `${apiUrl}/api/trees/continent/${continent}`;
 	}
-	// get data from api
-	const response = await fetch(`${treeApiUrl}?limit=${limit}&page=${page}`);
 
-	// waits for the JSON response from the server and converts it into a JavaScript object
-	const json = await response.json();
-	// access to data = list of trees
-	const trees = json.data;
+	try {
+		// get data from api
+		const response = await fetch(`${treeApiUrl}?limit=${limit}&page=${page}`);
 
-	// access to pages = total number of available pages
-	const pages = json.pagination.pages;
+		if (!response.ok) {
+			throw new Error(`HTTP ${response.status}`);
+		}
 
-	return { trees, pages, page, limit, continent };
+		// waits for the JSON response from the server and converts it into a JavaScript object
+		const json = await response.json();
+
+		// Transformer les données pour correspondre à TreeCardProps
+		const adaptedTrees = json.data.map((tree: any) => ({
+			tree_id: tree.tree_id,
+			name: tree.name,
+			price: tree.price,
+			image: tree.image,
+			localization: tree.projects?.[0]?.localization?.country || 'Non spécifié',
+			project_name: tree.projects?.[0]?.name || 'Projet général'
+		}));
+
+		// access to pages = total number of available pages
+		const pages = json.pagination?.pages || 1;
+
+		return { trees: adaptedTrees, pages, page, limit, continent };
+	} catch (error) {
+		console.error('Loader error:', error);
+		return {
+			trees: [],
+			pages: 1,
+			page,
+			limit,
+			continent
+		};
+	}
 }
 
 export default function Catalog(props: Route.ComponentProps) {
 	const { loaderData } = props;
 
+	// Mapping pour afficher les noms français des continents
+	const continentNames: Record<string, string> = {
+		'europe': 'Europe',
+		'asie': 'Asie',
+		'amerique-nord': 'Amérique du Nord',
+		'amerique-sud': 'Amérique du Sud',
+		'afrique': 'Afrique',
+		'australie': 'Australie'
+	};
+
+	const continentName = loaderData.continent
+		? continentNames[loaderData.continent] || loaderData.continent
+		: null;
+
+	const pageTitle = continentName
+		? `Nos arbres - ${continentName}`
+		: 'Nos arbres - Monde entier';
+
 	return (
 		<main>
-			<h1>Nos arbres</h1>
-
-			<details>
-				{/* filter by continent */}
-				<summary className="summary">Filtrer par continent</summary>
-				<ul className="submenu">
-					{continents.map((continent) => (
-						<li key={continent.value}>
-							<Link to={`/catalog/${continent.value}`}>{continent.label}</Link>
-						</li>
-					))}
-				</ul>
-			</details>
+			<h1>{pageTitle}</h1>
 
 			<div className="tree-card-container">
-				<ul>
-					{loaderData.trees.map((tree: TreeCardProps) => (
-						<li key={tree.tree_id}>
-							<TreeCard
-								tree_id={tree.tree_id}
-								name={tree.name}
-								price={tree.price}
-								image={tree.image}
-								localization={tree.localization}
-								project_name={tree.project_name}
-							/>
-						</li>
-					))}
-				</ul>
-				<div>
-					{/* pagination for desktop navigation*/}
-					{loaderData.page > 1 ? (
-						<Link
-							to={`?page=${loaderData.page - 1}&limit=${loaderData.limit}`}
-							className="navigation-pages-links"
-						>
-							Page précédente
+				{loaderData.trees.length > 0 ? (
+					<ul>
+						{loaderData.trees.map((tree: TreeCardProps) => (
+							<li key={tree.tree_id}>
+								<TreeCard
+									tree_id={tree.tree_id}
+									name={tree.name}
+									price={tree.price}
+									image={tree.image}
+									localization={tree.localization}
+									project_name={tree.project_name}
+								/>
+							</li>
+						))}
+					</ul>
+				) : (
+					<div className="empty-state">
+						<h2>Aucun arbre trouvé</h2>
+						<p>Aucun arbre n'est disponible pour cette région actuellement.</p>
+						<Link to="/catalog" className="navigation-pages-links">
+							Voir tous les arbres
 						</Link>
-					) : null}
-				</div>
-				<div>
-					{loaderData.page < loaderData.pages ? (
-						<Link
-							to={`?page=${loaderData.page + 1}&limit=${loaderData.limit}`}
-							className="navigation-pages-links"
-						>
-							Page suivante
-						</Link>
-					) : null}
-				</div>
+					</div>
+				)}
+
+				{loaderData.trees.length > 0 && loaderData.pages > 1 && (
+					<div className="pagination">
+						{loaderData.page > 1 && (
+							<Link
+								to={`?page=${loaderData.page - 1}&limit=${loaderData.limit}`}
+								className="navigation-pages-links"
+							>
+								← Page précédente
+							</Link>
+						)}
+
+						{loaderData.page < loaderData.pages && (
+							<Link
+								to={`?page=${loaderData.page + 1}&limit=${loaderData.limit}`}
+								className="navigation-pages-links"
+							>
+								Page suivante →
+							</Link>
+						)}
+					</div>
+				)}
 			</div>
 		</main>
 	);
