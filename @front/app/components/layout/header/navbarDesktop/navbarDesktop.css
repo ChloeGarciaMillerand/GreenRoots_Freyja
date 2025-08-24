@@ -11,33 +11,36 @@
 	align-items: center;
 }
 
-/* Chaque li en ligne (par défaut block ok) */
+/* Chaque li en ligne */
 .navlinks > li {
 	position: relative;
 }
 
-/* Forcer details à inline-block pour ne pas casser la ligne */
-.navlinks li details {
-	display: inline-block;
+/* Container pour le menu avec sous-menu */
+.has-submenu {
 	position: relative;
 }
 
-/* Summary aussi en inline-block et pointer */
-.navlinks li details > summary {
-	list-style: none;
-	cursor: pointer;
+/* Le bouton/lien principal */
+.menu-trigger {
 	display: inline-block;
-	margin: 0;
 	padding: 0.2rem 0.4rem;
+	color: var(--dark-green);
+	text-decoration: none;
+	cursor: pointer;
+	border: none;
+	background: none;
+	font-size: inherit;
+	font-family: inherit;
 }
 
-/* Supprimer le marker par défaut */
-.navlinks li details > summary::-webkit-details-marker {
-	display: none;
+/* Assurer que les liens dans menu-trigger gardent le bon style */
+.menu-trigger:hover {
+	color: var(--dark-green);
 }
 
-/* Sous-menu en absolu, hidden par défaut */
-.navlinks li .submenu {
+/* Sous-menu caché par défaut - IMPORTANT: display: none */
+.submenu {
 	display: none;
 	position: absolute;
 	top: 100%;
@@ -51,9 +54,14 @@
 	z-index: 1000;
 }
 
-/* Afficher sous-menu si details ouvert */
-details[open] > .submenu {
+/* Afficher le sous-menu UNIQUEMENT au survol du conteneur parent */
+.has-submenu:hover .submenu {
 	display: block;
+}
+
+/* S'assurer que le submenu reste caché par défaut */
+.has-submenu .submenu {
+	display: none;
 }
 
 .submenu li {
@@ -62,12 +70,21 @@ details[open] > .submenu {
 
 .submenu li a {
 	text-decoration: none;
+	display: block;
+	padding: 0.2rem 0;
 }
 
 .submenu li a:hover {
 	color: var(--dark-grey);
 }
 
-.summary {
-	color: var(--dark-green);
+/* Style pour les liens normaux */
+.navlinks > li > a {
+	padding: 0.2rem 0.4rem;
+	text-decoration: none;
+	transition: color 0.2s ease;
+}
+
+.navlinks > li > a:hover {
+	color: var(--dark-grey);
 }
