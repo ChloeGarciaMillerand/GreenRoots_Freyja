@@ -1,11 +1,17 @@
 import 'dotenv/config';
 import express from 'express';
+import morgan from 'morgan';
 import { router } from "./routes/index.js";
 import { setupSecurity } from './app/Middleware/security.js';
 import { errorHandler } from './app/Middleware/errorHandler.js';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
+
+// Logging middleware
+if (process.env.NODE_ENV !== 'production') {
+  app.use(morgan('dev'))
+}
 
 // Security middleware
 setupSecurity(app);
