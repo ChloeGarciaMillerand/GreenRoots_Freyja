@@ -1,4 +1,5 @@
 import { Link } from "react-router";
+import "./home.css";
 import type { Route } from "./+types/home";
 
 import homePageSeed from "./images/homePage_seed_growing.webp";

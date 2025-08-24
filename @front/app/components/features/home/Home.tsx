@@ -1,5 +1,5 @@
 import preactLogo from '../../../../assets/icons/preact.svg';
-import './home.scss';
+import './home.css';
 
 export function Home() {
     return (<>

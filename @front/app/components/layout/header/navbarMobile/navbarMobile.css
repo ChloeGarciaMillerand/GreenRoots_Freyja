@@ -6,61 +6,183 @@
 	background: none;
 	border: none;
 	cursor: pointer;
+	padding: 0.5rem;
 }
 
 .navbar-mobile .menu-icon {
 	font-size: 2.5rem;
-	color: #333;
-	transition: transform 0.3s ease;
 	color: var(--dark-green);
+	transition: transform 0.3s ease;
 }
 
 nav.navbar-mobile {
-	position: relative; /* point de référence pour le menu */
+	position: relative;
 }
 
-nav.navbar-mobile > ul {
+/* Menu principal mobile */
+.mobile-menu {
 	position: absolute;
 	top: 100%;
 	left: 0;
+	right: 0;
 	margin: 0;
-	padding: 1rem 1rem;
+	padding: 1rem;
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 	border-radius: 4px;
-	z-index: 100;
-	width: max-content;
+	z-index: 1000;
 	background: var(--pearl);
+	list-style: none;
+	min-width: 250px;
 }
 
-/* Style des items */
-nav.navbar-mobile ul li {
-	margin: 0.5rem;
+.mobile-menu > li {
+	margin: 0.8rem 0;
 }
 
-/* Retire le marker par défaut du summary */
-.navbar-mobile summary {
+/* Liens principaux */
+.mobile-main-link {
+	display: block;
+	padding: 0.4rem 0;
+	color: var(--dark-green);
+	text-decoration: none;
+	font-weight: 500;
+	border-bottom: 1px solid var(--light-green);
+}
+
+.mobile-main-link:hover {
+	color: var(--dark-grey);
+}
+
+/* Container pour catalogue avec sous-menu */
+.mobile-submenu-container {
+	border-left: 3px solid var(--light-green);
+	padding-left: 0.5rem;
+}
+
+/* Details pour continents */
+.mobile-details {
+	margin-top: 0.5rem;
+}
+
+.mobile-summary {
 	list-style: none;
 	cursor: pointer;
+	padding: 0.3rem 0;
+	font-size: 0.9rem;
+	color: var(--dark-green);
+	font-weight: 500;
 }
 
-/* Optionnel : personnaliser le triangle */
-.navbar-mobile summary::-webkit-details-marker {
+.mobile-summary::-webkit-details-marker {
 	display: none;
 }
 
-.navbar-mobile summary::after {
-	content: "▶"; /* triangle fermé */
+.mobile-summary::after {
+	content: "▶";
 	display: inline-block;
 	margin-left: 0.5rem;
 	transition: transform 0.3s ease;
+	font-size: 0.8rem;
 }
 
-.navbar-mobile details[open] summary::after {
-	transform: rotate(90deg); /* triangle ouvert */
+.mobile-details[open] .mobile-summary::after {
+	transform: rotate(90deg);
 }
 
-/* Sous-menu */
-.navbar-mobile details ul {
-	margin-top: 0.5rem;
-	padding-left: 1.5rem;
+/* Sous-menu mobile */
+.mobile-submenu {
+	list-style: none;
+	margin: 0.5rem 0 0 0;
+	padding: 0;
+	background: rgba(255, 255, 255, 0.5);
+	border-radius: 4px;
+	padding: 0.5rem;
+}
+
+.mobile-submenu li {
+	margin: 0.3rem 0;
+}
+
+.mobile-submenu-link {
+	display: block;
+	padding: 0.3rem 0.5rem;
+	color: var(--dark-green);
+	text-decoration: none;
+	font-size: 0.9rem;
+	border-radius: 3px;
+	transition: all 0.2s ease;
+}
+
+.mobile-submenu-link:hover {
+	background: var(--light-green);
+	color: var(--dark-grey);
+}
+
+/* Couleurs continents pour mobile */
+.mobile-submenu-link[href*="Europe"] {
+	color: var(--europe-color);
+	border-left: 3px solid var(--europe-color);
+}
+
+.mobile-submenu-link[href*="Asia"] {
+	color: var(--asia-color);
+	border-left: 3px solid var(--asia-color);
+}
+
+.mobile-submenu-link[href*="North America"] {
+	color: var(--north-america-color);
+	border-left: 3px solid var(--north-america-color);
+}
+
+.mobile-submenu-link[href*="South America"] {
+	color: var(--south-america-color);
+	border-left: 3px solid var(--south-america-color);
+}
+
+.mobile-submenu-link[href*="Africa"] {
+	color: var(--africa-color);
+	border-left: 3px solid var(--africa-color);
+}
+
+.mobile-submenu-link[href*="Australia"] {
+	color: var(--australia-color);
+	border-left: 3px solid var(--australia-color);
+}
+
+/* "Voir tout" reste neutre */
+.mobile-submenu-link[href="/catalog"] {
+	color: var(--dark-green);
+	border-left: 3px solid var(--dark-green);
+	font-weight: 500;
+}
+
+/* Hover pour couleurs continents */
+.mobile-submenu-link[href*="Europe"]:hover {
+	color: var(--europe-hover);
+	background: rgba(34, 139, 34, 0.1);
+}
+
+.mobile-submenu-link[href*="Asia"]:hover {
+	color: var(--asia-hover);
+	background: rgba(255, 99, 71, 0.1);
+}
+
+.mobile-submenu-link[href*="North America"]:hover {
+	color: var(--north-america-hover);
+	background: rgba(65, 105, 225, 0.1);
+}
+
+.mobile-submenu-link[href*="South America"]:hover {
+	color: var(--south-america-hover);
+	background: rgba(255, 140, 0, 0.1);
+}
+
+.mobile-submenu-link[href*="Africa"]:hover {
+	color: var(--africa-hover);
+	background: rgba(218, 165, 32, 0.1);
+}
+
+.mobile-submenu-link[href*="Australia"]:hover {
+	color: var(--australia-hover);
+	background: rgba(139, 0, 139, 0.1);
 }

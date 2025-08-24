@@ -13,7 +13,7 @@ function NavbarDesktop({ className }: { className?: string }) {
 				to: `/catalog/${continent.value}`,
 			})),
 		},
-		{ to: "/about", label: "À propos / Contact" },
+		{ to: "/about", label: "Notre pépinière" },
 	];
 
 	return (
@@ -22,16 +22,17 @@ function NavbarDesktop({ className }: { className?: string }) {
 				{navLinks.map((link) =>
 					link.subLinks ? (
 						<li key={link.to} className="has-submenu">
-							<details>
-								<summary className="summary">{link.label}</summary>
-								<ul className="submenu">
-									{link.subLinks.map((subLink) => (
-										<li key={subLink.to}>
-											<Link to={subLink.to}>{subLink.label}</Link>
-										</li>
-									))}
-								</ul>
-							</details>
+							<Link to={link.to} className="menu-trigger">{link.label}</Link>
+							<ul className="submenu">
+								<li key="/catalog">
+									<Link to="/catalog">Voir tout</Link>
+								</li>
+								{link.subLinks.map((subLink) => (
+									<li key={subLink.to}>
+										<Link to={subLink.to}>{subLink.label}</Link>
+									</li>
+								))}
+							</ul>
 						</li>
 					) : (
 						<li key={link.to}>
