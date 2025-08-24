@@ -29,12 +29,15 @@ type Pages = {
   "/login": {
     params: {};
   };
+  "/logout": {
+    params: {};
+  };
 };
 
 type RouteFiles = {
   "root.tsx": {
     id: "root";
-    page: "/" | "/add-to-shopping-cart" | "/catalog/:continent?" | "/tree/:id" | "/login";
+    page: "/" | "/add-to-shopping-cart" | "/catalog/:continent?" | "/tree/:id" | "/login" | "/logout";
   };
   "pages/home/home.tsx": {
     id: "pages/home/home";
@@ -55,5 +58,9 @@ type RouteFiles = {
   "pages/login/Login.tsx": {
     id: "pages/login/Login";
     page: "/login";
+  };
+  "pages/logout.tsx": {
+    id: "pages/logout";
+    page: "/logout";
   };
 };

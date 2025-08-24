@@ -5,5 +5,6 @@ export default [
 	route("add-to-shopping-cart", "pages/addToShoppingCart.tsx"),
 	route("catalog/:continent?", "pages/catalog/catalog.tsx"),
 	route("tree/:id", "pages/tree/tree.tsx"),
-	route("login", "pages/login/Login.tsx")
+	route("login", "pages/login/Login.tsx"),
+	route("logout", "pages/logout.tsx")
 ] satisfies RouteConfig;
