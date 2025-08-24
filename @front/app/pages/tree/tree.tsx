@@ -2,18 +2,23 @@ import type { Route } from "./+types/tree";
 import { useState } from "react";
 import { useNavigation } from "react-router";
 
+// Icons
 import localizationIcon from "./icons/localisation.svg";
 import projectIcon from "./icons/project.svg";
 
+// Components
 import { QuantitySelector } from "~/components/shared/components/quantitySelector/quantitySelector";
 
-// Import your cart service
+// Services
 import { cartService } from "../../services/cartService";
+
+// Styles
+import "./tree.css";
 
 export function meta() {
     return [
         {
-            title: "GreenRoots - catalogue d'arbres",
+            title: "GreenRoots - Catalogue d'arbres",
         },
         {
             name: "description",
@@ -25,11 +30,10 @@ export function meta() {
 
 export async function loader(args: Route.LoaderArgs) {
     const apiUrl = "http://backend:3001";
-
     const { params } = args;
     const treeId = params.id;
-    const response = await fetch(`${apiUrl}/api/trees/${treeId}`);
 
+    const response = await fetch(`${apiUrl}/api/trees/${treeId}`);
     const json = await response.json();
 
     const tree = json.data;
@@ -40,6 +44,8 @@ export async function loader(args: Route.LoaderArgs) {
 
 export default function Tree(props: Route.ComponentProps) {
     const { tree, project } = props.loaderData;
+
+    // État local
     const [quantity, setQuantity] = useState(1);
     const [isAddingToCart, setIsAddingToCart] = useState(false);
     const [cartMessage, setCartMessage] = useState<string | null>(null);
@@ -48,7 +54,7 @@ export default function Tree(props: Route.ComponentProps) {
     const navigation = useNavigation();
     const isSubmitting = navigation.formAction === "/add-to-shopping-cart";
 
-    // Handle add to cart functionality
+    // Gestion du panier
     const handleAddToCart = async () => {
         setIsAddingToCart(true);
         setCartMessage(null);
@@ -60,19 +66,13 @@ export default function Tree(props: Route.ComponentProps) {
             if (result.success) {
                 setCartMessage(`${quantity} ${tree.name}(s) ajouté(s) au panier !`);
 
-                // Optional: Reset quantity after successful add
-                // setQuantity(1);
-
-                // Optional: Show success message for a few seconds then hide
-                setTimeout(() => {
-                    setCartMessage(null);
-                }, 3000);
-
+                // Message de succès disparaît après 3 secondes
+                setTimeout(() => setCartMessage(null), 3000);
             } else {
                 setCartError(result.error || "Erreur lors de l'ajout au panier");
             }
         } catch (error) {
-            console.error('Error adding to cart:', error);
+            console.error('Erreur ajout panier:', error);
             setCartError("Erreur de connexion. Veuillez réessayer.");
         } finally {
             setIsAddingToCart(false);
@@ -80,54 +80,122 @@ export default function Tree(props: Route.ComponentProps) {
     };
 
     return (
-        <main>
-            <section className="tree-description">
-                <img src={tree.image} alt={`représenation de ${tree.name}`} />
-                <div className="tree-text-content">
-                    <h2>{tree.name}</h2>
-                    <div className="tree-localization">
-                        <img src={localizationIcon} alt="picto de lieu" />
-                        <p>{project?.localization?.country}</p>
-                    </div>
-                    <div className="tree-project">
-                        <img src={projectIcon} alt="picto de lieu" />
-                        <p>{project?.name}</p>
-                    </div>
-                    <p>{tree.description}</p>
-                    <p>€ {tree.price}</p>
+        <main className="tree-page">
+            {/* Section principale : produit */}
+            <section className="tree-product">
+                <div className="tree-image-container">
+                    <img
+                        src={tree.image}
+                        alt={`${tree.name} - Arbre à parrainer`}
+                        loading="lazy"
+                        className="tree-image"
+                    />
+                </div>
 
-                    {/* Cart messages */}
+                <div className="tree-details">
+                    <div className="tree-header-info">
+                        <h1 className={`tree-title continent-${project?.localization?.continent?.toLowerCase()?.replace(/\s+/g, '-')?.replace('é', 'e') || 'default'}`}>
+                            {tree.name}
+                        </h1>
+
+                        <div className="tree-meta">
+                            <div className="tree-location">
+                                <img src={localizationIcon} alt="" aria-hidden="true" />
+                                <span>{project?.localization?.country}</span>
+                            </div>
+                            <div className="tree-project-ref">
+                                <img src={projectIcon} alt="" aria-hidden="true" />
+                                <span>{project?.name}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="tree-description">
+                        <p>{tree.description}</p>
+                    </div>
+
+                    <div className="tree-price">
+                        <span className="price-value">{tree.price}€</span>
+                        <span className="price-unit">par arbre</span>
+                    </div>
+
+                    {/* Messages du panier */}
                     {cartMessage && (
-                        <div className="cart-success-message" style={{ color: 'green', marginBottom: '10px' }}>
-                            {cartMessage}
+                        <div className="cart-message cart-success" role="status" aria-live="polite">
+                            ✓ {cartMessage}
                         </div>
                     )}
                     {cartError && (
-                        <div className="cart-error-message" style={{ color: 'red', marginBottom: '10px' }}>
-                            {cartError}
+                        <div className="cart-message cart-error" role="alert" aria-live="assertive">
+                            ⚠ {cartError}
                         </div>
                     )}
 
-                    <div className="tree-add-to-cart">
-                        <QuantitySelector value={quantity} onChange={setQuantity} />
+                    {/* Actions d'achat */}
+                    <div className="tree-purchase">
+                        <div className="quantity-section">
+                            <label htmlFor="quantity" className="quantity-label">
+                                Quantité :
+                            </label>
+                            <QuantitySelector
+                                value={quantity}
+                                onChange={setQuantity}
+                                id="quantity"
+                            />
+                        </div>
+
                         <button
                             type="button"
-                            className="add-cart-button"
+                            className="add-to-cart-btn"
                             disabled={isSubmitting || isAddingToCart}
                             onClick={handleAddToCart}
+                            aria-describedby={cartError ? "cart-error" : undefined}
                         >
-                            {isAddingToCart ? "Ajout en cours..." : "Ajouter au panier"}
+                            {isAddingToCart ? (
+                                <>
+                                    <span className="loading-spinner" aria-hidden="true"></span>
+                                    Ajout en cours...
+                                </>
+                            ) : (
+                                'Ajouter au panier'
+                            )}
                         </button>
                     </div>
                 </div>
             </section>
-            <section className="project-description">
-                <img src={project?.image} alt={`représenation de ${project?.name}`} />
-                <div className="project-text-content">
-                    <h2>{project?.name}</h2>
-                    <p>{project?.description}</p>
-                </div>
-            </section>
+
+            {/* Section projet associé */}
+            {project && (
+                <section className="project-section">
+                    <div className="project-content">
+                        <div className="project-text">
+                            <h2 className="project-title">Projet de reforestation</h2>
+                            <h3 className="project-name">{project.name}</h3>
+                            <p className="project-description">{project.description}</p>
+
+                            <div className="project-impact">
+                                <div className="impact-item">
+                                    <span className="impact-number">+1</span>
+                                    <span className="impact-label">Arbre planté</span>
+                                </div>
+                                <div className="impact-item">
+                                    <span className="impact-number">≈ 22kg</span>
+                                    <span className="impact-label">CO₂ absorbé/an</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="project-image-container">
+                            <img
+                                src={project.image}
+                                alt={`Projet ${project.name}`}
+                                loading="lazy"
+                                className="project-image"
+                            />
+                        </div>
+                    </div>
+                </section>
+            )}
         </main>
     );
 }
