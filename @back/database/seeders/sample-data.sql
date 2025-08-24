@@ -169,24 +169,24 @@ INSERT INTO order_line (tree_id, order_id, quantity, price) VALUES
 -- Marie commande 2 Baobabs
 (2, 2, 2, 25.00); -- 2 Baobabs
 
--- Nouvelles commandes pour les nouveaux projets
+-- Nouvelles commandes pour les nouveaux projets (quantités réduites)
 INSERT INTO "order" (user_id, status) VALUES
                                           (1, 'completed'),  -- Jean parraine Amazonie
                                           (2, 'completed'),  -- Marie parraine Bornéo
                                           (3, 'processing'); -- Admin teste Afrique
 
--- Nouvelles lignes de commande
+-- Nouvelles lignes de commande (quantités ajustées)
 INSERT INTO order_line (tree_id, order_id, quantity, price) VALUES
--- Jean parraine forêt amazonienne (order_id 3)
-(8, 3, 10, 55.00),  -- 10 Acajous Amazonie
-(9, 3, 20, 25.00),  -- 20 Cecropia régénération
+-- Jean parraine forêt amazonienne (order_id 3) - quantités réduites
+(8, 3, 5, 55.00),   -- 5 Acajous Amazonie (au lieu de 10)
+(9, 3, 10, 25.00),  -- 10 Cecropia régénération (au lieu de 20)
 
 -- Marie parraine Bornéo (order_id 4)
 (5, 4, 5, 45.00),   -- 5 Dipterocarpus géants
 
--- Admin teste Grande Muraille Verte (order_id 5)
-(17, 5, 25, 20.00), -- 25 Balanites Sahel
-(18, 5, 15, 18.00); -- 15 Prosopis
+-- Admin teste Grande Muraille Verte (order_id 5) - quantités réduites
+(17, 5, 15, 20.00), -- 15 Balanites Sahel (au lieu de 25)
+(18, 5, 10, 18.00); -- 10 Prosopis (au lieu de 15)
 
 -- Arbres plantés
 INSERT INTO planted_tree (project_id, order_line_id) VALUES
@@ -204,15 +204,15 @@ INSERT INTO planted_tree (project_id, order_line_id) VALUES
 (7, 5),
 -- Dipterocarpus de Marie plantés à Bornéo
 (4, 6),
--- Balanites d''Admin plantés au Sénégal
+-- Balanites d'Admin plantés au Sénégal
 (15, 7),
--- Prosopis d''Admin plantés au Mali
+-- Prosopis d'Admin plantés au Mali
 (16, 8);
 
--- Transactions de paiement
+-- Transactions de paiement (montants corrigés pour respecter NUMERIC(5,2))
 INSERT INTO payment_transaction (order_id, amount, status, stripe_payment_id) VALUES
-                                                                                  (1, 113.50, 'completed', 'pi_1234567890'),   -- Jean initial
-                                                                                  (2, 50.00, 'completed', 'pi_0987654321'),    -- Marie initial
-                                                                                  (3, 1050.00, 'completed', 'pi_amazon_rescue'),    -- Jean Amazonie: (10*55) + (20*25)
-                                                                                  (4, 225.00, 'completed', 'pi_borneo_emergency'),  -- Marie Bornéo: 5*45
-                                                                                  (5, 770.00, 'completed', 'pi_sahel_green');       -- Admin Sahel: (25*20) + (15*18)
+                                                                                  (1, 113.50, 'completed', 'pi_1234567890'),   -- Jean initial: (5*15.50) + (3*12.00) = 77.50 + 36.00 = 113.50
+                                                                                  (2, 50.00, 'completed', 'pi_0987654321'),    -- Marie initial: 2*25.00 = 50.00
+                                                                                  (3, 525.00, 'completed', 'pi_amazon_rescue'), -- Jean Amazonie: (5*55) + (10*25) = 275 + 250 = 525.00
+                                                                                  (4, 225.00, 'completed', 'pi_borneo_emergency'), -- Marie Bornéo: 5*45 = 225.00
+                                                                                  (5, 480.00, 'completed', 'pi_sahel_green');   -- Admin Sahel: (15*20) + (10*18) = 300 + 180 = 480.00
