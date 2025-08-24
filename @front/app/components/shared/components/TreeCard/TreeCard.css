@@ -33,11 +33,30 @@
 	margin-bottom: 1rem;
 }
 
+.tree-name-link {
+	text-decoration: none;
+	display: block;
+	transition: all 0.2s ease;
+	border-radius: 4px;
+	padding: 0.2rem;
+	margin: -0.2rem;
+}
+
+.tree-name-link:hover {
+	background: rgba(69, 94, 70, 0.05);
+	transform: translateY(-1px);
+}
+
 .tree-card-name-price h3 {
 	margin: 0 0 0.5rem 0;
 	font-size: 1.2rem;
 	color: var(--dark-green);
 	font-weight: 600;
+	transition: color 0.2s ease;
+}
+
+.tree-name-link:hover h3 {
+	color: #2d4016;
 }
 
 .tree-card-name-price p {

@@ -109,9 +109,9 @@ export default function Catalog(props: Route.ComponentProps) {
 
 			<div className="tree-card-container">
 				{loaderData.trees.length > 0 ? (
-					<ul>
+					<div className="tree-cards-grid">
 						{loaderData.trees.map((tree: TreeCardProps) => (
-							<li key={tree.tree_id}>
+							<div key={tree.tree_id}>
 								<TreeCard
 									tree_id={tree.tree_id}
 									name={tree.name}
@@ -120,9 +120,9 @@ export default function Catalog(props: Route.ComponentProps) {
 									localization={tree.localization}
 									project_name={tree.project_name}
 								/>
-							</li>
+							</div>
 						))}
-					</ul>
+					</div>
 				) : (
 					<div className="empty-state">
 						<h2>Aucun arbre trouvé</h2>

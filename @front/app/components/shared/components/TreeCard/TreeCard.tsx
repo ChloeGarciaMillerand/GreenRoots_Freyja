@@ -2,7 +2,7 @@ import { useState } from "react";
 import type { TreeCardProps } from "@types";
 import { QuantitySelector } from "~/components/shared/components/quantitySelector/quantitySelector";
 import "./TreeCard.css";
-import { Form, useNavigation } from "react-router";
+import { Form, useNavigation, Link } from "react-router";
 import localizationIcon from "./icons/localization.svg";
 import projectIcon from "./icons/project.svg";
 
@@ -110,7 +110,9 @@ function TreeCard({
             <img src={image} alt={`${name} - Arbre de ${localization}`} />
             <div className="tree-card-text-content">
                 <div className="tree-card-name-price">
-                    <h3>{name}</h3>
+                    <Link to={`/tree/${tree_id}`} className="tree-name-link">
+                        <h3>{name}</h3>
+                    </Link>
                     <p>{price} €</p>
                 </div>
 

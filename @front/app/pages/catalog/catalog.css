@@ -30,17 +30,15 @@ main h1::after {
 	width: 100%;
 }
 
-.tree-card-container ul {
-	list-style: none;
-	padding: 0;
-	margin: 0 0 3rem 0;
+.tree-cards-grid {
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-	gap: 1.5rem; /* Reduced from 2rem */
+	gap: 1.5rem;
 	justify-items: center;
+	margin-bottom: 3rem;
 }
 
-.tree-card-container li {
+.tree-cards-grid > div {
 	width: 100%;
 	display: flex;
 	justify-content: center;
