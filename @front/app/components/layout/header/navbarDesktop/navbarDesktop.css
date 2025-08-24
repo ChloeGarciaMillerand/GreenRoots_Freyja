@@ -74,7 +74,62 @@
 	padding: 0.2rem 0;
 }
 
-.submenu li a:hover {
+/* COULEURS CONTINENTS - Utilisation des variables CSS globales */
+.submenu li a[href*="Europe"] {
+	color: var(--europe-color);
+}
+
+.submenu li a[href*="Asia"] {
+	color: var(--asia-color);
+}
+
+.submenu li a[href*="North America"] {
+	color: var(--north-america-color);
+}
+
+.submenu li a[href*="South America"] {
+	color: var(--south-america-color);
+}
+
+.submenu li a[href*="Africa"] {
+	color: var(--africa-color);
+}
+
+.submenu li a[href*="Australia"] {
+	color: var(--australia-color);
+}
+
+/* Hover pour les couleurs continents */
+.submenu li a[href*="Europe"]:hover {
+	color: var(--europe-hover);
+}
+
+.submenu li a[href*="Asia"]:hover {
+	color: var(--asia-hover);
+}
+
+.submenu li a[href*="North America"]:hover {
+	color: var(--north-america-hover);
+}
+
+.submenu li a[href*="South America"]:hover {
+	color: var(--south-america-hover);
+}
+
+.submenu li a[href*="Africa"]:hover {
+	color: var(--africa-hover);
+}
+
+.submenu li a[href*="Australia"]:hover {
+	color: var(--australia-hover);
+}
+
+/* "Voir tout" reste neutre */
+.submenu li a[href="/catalog"] {
+	color: var(--dark-green);
+}
+
+.submenu li a[href="/catalog"]:hover {
 	color: var(--dark-grey);
 }
 
