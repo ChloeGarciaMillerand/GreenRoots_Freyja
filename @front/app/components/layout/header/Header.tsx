@@ -7,7 +7,7 @@ import logo from "../../../../assets/icons/logo.svg";
 import iconAccount from "../../../../assets/icons/iconAccount.svg";
 import iconCart from "../../../../assets/icons/iconCart.svg";
 
-export function Header(props:{user:any}) {
+export function Header(props: { user: any }) {
 	return (
 		<div>
 			<header>
@@ -28,35 +28,34 @@ export function Header(props:{user:any}) {
 						<img src={iconCart} alt="Panier" />
 					</Link>
 					<ul className="navlinks">
-            <li>
-              <details>
-                <summary className="summary"><img src={iconAccount} alt="Compte personnel" /></summary>
-                {props.user
-					? (
-						<ul className="submenu">
-							<li>
-								<Link to='/'>{props.user.email}</Link>
-							</li>
-							<li>
-								<Form method="post" action="/logout">
-									<button>Se déconnecter</button>
-								</Form>
-							</li>
-						</ul>
-					)
-					: (
-						<ul className="submenu">
-							<li>
-								<Link to='/login'>Se connecter</Link>
-							</li>
-							<li>
-								<Link to='/register'>S'inscrire</Link>
-							</li>
-						</ul>
-					)
-				}
-              </details>
-            </li>
+						<li>
+							<details>
+								<summary className="summary">
+									<img src={iconAccount} alt="Compte personnel" />
+								</summary>
+								{props.user ? (
+									<ul className="submenu">
+										<li>
+											<Link to="/">{props.user.email}</Link>
+										</li>
+										<li>
+											<Form method="post" action="/logout">
+												<button type="button">Se déconnecter</button>
+											</Form>
+										</li>
+									</ul>
+								) : (
+									<ul className="account-submenu">
+										<li>
+											<Link to="/login">Se connecter</Link>
+										</li>
+										<li>
+											<Link to="/register">S'inscrire</Link>
+										</li>
+									</ul>
+								)}
+							</details>
+						</li>
 					</ul>
 				</div>
 			</header>
