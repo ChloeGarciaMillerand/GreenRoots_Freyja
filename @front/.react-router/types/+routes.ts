@@ -32,6 +32,9 @@ type Pages = {
   "/logout": {
     params: {};
   };
+  "/about": {
+    params: {};
+  };
 };
 
 type RouteFiles = {
@@ -62,7 +65,9 @@ type RouteFiles = {
   "pages/logout.tsx": {
     id: "pages/logout";
     page: "/logout";
+  };
   "pages/about/about.tsx": {
     id: "pages/about/about";
+    page: "/about";
   };
 };
