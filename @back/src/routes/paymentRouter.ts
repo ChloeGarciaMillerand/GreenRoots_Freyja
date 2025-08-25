@@ -7,9 +7,6 @@ const paymentRouter: Router = Router();
 
 // Validation for creating payment intent
 const createPaymentIntentValidation = [
-  body('amount')
-    .isFloat({ min: 0.01 })
-    .withMessage('Amount must be greater than 0'),
   body('order_id')
     .isInt({ min: 1 })
     .withMessage('Valid order ID is required'),

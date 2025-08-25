@@ -1,16 +1,25 @@
 import type { Request, Response } from 'express';
 import stripe from '../Services/stripeService.js';
 import { paymentModel } from '../Models/paymentModel.js';
+import { orderLineModel } from '../Models/orderLineModel.js';
 import { PaymentStatus } from '../../@types/PaymentTransaction.js';
 
 const paymentController = {
     async createPaymentIntent(req: Request, res: Response) {
         try {
-            const { amount, currency = 'eur', order_id, payment_method_types } = req.body;
+            const { currency = 'eur', order_id, payment_method_types } = req.body;
 
-            if (!amount || !order_id) {
+            if (!order_id) {
                 return res.status(400).json({
-                    error: 'Amount and order_id are required'
+                    error: 'Order ID is required'
+                });
+            }
+
+            const amount = await orderLineModel.calculateOrderTotal(order_id);
+
+            if (amount <= 0) {
+                return res.status(400).json({
+                    error: 'Invalid order: no items found or total amount is zero'
                 });
             }
 
