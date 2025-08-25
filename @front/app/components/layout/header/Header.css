@@ -85,15 +85,15 @@ details summary::marker {
 		align-items: center;
 		justify-content: space-between;
 	}
-
+	
 	.navbar-mobile {
 		display: none;
 	}
-
+	
 	.header-logo {
 		order: 1;
 	}
-
+	
 	.navbar-desktop {
 		display: block;
 		order: 2;
@@ -101,14 +101,14 @@ details summary::marker {
 		align-items: center;
 		height: 100%;
 	}
-
+	
 	.navbar-desktop ul {
 		box-shadow: none;
 		display: flex;
 		gap: 3rem;
 		list-style-type: none;
 	}
-
+	
 	.header-account-cart {
 		order: 3;
 	}

@@ -14,7 +14,7 @@ export const authenticateToken = async (req: Request, res: Response, next: NextF
         return res.status(401).json({ error: 'Access token required' });
     }
 
-    const payload = authService.verifyToken(token);
+    const payload = await authService.verifyToken(token);
 
     if (!payload) {
         return res.status(403).json({ error: 'Invalid or expired token' });

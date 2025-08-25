@@ -3,6 +3,7 @@ import {
 	Links,
 	Meta,
 	Outlet,
+	redirect,
 	Scripts,
 	ScrollRestoration
 } from "react-router";
@@ -15,6 +16,34 @@ import "../styles/global.css";
 
 import { Header } from "./components/layout/header/Header";
 import { Footer } from "./components/layout/footer/Footer";
+import { getSession } from "./services/sessions.server";
+
+const API_URL = import.meta.env.VITE_API_URL;
+
+export async function loader({
+  request,
+}: Route.LoaderArgs) {
+  const session = await getSession(
+    request.headers.get("Cookie"),
+  );
+
+  if (session.has("token")) {
+	const token = session.get("token");
+	const response = await fetch(`${API_URL}/user/profile`, {
+      headers: {
+        "Content-Type": "application/json",
+		"Authorization": `Bearer ${token}`,
+      },
+    });
+
+	const data = await response.json();
+    const user = data.data.user;
+
+    return { user };
+  }
+
+  return { user: null}
+}
 
 export function Layout({ children }: { children: React.ReactNode }) {
 	return (
@@ -27,9 +56,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
 				<Links />
 			</head>
 			<body>
-				<Header />
 				{children}
-				<Footer />
 				<ScrollRestoration />
 				<Scripts />
 			</body>
@@ -37,8 +64,17 @@ export function Layout({ children }: { children: React.ReactNode }) {
 	);
 }
 
-export default function App() {
-	return <Outlet />;
+export default function App(props:Route.ComponentProps) {
+	const user = props.loaderData.user;
+
+	return (
+		<>
+			<Header user={user}/>
+			<Outlet />
+			<Footer />
+		</>
+	)
+	
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
