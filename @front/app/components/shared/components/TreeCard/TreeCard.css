@@ -168,7 +168,7 @@
 	box-shadow: none;
 }
 
-/* COULEURS PAR CONTINENT */
+/* COULEURS PAR CONTINENT - Sans effets de lumière */
 
 /* Europe - Vert */
 .tree-card[data-continent="Europe"] {
@@ -177,10 +177,6 @@
 
 .tree-card[data-continent="Europe"] .tree-card-name-price h3 {
 	color: var(--europe-color);
-}
-
-.tree-card[data-continent="Europe"]:hover {
-	box-shadow: 0 6px 16px rgba(34, 139, 34, 0.25);
 }
 
 /* Asie - Rouge-orange */
@@ -192,10 +188,6 @@
 	color: var(--asia-color);
 }
 
-.tree-card[data-continent="Asia"]:hover {
-	box-shadow: 0 6px 16px rgba(255, 99, 71, 0.25);
-}
-
 /* Amérique du Nord - Bleu royal */
 .tree-card[data-continent="North America"] {
 	border-top-color: var(--north-america-color);
@@ -203,10 +195,6 @@
 
 .tree-card[data-continent="North America"] .tree-card-name-price h3 {
 	color: var(--north-america-color);
-}
-
-.tree-card[data-continent="North America"]:hover {
-	box-shadow: 0 6px 16px rgba(65, 105, 225, 0.25);
 }
 
 /* Amérique du Sud - Orange vif */
@@ -218,10 +206,6 @@
 	color: var(--south-america-color);
 }
 
-.tree-card[data-continent="South America"]:hover {
-	box-shadow: 0 6px 16px rgba(255, 140, 0, 0.25);
-}
-
 /* Afrique - Or vif */
 .tree-card[data-continent="Africa"] {
 	border-top-color: var(--africa-color);
@@ -231,10 +215,6 @@
 	color: var(--africa-color);
 }
 
-.tree-card[data-continent="Africa"]:hover {
-	box-shadow: 0 6px 16px rgba(218, 165, 32, 0.25);
-}
-
 /* Océanie - Violet */
 .tree-card[data-continent="Australia"] {
 	border-top-color: var(--australia-color);
@@ -242,10 +222,6 @@
 
 .tree-card[data-continent="Australia"] .tree-card-name-price h3 {
 	color: var(--australia-color);
-}
-
-.tree-card[data-continent="Australia"]:hover {
-	box-shadow: 0 6px 16px rgba(139, 0, 139, 0.25);
 }
 
 /* Responsive */

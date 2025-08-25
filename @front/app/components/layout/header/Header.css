@@ -65,6 +65,18 @@ header {
 	list-style: none;
 }
 
+.summary {
+	all: unset; /* supprime tous les styles par défaut */
+	display: flex;
+	align-items: center;
+	cursor: pointer;
+}
+
+details summary::-webkit-details-marker,
+details summary::marker {
+	display: none;
+}
+
 /* Responsive: tablet and desktop */
 @media (min-width: 768px) {
 	header {
@@ -73,15 +85,15 @@ header {
 		align-items: center;
 		justify-content: space-between;
 	}
-
+	
 	.navbar-mobile {
 		display: none;
 	}
-
+	
 	.header-logo {
 		order: 1;
 	}
-
+	
 	.navbar-desktop {
 		display: block;
 		order: 2;
@@ -89,14 +101,14 @@ header {
 		align-items: center;
 		height: 100%;
 	}
-
+	
 	.navbar-desktop ul {
 		box-shadow: none;
 		display: flex;
 		gap: 3rem;
 		list-style-type: none;
 	}
-
+	
 	.header-account-cart {
 		order: 3;
 	}

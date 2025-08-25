@@ -29,8 +29,8 @@ export async function loader(params: Route.LoaderArgs) {
 
 	// get the params value in the URL (limit per page)
 	const limitParam = url.searchParams.get("limit");
-	// otherwise, the default value 8 is used
-	const limit = limitParam ? Number.parseInt(limitParam) : 8;
+	// Change default limit to 6 cards per page
+	const limit = limitParam ? Number.parseInt(limitParam) : 6;
 
 	// get the params value in the URL (current page)
 	const pageParam = url.searchParams.get("page");
