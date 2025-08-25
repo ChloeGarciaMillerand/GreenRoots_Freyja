@@ -56,32 +56,32 @@ INSERT INTO localization (country, continent) VALUES
 ('Mali', 'Afrique');
 
 -- Arbres pour reforestation (espèces locales menacées)
-INSERT INTO tree (name, description, price) VALUES
+INSERT INTO tree (name, description, price, image) VALUES
 -- Asie (déforestation tropicale)
-('Dipterocarpus', 'Géant de la forêt tropicale indonésienne', 45.00),
-('Teck birman', 'Espèce native du Myanmar en danger', 38.00),
-('Narra philippin', 'Arbre national des Philippines', 42.00),
+('Dipterocarpus', 'Géant de la forêt tropicale indonésienne', 45.00, '/assets/images/trees/conifer.webp'),
+('Teck birman', 'Espèce native du Myanmar en danger', 38.00, '/assets/images/trees/conifer.webp'),
+('Narra philippin', 'Arbre national des Philippines', 42.00, '/assets/images/trees/conifer.webp'),
 
 -- Amérique du Sud (Amazonie)
-('Acajou du Brésil', 'Bois précieux amazonien surexploité', 55.00),
-('Cecropia', 'Arbre pionnier pour régénération rapide', 25.00),
-('Pau-brasil', 'Arbre emblématique du Brésil', 48.00),
+('Acajou du Brésil', 'Bois précieux amazonien surexploité', 55.00, '/assets/images/trees/conifer.webp'),
+('Cecropia', 'Arbre pionnier pour régénération rapide', 25.00, '/assets/images/trees/conifer.webp'),
+('Pau-brasil', 'Arbre emblématique du Brésil', 48.00, '/assets/images/trees/conifer.webp'),
 
 -- Amérique du Nord (forêt boréale)
-('Épinette noire', 'Conifère boréal post-incendie', 28.00),
-('Peuplier faux-tremble', 'Régénération après perturbations', 22.00),
+('Épinette noire', 'L’épinette noire est un conifère robuste, typique des régions froides et humides du nord. Avec ses aiguilles courtes, vert foncé, et ses cônes brunâtres, elle est facilement reconnaissable. Elle pousse lentement mais vit très longtemps, ce qui en fait un arbre essentiel dans les forêts boréales. Son bois léger mais solide est très utilisé pour la construction, le papier et même les instruments de musique.', 28.00, '/assets/images/trees/conifer.webp'),
+('Peuplier faux-tremble', 'Régénération après perturbations', 22.00, '/assets/images/trees/conifer.webp'),
 
 -- Australie (bushland)
-('Eucalyptus à gomme rouge', 'Résistant aux incendies', 35.00),
-('Banksia géant', 'Endémique Australie-Occidentale', 32.00),
+('Eucalyptus à gomme rouge', 'Résistant aux incendies', 35.00, '/assets/images/trees/conifer.webp'),
+('Banksia géant', 'Endémique Australie-Occidentale', 32.00, '/assets/images/trees/conifer.webp'),
 
 -- Europe (forêts dégradées)
-('Chêne de Roumanie', 'Restauration forêts des Carpates', 30.00),
-('Chêne-liège', 'Écosystème méditerranéen menacé', 40.00),
+('Chêne de Roumanie', 'Restauration forêts des Carpates', 30.00, '/assets/images/trees/conifer.webp'),
+('Chêne-liège', 'Écosystème méditerranéen menacé', 40.00, '/assets/images/trees/conifer.webp'),
 
 -- Afrique (Grande Muraille Verte)
-('Balanites', 'Résistant sécheresse, fruits nutritifs', 20.00),
-('Prosopis', 'Fixateur d''azote anti-désertification', 18.00);
+('Balanites', 'Résistant sécheresse, fruits nutritifs', 20.00, '/assets/images/trees/conifer.webp'),
+('Prosopis', 'Fixateur d''azote anti-désertification', 18.00, '/assets/images/trees/conifer.webp');
 
 -- Projets de reforestation urgents
 INSERT INTO project (localization_id, name, description) VALUES

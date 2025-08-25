@@ -10,6 +10,8 @@ DROP TABLE IF EXISTS project_tree;
 DROP TABLE IF EXISTS project;
 DROP TABLE IF EXISTS tree;
 DROP TABLE IF EXISTS localization;
+DROP TABLE IF EXISTS password_reset_tokens;
+DROP TABLE IF EXISTS email_verification_tokens;
 
 CREATE TABLE localization (
     localization_id SERIAL PRIMARY KEY,
