@@ -45,6 +45,38 @@ header {
 	display: none;
 }
 
+.header-account-cart details {
+	align-self: center !important;
+}
+
+.account-submenu {
+	position: absolute;
+	top: 100%; /* juste sous le summary */
+	right: 0; /* aligné à droite du parent */
+	background-color: var(--pearl);
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	border-radius: 4px;
+	padding: 1rem;
+	min-width: 160px;
+	z-index: 999;
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	list-style: none;
+}
+
+.summary {
+	all: unset; /* supprime tous les styles par défaut */
+	display: flex;
+	align-items: center;
+	cursor: pointer;
+}
+
+details summary::-webkit-details-marker,
+details summary::marker {
+	display: none;
+}
+
 /* Responsive: tablet and desktop */
 @media (min-width: 768px) {
 	header {
