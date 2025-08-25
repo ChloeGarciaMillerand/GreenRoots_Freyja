@@ -151,9 +151,9 @@ INSERT INTO project_tree (project_id, tree_id) VALUES
 
 -- Utilisateurs
 INSERT INTO "user" (first_name, last_name, email, password, role) VALUES
-                                                                      ('Jean', 'Dupont', 'jean@email.com', 'hash123', 'client'),
-                                                                      ('Marie', 'Martin', 'marie@email.com', 'hash456', 'client'),
-                                                                      ('Admin', 'Site', 'admin@greenroots.com', 'adminHash', 'admin');
+                                                                      ('Jean', 'Dupont', 'jean@email.com', '$argon2id$v=19$m=65536,t=3,p=1$1HIoF7YCPsoHyjzE4agNHg$LLGk5Biamg27yNsOB1hWHI6dEDuQ/1/lDJ4eHfprSkc', 'client'),
+                                                                      ('Marie', 'Martin', 'marie@email.com', '$argon2id$v=19$m=65536,t=3,p=1$e8WVMjdaA2uAT5Pa5fFY3g$aVEO/Omm9Ys66tRyHkwWUAbvLGtfoYzb6SihrHBai+U', 'client'),
+                                                                      ('Admin', 'Site', 'admin@greenroots.com', '$argon2id$v=19$m=65536,t=3,p=1$tl7lNazgFnTcJ8wNW2czzQ$3OrHdmOj+kV4L+UQw74EqI5Zj+1MoP7Qy3d5fZLw65Y', 'admin');
 
 -- Commandes initiales
 INSERT INTO "order" (user_id, status) VALUES
