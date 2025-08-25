@@ -5,24 +5,42 @@ import { handleValidationErrors } from '../app/Middleware/validation.js';
 
 const orderRouter = Router();
 
+const createOrderValidation = [
+  body('user_id')
+    .isInt({ min: 1 })
+    .withMessage('Valid user ID is required'),
+  body('items')
+    .isArray({ min: 1 })
+    .withMessage('Items must be a non-empty array'),
+  body('items.*.tree_id')
+    .isInt({ min: 1 })
+    .withMessage('Valid tree ID is required for each item'),
+  body('items.*.quantity')
+    .isInt({ min: 1 })
+    .withMessage('Quantity must be at least 1'),
+  body('items.*.price')
+    .isFloat({ min: 0.01 })
+    .withMessage('Price must be greater than 0'),
+  handleValidationErrors
+];
+
 const statusValidation = [
   body('status')
     .isIn(['PENDING', 'PROCESSING', 'COMPLETED', 'CANCELLED'])
     .withMessage('Invalid order status')
     .customSanitizer((value) => value.toUpperCase()),
-    handleValidationErrors
+  handleValidationErrors
 ];
 
 const idValidation = [
   param('id')
     .isInt({ min: 1 })
     .withMessage('Valid order ID is required'),
-    handleValidationErrors
+  handleValidationErrors
 ];
 
-orderRouter.post('/api/orders', ordersController.create);
-orderRouter.put('/api/orders/:id/status', statusValidation, idValidation, ordersController.updateStatus);
-
-orderRouter.get('/api/orders/:id', ordersController.show);
+orderRouter.post('/api/orders', createOrderValidation, ordersController.create);
+orderRouter.put('/api/orders/:id/status', idValidation, statusValidation, ordersController.updateStatus);
+orderRouter.get('/api/orders/:id', idValidation, ordersController.show);
 
 export { orderRouter };
