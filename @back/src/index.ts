@@ -16,7 +16,8 @@ if (process.env.NODE_ENV !== 'production') {
 // Security middleware
 setupSecurity(app);
 
-// Body parsing
+// Body parsing - raw body for Stripe webhooks, JSON for everything else
+app.use('/api/payments/webhook', express.raw({ type: 'application/json' }));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
 

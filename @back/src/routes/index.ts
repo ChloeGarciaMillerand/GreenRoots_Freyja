@@ -5,6 +5,7 @@ import {userRouter} from "./userRouter.js";
 import {orderRouter} from "./orderRouter.js";
 import {projectRouter} from "./projectRouter.js";
 import {localizationRouter} from "./localizationRouter.js";
+import { paymentRouter } from "./paymentRouter.js";
 
 const router = Router();
 
@@ -30,5 +31,6 @@ router.use(cartRouter);
 router.use(orderRouter);
 router.use(projectRouter);
 router.use(localizationRouter);
+router.use(paymentRouter);
 
 export { router };
