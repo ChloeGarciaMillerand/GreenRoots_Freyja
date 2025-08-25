@@ -14,7 +14,7 @@
     "prod:down": "docker compose -f docker-compose.yml -f docker-compose.prod.yml down",
     "docker:clean": "docker compose down -v --remove-orphans",
     "docker:reset": "docker compose down -v --remove-orphans && docker system prune -f",
-    "docker:rebuild": "docker compose down && docker-compose build --no-cache",
+    "docker:rebuild": "docker compose down && docker compose build --no-cache",
     "backend": "docker compose -f docker-compose.yml -f docker-compose.dev.yml up backend database",
     "backend:fresh": "docker compose -f docker-compose.yml -f docker-compose.dev.yml build --no-cache backend && docker compose -f docker-compose.yml -f docker-compose.dev.yml up backend database",
     "frontend": "docker compose -f docker-compose.yml -f docker-compose.dev.yml up frontend",

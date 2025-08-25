@@ -1,8 +1,8 @@
 export const continents = [
-				{ value: "Africa", label: "Afrique" },
-				{ value: "Asia", label: "Asie" },
-				{ value: "Europe", label: "Europe" },
-				{ value: "North America", label: "Amérique du nord" },
-				{ value: "South America", label: "Amérique du sud" },
-				{ value: "Australia", label: "Australie" },
-			]
+	{ label: "Europe", value: "europe" },
+	{ label: "Asie", value: "asie" },
+	{ label: "Amérique du Nord", value: "amerique-nord" },
+	{ label: "Amérique du Sud", value: "amerique-sud" },
+	{ label: "Afrique", value: "afrique" },
+	{ label: "Australie", value: "australie" }
+];

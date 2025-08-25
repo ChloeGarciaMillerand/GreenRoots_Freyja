@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router";
+import { continents } from "~/continents";
 
 import "./navbarMobile.css";
 
@@ -7,19 +8,16 @@ function NavbarMobile({ className }: { className?: string }) {
 	const [open, setOpen] = useState(false);
 
 	const navLinks = [
-		{ to: "/home", label: "Accueil" },
+		{ to: "/", label: "Accueil" },
 		{
 			to: "/catalog",
 			label: "Catalogue",
-			subLinks: [
-				{ to: "/catalog/afrique", label: "Afrique" },
-				{ to: "/catalog/amerique", label: "Amérique" },
-				{ to: "/catalog/asie", label: "Asie" },
-				{ to: "/catalog/europe", label: "Europe" },
-				{ to: "/catalog/oceanie", label: "Océanie" },
-			],
+			subLinks: continents.map((continent) => ({
+				label: continent.label,
+				to: `/catalog/${continent.value}`,
+			})),
 		},
-		{ to: "/about", label: "À propos" },
+		{ to: "/about", label: "Notre pépinière" },
 	];
 
 	return (
@@ -35,24 +33,34 @@ function NavbarMobile({ className }: { className?: string }) {
 				<span className="menu-icon">{open ? "✖" : "☰"}</span>
 			</button>
 			{open ? (
-				<ul style={{ listStyle: "none", paddingLeft: 0 }}>
+				<ul className="mobile-menu">
 					{navLinks.map((link) => (
 						<li key={link.to}>
 							{link.subLinks ? (
-								<details>
-									<summary>{link.label}</summary>
-									<ul style={{ listStyle: "none", paddingLeft: "1rem" }}>
-										{link.subLinks.map((sub) => (
-											<li key={sub.to}>
-												<Link to={sub.to} onClick={() => setOpen(false)}>
-													{sub.label}
+								<div className="mobile-submenu-container">
+									<Link to={link.to} onClick={() => setOpen(false)} className="mobile-main-link">
+										{link.label}
+									</Link>
+									<details className="mobile-details">
+										<summary className="mobile-summary">Continents</summary>
+										<ul className="mobile-submenu">
+											<li>
+												<Link to="/catalog" onClick={() => setOpen(false)} className="mobile-submenu-link">
+													Voir tout
 												</Link>
 											</li>
-										))}
-									</ul>
-								</details>
+											{link.subLinks.map((sub) => (
+												<li key={sub.to}>
+													<Link to={sub.to} onClick={() => setOpen(false)} className="mobile-submenu-link">
+														{sub.label}
+													</Link>
+												</li>
+											))}
+										</ul>
+									</details>
+								</div>
 							) : (
-								<Link to={link.to} onClick={() => setOpen(false)}>
+								<Link to={link.to} onClick={() => setOpen(false)} className="mobile-main-link">
 									{link.label}
 								</Link>
 							)}
