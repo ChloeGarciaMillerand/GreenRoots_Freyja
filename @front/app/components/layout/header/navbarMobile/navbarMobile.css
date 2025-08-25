@@ -77,16 +77,19 @@ nav.navbar-mobile {
 	display: none;
 }
 
-.mobile-summary::after {
-	content: "▶";
+
+.navbar-mobile summary::after {
+	content: "▶"; /* triangle fermé */
+	transform: rotate(90deg);
 	display: inline-block;
 	margin-left: 0.5rem;
 	transition: transform 0.3s ease;
 	font-size: 0.8rem;
 }
 
-.mobile-details[open] .mobile-summary::after {
-	transform: rotate(90deg);
+.navbar-mobile details[open] summary::after {
+	transform: rotate(0deg); /* triangle ouvert */
+
 }
 
 /* Sous-menu mobile */

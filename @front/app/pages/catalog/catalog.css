@@ -30,16 +30,18 @@ main h1::after {
 	width: 100%;
 }
 
+/* Grid pour 3 colonnes fixes */
 .tree-cards-grid {
 	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-	gap: 1.5rem;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 2rem;
 	justify-items: center;
 	margin-bottom: 3rem;
 }
 
 .tree-cards-grid > div {
 	width: 100%;
+	max-width: 320px;
 	display: flex;
 	justify-content: center;
 }
@@ -98,10 +100,9 @@ main h1::after {
 
 /* RESPONSIVE DESIGN */
 
-/* Large screens - Plus de colonnes */
+/* Large screens */
 @media (min-width: 1200px) {
-	.tree-card-container ul {
-		grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+	.tree-cards-grid {
 		gap: 2.5rem;
 	}
 
@@ -110,11 +111,14 @@ main h1::after {
 	}
 }
 
-/* Tablet landscape */
+/* Tablet landscape - Garde 3 colonnes */
 @media (max-width: 1024px) {
-	.tree-card-container ul {
-		grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+	.tree-cards-grid {
 		gap: 1.5rem;
+	}
+
+	.tree-cards-grid > div {
+		max-width: 300px;
 	}
 
 	main {
@@ -122,7 +126,7 @@ main h1::after {
 	}
 }
 
-/* Tablet portrait */
+/* Tablet portrait - Passe à 2 colonnes */
 @media (max-width: 768px) {
 	main {
 		padding: 1.5rem 1rem;
@@ -132,9 +136,13 @@ main h1::after {
 		margin-bottom: 2rem;
 	}
 
-	.tree-card-container ul {
-		grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+	.tree-cards-grid {
+		grid-template-columns: repeat(2, 1fr);
 		gap: 1.5rem;
+	}
+
+	.tree-cards-grid > div {
+		max-width: 280px;
 	}
 
 	.pagination {
@@ -149,7 +157,7 @@ main h1::after {
 	}
 }
 
-/* Mobile */
+/* Mobile - Passe à 1 colonne */
 @media (max-width: 480px) {
 	main {
 		padding: 1rem 0.5rem;
@@ -160,10 +168,14 @@ main h1::after {
 		margin-bottom: 1.5rem;
 	}
 
-	.tree-card-container ul {
+	.tree-cards-grid {
 		grid-template-columns: 1fr;
 		gap: 1rem;
 		padding: 0 0.5rem;
+	}
+
+	.tree-cards-grid > div {
+		max-width: none;
 	}
 
 	.navigation-pages-links {
@@ -178,7 +190,7 @@ main h1::after {
 		padding: 0.5rem 0.25rem;
 	}
 
-	.tree-card-container ul {
+	.tree-cards-grid {
 		padding: 0 0.25rem;
 	}
 }

@@ -8,6 +8,7 @@
 	--dark-green: #455e46;
 	--dark-grey: #212529;
 	--black: #000000;
+	--grey: #d9d9d9;
 	--pearl: #faf2e4;
 	--light-grey: #f6f7f9;
 	--light-yellow: #f0ddb5;
@@ -17,18 +18,18 @@
 	--light-brown: #ebeed2;
 
 	/* Couleurs continents */
-	--europe-color: #228b22;
-	--europe-hover: #006400;
-	--asia-color: #ff6347;
-	--asia-hover: #dc143c;
-	--north-america-color: #4169e1;
-	--north-america-hover: #191970;
-	--south-america-color: #ff8c00;
-	--south-america-hover: #e55b00;
-	--africa-color: #daa520;
-	--africa-hover: #b8860b;
-	--australia-color: #8b008b;
-	--australia-hover: #4b0082;
+	--europe-color: #4D834C;
+	--europe-hover: #3a6239;
+	--asia-color: #D04838;
+	--asia-hover: #a63529;
+	--north-america-color: #0E2E3D;
+	--north-america-hover: #0a232e;
+	--south-america-color: #6B7B6A;
+	--south-america-hover: #545f53;
+	--africa-color: #A16C0D;
+	--africa-hover: #7e540a;
+	--australia-color: #603102;
+	--australia-hover: #4d2702;
 }
 
 body {
@@ -37,7 +38,12 @@ body {
 }
 
 main {
-	width: 100%;
+	width: 90%;
+	margin: auto;
+}
+
+section {
+	margin-bottom: 2rem;
 }
 
 /* Titles */
@@ -50,6 +56,7 @@ h1 {
 h2 {
 	color: var(--dark-green);
 	font-size: 1.5rem;
+	margin-bottom: 1.5rem;
 }
 
 h3 {

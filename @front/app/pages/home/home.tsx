@@ -7,6 +7,7 @@ import homePageSeed from "./images/homePage_seed_growing.webp";
 import trees from "./data/data";
 import TreeCard from "~/components/shared/components/TreeCard/TreeCard";
 import type { TreeCardProps } from "@types";
+import "./home.css";
 
 export function meta() {
 	return [
@@ -35,15 +36,22 @@ export default function Home(props: Route.ComponentProps) {
 					Participez à la reforestation avec <span>GreenRoots</span>
 				</h1>
 			</section>
-			<img src={homePageSeed} alt="graine poussant dans la forêt" />
-			<div>
-				<p>Partout dans le monde, nos projets revitalisent la planète!</p>
-				<p>make our planet green again!</p>
-				<Link to="" className="link-button">
-					Voir tous nos arbres
-				</Link>
-			</div>
-			<section>
+			<section className="sub-hero-section-full-width">
+				<div
+					className="container-sub-hero
+				"
+				>
+					<img src={homePageSeed} alt="graine poussant dans la forêt" />
+					<div className="sub-hero-text-content">
+						<p>Partout dans le monde, nos projets revitalisent la planète!</p>
+						<h3>make our planet green again!</h3>
+						<Link to="/catalog" className="link-button-desktop">
+							Voir tous nos arbres
+						</Link>
+					</div>
+				</div>
+			</section>
+			<section className="trees-section">
 				<h2>Nos arbres autour du monde</h2>
 				<div className="tree-card-container">
 					<ul>
@@ -61,6 +69,9 @@ export default function Home(props: Route.ComponentProps) {
 						))}
 					</ul>
 				</div>
+				<Link to="/catalog" className="link-button-mobile">
+					Voir tous nos arbres
+				</Link>
 			</section>
 		</main>
 	);
