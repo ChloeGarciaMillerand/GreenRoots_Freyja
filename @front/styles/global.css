@@ -16,6 +16,20 @@
 	--light-red: #eeded2;
 	--light-blue: #cce7f0;
 	--light-brown: #ebeed2;
+
+	/* Couleurs continents */
+	--europe-color: #228b22;
+	--europe-hover: #006400;
+	--asia-color: #ff6347;
+	--asia-hover: #dc143c;
+	--north-america-color: #4169e1;
+	--north-america-hover: #191970;
+	--south-america-color: #ff8c00;
+	--south-america-hover: #e55b00;
+	--africa-color: #daa520;
+	--africa-hover: #b8860b;
+	--australia-color: #8b008b;
+	--australia-hover: #4b0082;
 }
 
 body {
