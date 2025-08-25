@@ -26,12 +26,15 @@ type Pages = {
       "id": string;
     };
   };
+  "/about": {
+    params: {};
+  };
 };
 
 type RouteFiles = {
   "root.tsx": {
     id: "root";
-    page: "/" | "/add-to-shopping-cart" | "/catalog/:continent?" | "/tree/:id";
+    page: "/" | "/add-to-shopping-cart" | "/catalog/:continent?" | "/tree/:id" | "/about";
   };
   "pages/home/home.tsx": {
     id: "pages/home/home";
@@ -48,5 +51,9 @@ type RouteFiles = {
   "pages/tree/tree.tsx": {
     id: "pages/tree/tree";
     page: "/tree/:id";
+  };
+  "pages/about/about.tsx": {
+    id: "pages/about/about";
+    page: "/about";
   };
 };
