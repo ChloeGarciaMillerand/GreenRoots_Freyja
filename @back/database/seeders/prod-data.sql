@@ -104,7 +104,7 @@ INSERT INTO project_tree (project_id, tree_id) VALUES
 
 -- Forêt Amazonienne (Brésil)
 (3, 3), -- Eucalyptus
-(3, 4); -- Palissandre
+(3, 4), -- Palissandre
 
 -- Bornéo Emergency (project_id 4)
 (4, 5), -- Dipterocarpus (tree_id 5)
