@@ -5,13 +5,17 @@ function RegisterForm() {
 	const actionData = useActionData();
 
 	return (
+		// returns form-related errors (e.g. email already in use)
 		<Form method="POST">
 			{actionData?.errors?.form ? (
-				<p role="alert">{actionData?.errors?.form}</p>
+				<p className="register-error-text" role="alert">
+					{actionData?.errors?.form}
+				</p>
 			) : null}
+			{/* form fields */}
 			<div className="form-container">
 				<div className="field">
-					<label htmlFor="first_name">Prénom</label>
+					<label htmlFor="first_name">Prénom*</label>
 					<input
 						id="first_name"
 						name="first_name"
@@ -20,11 +24,13 @@ function RegisterForm() {
 						}
 					/>
 					{actionData?.errors?.first_name ? (
-						<p id="first_name-error">{actionData?.errors?.first_name}</p>
+						<p className="register-error-text" id="first_name-error">
+							{actionData?.errors?.first_name}
+						</p>
 					) : null}
 				</div>
 				<div className="field">
-					<label htmlFor="last_name">Nom</label>
+					<label htmlFor="last_name">Nom*</label>
 					<input
 						id="last_name"
 						name="last_name"
@@ -33,11 +39,13 @@ function RegisterForm() {
 						}
 					/>
 					{actionData?.errors?.last_name ? (
-						<p id="last_name-error">{actionData?.errors?.last_name}</p>
+						<p className="register-error-text" id="last_name-error">
+							{actionData?.errors?.last_name}
+						</p>
 					) : null}
 				</div>
 				<div className="field">
-					<label htmlFor="email">* Email:</label>
+					<label htmlFor="email">Email*</label>
 					<input
 						id="email"
 						name="email"
@@ -47,7 +55,9 @@ function RegisterForm() {
 						}
 					/>
 					{actionData?.errors?.email ? (
-						<p id="email-error">{actionData?.errors?.email}</p>
+						<p className="register-error-text" id="email-error">
+							{actionData?.errors?.email}
+						</p>
 					) : null}
 				</div>
 				<div className="field">
@@ -62,11 +72,13 @@ function RegisterForm() {
 						}
 					/>
 					{actionData?.errors?.phone_number ? (
-						<p id="phone_number-error">{actionData?.errors?.phone_number}</p>
+						<p className="register-error-text" id="phone_number-error">
+							{actionData?.errors?.phone_number}
+						</p>
 					) : null}
 				</div>
 				<div className="field">
-					<label htmlFor="password">* Mot de passe:</label>
+					<label htmlFor="password">Mot de passe*</label>
 					<input
 						type="password"
 						id="password"
@@ -77,11 +89,13 @@ function RegisterForm() {
 						}
 					/>
 					{actionData?.errors?.password ? (
-						<p id="password-error">{actionData?.errors?.password}</p>
+						<p className="register-error-text" id="password-error">
+							{actionData?.errors?.password}
+						</p>
 					) : null}
 				</div>
 				<div className="field">
-					<label htmlFor="confirm-password">* Confirmer le mot de passe:</label>
+					<label htmlFor="confirm-password">Confirmer le mot de passe:*</label>
 					<input
 						type="password"
 						id="confirm-password"
@@ -89,6 +103,7 @@ function RegisterForm() {
 						required
 					/>
 				</div>
+				{/* submit button */}
 				<button type="submit" className="button-submission">
 					Créer un compte
 				</button>

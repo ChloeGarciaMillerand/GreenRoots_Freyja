@@ -26,6 +26,7 @@ export async function action({ request }: Route.ActionArgs) {
 
 	const userData = { first_name, last_name, email, phone_number, password };
 
+	// error handling
 	const errors: Errors = {};
 
 	if (!first_name) {
@@ -55,6 +56,7 @@ export async function action({ request }: Route.ActionArgs) {
 		return data({ errors }, { status: 400 });
 	}
 
+	// user registration in the database
 	const response = await fetch(`${API_URL}/user/register`, {
 		method: "POST",
 		headers: {
@@ -63,6 +65,7 @@ export async function action({ request }: Route.ActionArgs) {
 		body: JSON.stringify(userData),
 	});
 
+	// error message if registration failed
 	if (!response.ok) {
 		const json = await response.json();
 		console.error("Register failed");

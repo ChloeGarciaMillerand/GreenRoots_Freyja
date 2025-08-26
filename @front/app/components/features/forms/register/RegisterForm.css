@@ -14,7 +14,11 @@ input {
 	border-radius: 5px;
 }
 
-.button-connexion {
+.register-error-text {
+	color: red;
+}
+
+.button-submission {
 	background-color: var(--dark-green);
 	color: white;
 	border: none;
