@@ -1,9 +1,14 @@
-import { Form } from "react-router";
+import { Form, useActionData } from "react-router";
 import "./RegisterForm.css";
 
 function RegisterForm() {
+	const actionData = useActionData();
+
 	return (
 		<Form method="POST">
+			{actionData?.errors?.form ? (
+				<p role="alert">{actionData?.errors?.form}</p>
+			) : null}
 			<div className="form-container">
 				<div className="field">
 					<label htmlFor="first_name">Prénom</label>
@@ -15,7 +20,17 @@ function RegisterForm() {
 				</div>
 				<div className="field">
 					<label htmlFor="email">* Email:</label>
-					<input id="email" name="email" required />
+					<input
+						id="email"
+						name="email"
+						required
+						aria-describedby={
+							actionData?.errors?.email ? "email-error" : undefined
+						}
+					/>
+					{actionData?.errors?.email ? (
+						<p id="email-error">{actionData?.errors?.email}</p>
+					) : null}
 				</div>
 				<div className="field">
 					<label htmlFor="phone_number">Numéro de téléphone</label>

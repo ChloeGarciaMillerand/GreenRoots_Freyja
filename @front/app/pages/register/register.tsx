@@ -12,13 +12,13 @@ type Errors = {
 
 export async function action({ request }: Route.ActionArgs) {
 	const formData = await request.formData();
-	const firstName = String(formData.get("first_name"));
-	const lastName = String(formData.get("last_name"));
+	const first_name = String(formData.get("first_name"));
+	const last_name = String(formData.get("last_name"));
 	const email = String(formData.get("email"));
-	const phoneNumber = String(formData.get("phone_number"));
+	const phone_number = String(formData.get("phone_number"));
 	const password = String(formData.get("password"));
 	const confirmPassword = String(formData.get("confirm-password"));
-	const userData = { firstName, lastName, email, phoneNumber, password };
+	const userData = { first_name, last_name, email, phone_number, password };
 
 	const errors: Errors = {};
 
@@ -29,13 +29,10 @@ export async function action({ request }: Route.ActionArgs) {
 	if (password !== confirmPassword) {
 		errors.confirmPassword = "Les mots de passe ne sont pas identiques";
 	}
-	/*
+
 	if (Object.keys(errors).length > 0) {
 		return data({ errors }, { status: 400 });
 	}
-    */
-
-	console.log(userData);
 
 	const response = await fetch(`${API_URL}/user/register`, {
 		method: "POST",
@@ -46,8 +43,12 @@ export async function action({ request }: Route.ActionArgs) {
 	});
 
 	if (!response.ok) {
+		const json = await response.json();
 		console.error("Register failed");
-		return;
+		return data(
+			{ errors: { form: json?.error ?? "Register failed" } },
+			{ status: 400 },
+		);
 	}
 
 	return redirect("/login");
