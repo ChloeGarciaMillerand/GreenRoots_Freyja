@@ -14,6 +14,25 @@ env:
 jobs:
   test:
     runs-on: ubuntu-latest
+    
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_DB: ${{ secrets.TEST_POSTGRES_DB || 'greenroots_test' }}
+          POSTGRES_USER: ${{ secrets.TEST_POSTGRES_USER || 'test_user' }}
+          POSTGRES_PASSWORD: ${{ secrets.TEST_POSTGRES_PASSWORD || 'test_password' }}
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    
+    env:
+      DATABASE_URL: postgres://${{ secrets.TEST_POSTGRES_USER || 'test_user' }}:${{ secrets.TEST_POSTGRES_PASSWORD || 'test_password' }}@localhost:5432/${{ secrets.TEST_POSTGRES_DB || 'greenroots_test' }}
+      NODE_ENV: test
 
     steps:
     - name: Checkout code
@@ -34,6 +53,14 @@ jobs:
       run: |
         cd @back
         pnpm install --frozen-lockfile
+
+    - name: Setup test database
+      run: |
+        cd @back
+        # Wait for PostgreSQL to be ready
+        until pg_isready -h localhost -p 5432 -U ${{ secrets.TEST_POSTGRES_USER || 'test_user' }}; do sleep 1; done
+        # Create tables
+        PGPASSWORD=${{ secrets.TEST_POSTGRES_PASSWORD || 'test_password' }} psql -h localhost -U ${{ secrets.TEST_POSTGRES_USER || 'test_user' }} -d ${{ secrets.TEST_POSTGRES_DB || 'greenroots_test' }} -f database/migration/create-tables.sql
 
     - name: Run backend tests
       run: |
