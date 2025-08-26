@@ -1,3 +1,4 @@
+import { useState } from "react";
 import "./Header.css";
 import NavbarMobile from "./navbarMobile/navbarMobile";
 import NavbarDesktop from "./navbarDesktop/navbarDesktop";
@@ -7,6 +8,16 @@ import iconAccount from "../../../../assets/icons/iconAccount.svg";
 import iconCart from "../../../../assets/icons/iconCart.svg";
 
 export function Header(props: { user: any }) {
+	const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+	const toggleMenu = () => {
+		setIsMenuOpen(!isMenuOpen);
+	};
+
+	const closeMenu = () => {
+		setIsMenuOpen(false);
+	};
+
 	return (
 		<div>
 			<header>
@@ -25,32 +36,40 @@ export function Header(props: { user: any }) {
 					</Link>
 					<ul className="navlinks">
 						<li>
-							<details>
-								<summary className="summary">
+							<div
+								className="account-menu-container"
+								onMouseEnter={() => setIsMenuOpen(true)}
+								onMouseLeave={closeMenu}
+							>
+								<div className="account-trigger" onClick={toggleMenu}>
 									<img src={iconAccount} alt="Compte personnel" />
-								</summary>
-								{props.user ? (
+								</div>
+								{(isMenuOpen) && (
 									<ul className="account-submenu">
-										<li>
-											<Link to="/">{props.user.email}</Link>
-										</li>
-										<li>
-											<Form method="post" action="/logout">
-												<button type="button">Se déconnecter</button>
-											</Form>
-										</li>
-									</ul>
-								) : (
-									<ul className="account-submenu">
-										<li>
-											<Link to="/login">Se connecter</Link>
-										</li>
-										<li>
-											<Link to="/register">S'inscrire</Link>
-										</li>
+										{props.user ? (
+											<>
+												<li>
+													<Link to="/" onClick={closeMenu}>{props.user.email}</Link>
+												</li>
+												<li>
+													<Form method="post" action="/logout">
+														<button type="submit">Se déconnecter</button>
+													</Form>
+												</li>
+											</>
+										) : (
+											<>
+												<li>
+													<Link to="/login" onClick={closeMenu}>Se connecter</Link>
+												</li>
+												<li>
+													<Link to="/register" onClick={closeMenu}>S'inscrire</Link>
+												</li>
+											</>
+										)}
 									</ul>
 								)}
-							</details>
+							</div>
 						</li>
 					</ul>
 				</div>
