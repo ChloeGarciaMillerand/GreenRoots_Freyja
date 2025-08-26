@@ -129,7 +129,37 @@ const treeController = {
                 status: 500
             });
         }
+    },
+
+    async homepage(req: Request, res: Response) {
+        try {
+            const limit = parseInt(req.query.limit as string) || 3;
+
+            if (limit <= 0 || limit > 20) {
+                return res.status(400).json({
+                    message: 'Limit must be between 1 and 20',
+                    status: 400
+                });
+            }
+
+            // Get trees by ID range with projects and localizations for homepage showcase
+            const trees = await treeModel.findByIdRangeWithProjectsAndLocalizations(limit);
+
+            res.json({
+                message: `Homepage trees retrieved successfully (IDs 1-${limit})`,
+                data: trees,
+                count: trees.length,
+                status: 200
+            });
+        } catch (error) {
+            res.status(500).json({
+                message: 'Error retrieving homepage trees',
+                error: error instanceof Error ? error.message : 'Unknown error',
+                status: 500
+            });
+        }
     }
+
 }
 
 export { treeController };
