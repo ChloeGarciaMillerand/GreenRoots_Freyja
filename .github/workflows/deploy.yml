@@ -170,10 +170,21 @@ jobs:
           
           # Pull latest code
           git pull origin ${{ github.ref_name }}
-          
+
           # Create/update .env file with production values
-          cp .env.example .env
-          
+          cat > .env << EOF
+          NODE_ENV=production
+          DATABASE_URL=postgres://${{ secrets.DB_USER }}:${{ secrets.DB_PASSWORD }}@database:5432/${{ secrets.DB_NAME }}
+          DB_HOST=${{ secrets.DB_HOST || 'database' }}
+          DB_USER=${{ secrets.DB_USER }}
+          DB_NAME=${{ secrets.DB_NAME }}
+          DB_PASSWORD=${{ secrets.DB_PASSWORD }}
+          STRIPE_PUBLIC_KEY=${{ secrets.STRIPE_PUBLIC_KEY }}
+          STRIPE_SECRET_KEY=${{ secrets.STRIPE_SECRET_KEY }}
+          STRIPE_WEBHOOK_SECRET=${{ secrets.STRIPE_WEBHOOK_SECRET }}
+          DB_PORT=${{ secrets.DB_PORT || '5432' }}
+          EOF
+
           # Stop only backend and frontend (keep database running)
           docker compose -f docker-compose.prod.yml stop backend frontend
           
