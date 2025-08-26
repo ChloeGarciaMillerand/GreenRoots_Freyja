@@ -32,11 +32,12 @@
 	background: none;
 	font-size: inherit;
 	font-family: inherit;
+	transition: color 0.2s ease;
 }
 
-/* Assurer que les liens dans menu-trigger gardent le bon style */
+/* Hover pour le menu-trigger */
 .menu-trigger:hover {
-	color: var(--dark-green);
+	color: var(--dark-grey);
 }
 
 /* Sous-menu caché par défaut - IMPORTANT: display: none */
@@ -72,6 +73,7 @@
 	text-decoration: none;
 	display: block;
 	padding: 0.2rem 0;
+	transition: color 0.2s ease;
 }
 
 /* COULEURS CONTINENTS - Adaptées aux URLs françaises */
