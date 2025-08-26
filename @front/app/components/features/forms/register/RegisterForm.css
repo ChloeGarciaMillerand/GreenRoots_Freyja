@@ -29,7 +29,7 @@ input {
 	margin-top: 2rem;
 }
 
-.button-submission {
+.button-submission:hover {
 	filter: brightness(1.1);
 }
 
