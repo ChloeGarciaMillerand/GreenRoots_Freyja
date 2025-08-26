@@ -45,14 +45,27 @@ header {
 	display: none;
 }
 
-.header-account-cart details {
-	align-self: center !important;
+/* Account menu container */
+.account-menu-container {
+	position: relative;
+	align-self: center;
+}
+
+.account-trigger {
+	display: flex;
+	align-items: center;
+	cursor: pointer;
+}
+
+.account-trigger img {
+	height: 2rem;
+	width: auto;
 }
 
 .account-submenu {
 	position: absolute;
-	top: 100%; /* juste sous le summary */
-	right: 0; /* aligné à droite du parent */
+	top: 100%;
+	right: 0;
 	background-color: var(--pearl);
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 	border-radius: 4px;
@@ -63,18 +76,32 @@ header {
 	flex-direction: column;
 	gap: 0.5rem;
 	list-style: none;
+	margin: 0;
 }
 
-.summary {
-	all: unset; /* supprime tous les styles par défaut */
-	display: flex;
-	align-items: center;
+.account-submenu li {
+	margin: 0;
+}
+
+.account-submenu li a,
+.account-submenu li button {
+	display: block;
+	padding: 0.5rem 0;
+	text-decoration: none;
+	color: var(--dark-green);
+	background: none;
+	border: none;
 	cursor: pointer;
+	font-size: inherit;
+	font-family: inherit;
+	width: 100%;
+	text-align: left;
+	transition: color 0.2s ease;
 }
 
-details summary::-webkit-details-marker,
-details summary::marker {
-	display: none;
+.account-submenu li a:hover,
+.account-submenu li button:hover {
+	color: var(--dark-grey);
 }
 
 /* Responsive: tablet and desktop */
@@ -85,15 +112,15 @@ details summary::marker {
 		align-items: center;
 		justify-content: space-between;
 	}
-	
+
 	.navbar-mobile {
 		display: none;
 	}
-	
+
 	.header-logo {
 		order: 1;
 	}
-	
+
 	.navbar-desktop {
 		display: block;
 		order: 2;
@@ -101,14 +128,14 @@ details summary::marker {
 		align-items: center;
 		height: 100%;
 	}
-	
+
 	.navbar-desktop ul {
 		box-shadow: none;
 		display: flex;
 		gap: 3rem;
 		list-style-type: none;
 	}
-	
+
 	.header-account-cart {
 		order: 3;
 	}
