@@ -88,31 +88,31 @@ INSERT INTO tree (name, description, price, image) VALUES
 ('Prosopis', 'Le Prosopis est un arbre robuste des régions arides, souvent appelé mesquite. Il fixe l’azote dans le sol, produit bois et fourrage, offre ombre et habitat à la faune, et aide à lutter contre l’érosion dans les zones désertiques ou semi-arides.', 18.00, '/assets/images/trees/prosopis.webp');
 
 -- Projets de reforestation urgents
-INSERT INTO project (localization_id, name, description) VALUES
+INSERT INTO project (localization_id, name, description, image) VALUES
 -- Asie - zones critiques (localization_id 4, 5, 6)
-(4, 'Bornéo Emergency', 'Restauration urgente après huile de palme'),
-(5, 'Myanmar Forest Rescue', 'Reboisement zones d''exploitation illégale'),
-(6, 'Philippines Coral Triangle', 'Mangroves protection récifs coralliens'),
+(4, 'Bornéo Emergency', 'Le projet Bornéo Emergency vise à restaurer rapidement les forêts tropicales détruites par les feux et l’exploitation illégale à Bornéo. Grâce à la replantation d’essences locales et à l’implication des populations, le projet soutient la survie des orangs-outans et d’innombrables espèces menacées. En restaurant les sols et en recréant des habitats, cette initiative contribue à préserver la biodiversité unique de Bornéo tout en donnant un nouveau souffle aux communautés riveraines.'),
+(5, 'Myanmar Forest Rescue', 'Myanmar Forest Rescue agit pour la préservation des forêts primaires du Myanmar, menacées par la déforestation et l’agriculture intensive. Le projet mise sur la plantation d’espèces indigènes, la restauration des sols et l’éducation des populations locales aux pratiques durables. Cette action favorise la résilience des écosystèmes face aux changements climatiques et préserve la biodiversité, essentielle pour l’avenir des communautés locales et de la faune.'),
+(6, 'Philippines Coral Triangle', 'Le projet Philippines Coral Triangle s’attache à restaurer la végétation littorale et la mangrove pour protéger la zone, vitale pour la biodiversité marine. La plantation d’arbres adaptés renforce les côtes, améliore la qualité de l’eau et assure un refuge aux poissons et coraux. Cette démarche soutient les communautés de pêcheurs et joue un rôle clé dans la lutte contre l’érosion, offrant un avenir plus sûr aux habitants et à l’écosystème marin.'),
 
 -- Amazonie - poumons de la Terre (localization_id 7, 8, 9)
-(7, 'Amazonie Colombienne', 'Corridor biologique post-déforestation'),
-(8, 'Andes-Amazonie Pérou', 'Transition montagne-forêt tropicale'),
-(9, 'Bolivie Biodiversité', 'Hotspot mondial de biodiversité'),
+(7, 'Amazonie Colombienne', 'Amazonie colombienne a pour objectif de restaurer des milliers d’hectares de forêt amazonienne dégradée. Par l’implantation d’essences natives en collaboration avec les communautés indigènes, le projet protège les réserves d’eau, la faune locale et contribue à la lutte contre le réchauffement climatique. L’implication des habitants assure la pérennité des plantations et permet de transmettre des connaissances essentielles aux générations futures.'),
+(8, 'Andes-Amazonie Pérou', 'Le projet Andes-Amazonie Pérou restaure les forêts entre les Andes et l’Amazonie. Grâce à la plantation d’espèces adaptées et à la régénération naturelle, il lutte contre l’érosion, préserve la biodiversité et soutient la sécurité alimentaire locale. Les communautés rurales participent activement à la gestion des plantations et à la transmission des savoirs pour améliorer la résilience de ces écosystèmes stratégiques face aux défis climatiques.'),
+(9, 'Bolivie Biodiversité', 'Le projet Bolivie biodiversité protège les écosystèmes uniques de Bolivie à travers la reforestation et la restauration des habitats fragiles. En implantant différentes essences, il favorise le retour des espèces animales et végétales menacées. Cette démarche crée des emplois durables, sensibilise les communautés et contribue à la conservation des ressources naturelles, indispensables à l’équilibre de la région et à la qualité de vie des populations.'),
 
 -- Amérique du Nord - réchauffement (localization_id 10, 11)
-(10, 'Forêt Boréale Canada', 'Adaptation changement climatique'),
-(11, 'Californie Post-Feux', 'Régénération après méga-incendies'),
+(10, 'Forêt Boréale Canada', 'La Forêt boréale Canada est au cœur d’un projet de restauration ambitieux pour contrer les effets des exploitations minières et forestières intensives. Replanter des essences locales et restaurer la mosaïque naturelle du territoire permet de protéger le climat mondial, la faune (caribous, ours, oiseaux migrateurs) et de garantir un patrimoine durable aux futures générations de Canadiens.'),
+(11, 'Californie Post-Feux', 'Le projet Californie Post-Feux accompagne le repeuplement forestier après les mégafeux destructeurs. En mettant l’accent sur des plantations d’espèces résilientes, l’initiative contribue à limiter l’érosion, restaurer le cycle de l’eau et redonner abri à la faune locale. Elle s’appuie aussi sur la sensibilisation des populations et le suivi scientifique pour garantir la survie et l’équilibre des zones sinistrées par les incendies.'),
 
 -- Australie - crise climatique (localization_id 12)
-(12, 'Bushfire Recovery', 'Restauration écosystèmes post-incendies'),
+(12, 'Bushfire Recovery', 'Bushfire Recovery restaure les paysages sinistrés par les incendies en Océanie. En favorisant la replantation d’espèces autochtones, souvent adaptées au feu, le projet contribue à la résilience des forêts et à la survie de la faune endémique. L’action collective des communautés, alliée à la veille écologique, permet une récupération progressive des sols, offrant ainsi un nouvel espoir aux territoires brûlés.'),
 
 -- Europe - dégradation (localization_id 13, 14)
-(13, 'Carpates Sauvages', 'Dernière forêt primaire d''Europe'),
-(14, 'Montado Portugais', 'Système agroforestier traditionnel'),
+(13, 'Carpates Sauvages', 'Le projet Carpates sauvages se consacre à la préservation et à la restauration des forêts anciennes d’Europe centrale. Il protège la richesse écologique unique de ce massif, refuge d’espèces rares comme l’ours et le lynx. La plantation d’essences variées et d’arbres centenaires permet de recréer des corridors forestiers, tout en impliquant les populations locales dans une gestion durable et responsable de leur héritage naturel.'),
+(14, 'Montado Portugais', 'Le projet Montado portugais vise à restaurer les forêts de chênes-lièges et les prairies méditerranéennes typiques du sud du Portugal. En favorisant la régénération de cet écosystème, essentiel à la biodiversité et à l’économie rurale, il lutte contre la désertification. La replantation et l’entretien d’espèces locales soutiennent la faune, les producteurs de liège et les traditions agricoles ancestrales.'),
 
 -- Afrique - Grande Muraille Verte (localization_id 15, 16)
-(15, 'Sahel Vert Sénégal', 'Barrage anti-désertification'),
-(16, 'Mali Reforestation', 'Corridor vert transsaharien');
+(15, 'Sahel Vert Sénégal', 'Sahel vert Sénégal se mobilise pour reverdir les terres arides à travers la reforestation de zones fragiles du Sahel. Le projet améliore la fertilité des sols, favorise la rétention d’eau et redonne vie aux cultures vivrières. En sensibilisant et impliquant les communautés locales, il crée un climat propice à la résilience face à la sécheresse et offre aux générations futures un environnement plus prospère et sain.'),
+(16, 'Mali Reforestation', 'Mali reforestation redonne espoir aux régions désertifiées en restaurant des forêts vitales à la vie locale. Par la plantation d’arbres adaptés au climat, le projet protège les sols de l’érosion, améliore la qualité de l’eau et soutient la biodiversité. L’implication des populations garantit l’entretien des arbres et la transmission des bonnes pratiques, pour une résilience durable face aux défis du changement climatique.');
 
 -- Associations arbres/projets (espèces natives)
 INSERT INTO project_tree (project_id, tree_id) VALUES
