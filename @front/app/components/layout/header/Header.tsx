@@ -36,7 +36,7 @@ export function Header(props: { user: any }) {
 										</li>
 										<li>
 											<Form method="post" action="/logout">
-												<button type="button">Se déconnecter</button>
+												<button type="submit">Se déconnecter</button>
 											</Form>
 										</li>
 									</ul>
