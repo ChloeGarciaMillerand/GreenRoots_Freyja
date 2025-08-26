@@ -8,64 +8,70 @@ import {
 	ScrollRestoration
 } from "react-router";
 
+import { useEffect } from "react";
 import type { Route } from "./+types/root";
 
 import "../styles/reset.css";
 import "../styles/global.css";
 
-
 import { Header } from "./components/layout/header/Header";
 import { Footer } from "./components/layout/footer/Footer";
 import { getSession } from "./services/sessions.server";
+import { ServiceWorkerManager } from "./services/serviceWorker";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
 export async function loader({
-  request,
-}: Route.LoaderArgs) {
-  const session = await getSession(
-    request.headers.get("Cookie"),
-  );
+								 request,
+							 }: Route.LoaderArgs) {
+	const session = await getSession(
+		request.headers.get("Cookie"),
+	);
 
-  if (session.has("token")) {
-	const token = session.get("token");
-	const response = await fetch(`${API_URL}/user/profile`, {
-      headers: {
-        "Content-Type": "application/json",
-		"Authorization": `Bearer ${token}`,
-      },
-    });
+	if (session.has("token")) {
+		const token = session.get("token");
+		const response = await fetch(`${API_URL}/user/profile`, {
+			headers: {
+				"Content-Type": "application/json",
+				"Authorization": `Bearer ${token}`,
+			},
+		});
 
-	const data = await response.json();
-    const user = data.data.user;
+		const data = await response.json();
+		const user = data.data.user;
 
-    return { user };
-  }
+		return { user };
+	}
 
-  return { user: null}
+	return { user: null}
 }
 
 export function Layout({ children }: { children: React.ReactNode }) {
 	return (
 		<html lang="en">
-			<head>
-				<meta charSet="utf-8" />
-				<meta name="viewport" content="width=device-width, initial-scale=1" />
-				<link rel="icon" href="favicon.svg" />
-				<Meta />
-				<Links />
-			</head>
-			<body>
-				{children}
-				<ScrollRestoration />
-				<Scripts />
-			</body>
+		<head>
+			<meta charSet="utf-8" />
+			<meta name="viewport" content="width=device-width, initial-scale=1" />
+			<link rel="icon" href="favicon.svg" />
+			<Meta />
+			<Links />
+		</head>
+		<body>
+		{children}
+		<ScrollRestoration />
+		<Scripts />
+		</body>
 		</html>
 	);
 }
 
-export default function App(props:Route.ComponentProps) {
+export default function App(props: Route.ComponentProps) {
 	const user = props.loaderData.user;
+
+	// Enregistrer le Service Worker au démarrage de l'application
+	useEffect(() => {
+		ServiceWorkerManager.getInstance().register();
+	}, []);
 
 	return (
 		<>
@@ -74,7 +80,6 @@ export default function App(props:Route.ComponentProps) {
 			<Footer />
 		</>
 	)
-	
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
@@ -99,8 +104,8 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
 			<p>{details}</p>
 			{stack && (
 				<pre className="w-full p-4 overflow-x-auto">
-					<code>{stack}</code>
-				</pre>
+                <code>{stack}</code>
+             </pre>
 			)}
 		</main>
 	);

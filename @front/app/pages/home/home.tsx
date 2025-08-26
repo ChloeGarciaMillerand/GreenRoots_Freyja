@@ -3,32 +3,60 @@ import "./home.css";
 import type { Route } from "./+types/home";
 
 import homePageSeed from "./images/homePage_seed_growing.webp";
-
-import trees from "./data/data";
 import TreeCard from "~/components/shared/components/TreeCard/TreeCard";
 import type { TreeCardProps } from "@types";
-import "./home.css";
 
 export function meta() {
 	return [
 		{
-			title:
-				"GreenRoots - plantez des arbres pour lutter contre la déforestation",
+			title: "GreenRoots - plantez des arbres pour lutter contre la déforestation",
 		},
 		{
 			name: "description",
-			content:
-				"Parrainez un arbre dans un de nos projets de notre reforestation à travers le monde",
+			content: "Parrainez un arbre dans un de nos projets de notre reforestation à travers le monde",
 		},
 	];
 }
 
+// Loader Remix -> s'exécute côté serveur
 export async function loader() {
-	return { trees };
+	const apiUrl = "http://backend:3001"; // service docker backend
+
+	try {
+		const response = await fetch(`${apiUrl}/api/trees/homepage?limit=3`);
+
+		if (!response.ok) {
+			throw new Error(`HTTP ${response.status}`);
+		}
+
+		const result = await response.json();
+
+		const transformedTrees: TreeCardProps[] = result.data.map((tree: any) => {
+			const firstProject = tree.projects?.[0] ?? null;
+
+			return {
+				tree_id: tree.tree_id,
+				name: tree.name,
+				price: tree.price,
+				image: tree.image,
+				localization: firstProject?.localization?.continent || null,
+				project_name: firstProject?.name || null,
+				description: tree.description,
+				created_at: tree.created_at,
+				updated_at: tree.updated_at,
+			};
+		});
+
+		return { trees: transformedTrees };
+	} catch (err) {
+		console.error("Error fetching trees in loader:", err);
+		return { trees: [], error: err instanceof Error ? err.message : "Erreur inconnue" };
+	}
 }
 
-export default function Home(props: Route.ComponentProps) {
-	const { loaderData } = props;
+export default function Home({ loaderData }: Route.ComponentProps) {
+	const { trees, error } = loaderData;
+
 	return (
 		<main>
 			<section className="hero-section">
@@ -36,11 +64,9 @@ export default function Home(props: Route.ComponentProps) {
 					Participez à la reforestation avec <span>GreenRoots</span>
 				</h1>
 			</section>
+
 			<section className="sub-hero-section-full-width">
-				<div
-					className="container-sub-hero
-				"
-				>
+				<div className="container-sub-hero">
 					<img src={homePageSeed} alt="graine poussant dans la forêt" />
 					<div className="sub-hero-text-content">
 						<p>Partout dans le monde, nos projets revitalisent la planète!</p>
@@ -51,22 +77,29 @@ export default function Home(props: Route.ComponentProps) {
 					</div>
 				</div>
 			</section>
+
 			<section className="trees-section">
 				<h2>Nos arbres autour du monde</h2>
 				<div className="tree-card-container">
 					<ul>
-						{loaderData.trees.map((tree: TreeCardProps) => (
-							<li key={tree.tree_id}>
-								<TreeCard
-									tree_id={tree.tree_id}
-									name={tree.name}
-									price={tree.price}
-									image={tree.image}
-									localization={tree.localization}
-									project_name={tree.project_name}
-								/>
-							</li>
-						))}
+						{error ? (
+							<li><p>Erreur: {error}</p></li>
+						) : trees.length > 0 ? (
+							trees.map((tree: TreeCardProps) => (
+								<li key={tree.tree_id}>
+									<TreeCard
+										tree_id={tree.tree_id}
+										name={tree.name}
+										price={tree.price}
+										image={tree.image}
+										localization={tree.localization}
+										project_name={tree.project_name}
+									/>
+								</li>
+							))
+						) : (
+							<li><p>Aucun arbre disponible pour le moment.</p></li>
+						)}
 					</ul>
 				</div>
 				<Link to="/catalog" className="link-button-mobile">

@@ -353,6 +353,83 @@ class TreeModel {
             throw new Error(`Error fetching trees by continent ${continent}: ${error}`);
         }
     }
+
+    async findByIdRangeWithProjectsAndLocalizations(limit: number = 3): Promise<any[]> {
+        try {
+            const query = `
+            SELECT
+                t.tree_id,
+                t.name as tree_name,
+                t.description as tree_description,
+                t.price,
+                t.image as tree_image,
+                t.created_at as tree_created_at,
+                t.updated_at as tree_updated_at,
+                p.project_id,
+                p.name as project_name,
+                p.description as project_description,
+                p.image as project_image,
+                p.localization_id,
+                p.created_at as project_created_at,
+                p.updated_at as project_updated_at,
+                l.country,
+                l.continent
+            FROM tree t
+                     LEFT JOIN project_tree pt ON t.tree_id = pt.tree_id
+                     LEFT JOIN project p ON pt.project_id = p.project_id
+                     LEFT JOIN localization l ON p.localization_id = l.localization_id
+            WHERE t.tree_id >= 1 AND t.tree_id <= $1
+            ORDER BY t.tree_id ASC, p.created_at DESC
+        `;
+            const result = await this.db.query(query, [limit]);
+
+            if (result.rows.length === 0) {
+                return [];
+            }
+
+            // Group the results by tree to avoid duplication
+            const treesMap = new Map();
+
+            result.rows.forEach(row => {
+                const treeId = row.tree_id;
+
+                if (!treesMap.has(treeId)) {
+                    treesMap.set(treeId, {
+                        tree_id: row.tree_id,
+                        name: row.tree_name,
+                        description: row.tree_description,
+                        price: row.price,
+                        image: row.tree_image,
+                        created_at: row.tree_created_at,
+                        updated_at: row.tree_updated_at,
+                        projects: []
+                    });
+                }
+
+                // Add project if it exists
+                if (row.project_id) {
+                    treesMap.get(treeId).projects.push({
+                        project_id: row.project_id,
+                        name: row.project_name,
+                        description: row.project_description,
+                        image: row.project_image,
+                        localization_id: row.localization_id,
+                        created_at: row.project_created_at,
+                        updated_at: row.project_updated_at,
+                        localization: row.localization_id ? {
+                            localization_id: row.localization_id,
+                            country: row.country,
+                            continent: row.continent
+                        } : null
+                    });
+                }
+            });
+
+            return Array.from(treesMap.values());
+        } catch (error) {
+            throw new Error(`Error fetching trees by ID range (1 to ${limit}) with projects and localizations: ${error}`);
+        }
+    }
 }
 
 
