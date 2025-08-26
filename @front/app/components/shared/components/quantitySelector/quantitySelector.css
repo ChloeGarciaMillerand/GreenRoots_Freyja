@@ -92,21 +92,22 @@
 	color: var(--dark-grey);
 }
 
-/* Responsive */
+/* Responsive - SEULEMENT les améliorations mobiles */
 @media (max-width: 480px) {
 	.quantity-selector {
 		border-radius: 6px;
+		max-width: 130px; /* Évite le débordement sur mobile */
 	}
 
 	.quantity-btn {
-		width: 36px;
-		height: 36px;
-		font-size: 1.2rem;
+		width: 42px; /* Légèrement plus grand pour le touch */
+		height: 42px;
+		font-size: 1.5rem;
 	}
 
 	.quantity-input {
-		width: 45px;
-		height: 36px;
-		font-size: 0.9rem;
+		width: 46px; /* Proportionnel aux boutons */
+		height: 42px;
+		font-size: 1.1rem;
 	}
 }
