@@ -6,8 +6,13 @@ import "./register.css";
 const API_URL = import.meta.env.VITE_API_URL;
 
 type Errors = {
+	first_name?: string;
+	last_name?: string;
 	email?: string;
+	phone_number?: string;
+	password?: string;
 	confirmPassword?: string;
+	form?: string;
 };
 
 export async function action({ request }: Route.ActionArgs) {
@@ -18,16 +23,32 @@ export async function action({ request }: Route.ActionArgs) {
 	const phone_number = String(formData.get("phone_number"));
 	const password = String(formData.get("password"));
 	const confirmPassword = String(formData.get("confirm-password"));
+
 	const userData = { first_name, last_name, email, phone_number, password };
 
 	const errors: Errors = {};
+
+	if (!first_name) {
+		errors.first_name = "Prénom obligatoire";
+	}
+
+	if (!last_name) {
+		errors.last_name = "Nom de famille obligatoire";
+	}
 
 	if (!email.includes("@")) {
 		errors.email = "Adresse mail invalide";
 	}
 
-	if (password !== confirmPassword) {
-		errors.confirmPassword = "Les mots de passe ne sont pas identiques";
+	if (!password) {
+		errors.password = "Mot de passe obligatoire";
+	} else {
+		if (password.length < 8) {
+			errors.password = "Le mot de passe doit contenir au moins 8 caractères";
+		}
+		if (password !== confirmPassword) {
+			errors.confirmPassword = "Les mots de passe ne sont pas identiques";
+		}
 	}
 
 	if (Object.keys(errors).length > 0) {
@@ -46,7 +67,7 @@ export async function action({ request }: Route.ActionArgs) {
 		const json = await response.json();
 		console.error("Register failed");
 		return data(
-			{ errors: { form: json?.error ?? "Register failed" } },
+			{ errors: { form: json?.error ?? "Échec de l'inscription" } },
 			{ status: 400 },
 		);
 	}
