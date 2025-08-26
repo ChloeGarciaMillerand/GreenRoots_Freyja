@@ -175,13 +175,13 @@ jobs:
           cp .env.example .env
           
           # Stop only backend and frontend (keep database running)
-          docker-compose -f docker-compose.prod.yml stop backend frontend
+          docker compose -f docker-compose.prod.yml stop backend frontend
           
           # Rebuild backend and frontend
-          docker-compose -f docker-compose.prod.yml build --no-cache backend frontend
+          docker compose -f docker-compose.prod.yml build --no-cache backend frontend
           
           # Start all services (database will stay running if already up)
-          docker-compose -f docker-compose.prod.yml up -d
+          docker compose -f docker-compose.prod.yml up -d
           
           # Clean up unused images
           docker image prune -f
