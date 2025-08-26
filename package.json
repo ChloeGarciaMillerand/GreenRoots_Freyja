@@ -29,6 +29,7 @@
   },
   "devDependencies": {
     "@jest/globals": "^30.0.5",
+    "@types/nodemailer": "^7.0.1",
     "concurrently": "^8.2.2",
     "jest": "^30.0.5"
   }

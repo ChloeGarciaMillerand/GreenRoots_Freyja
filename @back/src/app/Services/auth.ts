@@ -2,6 +2,7 @@
 
 import * as argon2 from "argon2";
 import { UserModel } from "../Models/userModel.js";
+import { EmailService } from "./email.service.js"; // 🆕 NOUVEAU
 import type {
 	User,
 	UserRole,
@@ -14,6 +15,7 @@ import type {
 export class AuthService {
 	private readonly JWT_SECRET = process.env.JWT_SECRET || "your-secret-key";
 	private userModel = new UserModel();
+	private emailService = new EmailService(); // 🆕 NOUVEAU
 
 	// Argon2 configuration options
 	private readonly ARGON2_OPTIONS: argon2.Options = {
@@ -98,6 +100,21 @@ export class AuthService {
 			userId: savedUser.user_id!,
 			email: savedUser.email,
 			role: savedUser.role,
+		});
+
+		// 🆕 NOUVEAU : Envoyer l'email de bienvenue de manière asynchrone
+		this.emailService.sendWelcomeEmail({
+			email: savedUser.email,
+			firstName: savedUser.first_name,
+			lastName: savedUser.last_name
+		}).then(result => {
+			if (result.success) {
+				console.log(`✅ Email de bienvenue envoyé à ${savedUser.email}`);
+			} else {
+				console.error(`❌ Échec envoi email à ${savedUser.email}:`, result.error);
+			}
+		}).catch(error => {
+			console.error('❌ Erreur envoi email de bienvenue:', error);
 		});
 
 		// Return user without password
@@ -228,6 +245,7 @@ export class AuthService {
 		}
 
 		// Generate reset token
+		const jwt = await this.getJWT(); // 🔧 FIX : ajout de cette ligne
 		const resetToken = jwt.sign(
 			{ email, type: "password_reset" },
 			this.JWT_SECRET,
