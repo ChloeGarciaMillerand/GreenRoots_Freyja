@@ -13,7 +13,7 @@ describe('Database Connection', () => {
             host: process.env.DB_HOST || 'localhost',
             database: process.env.DB_NAME || process.env.POSTGRES_DB,
             password: process.env.DB_PASSWORD || process.env.POSTGRES_PASSWORD,
-            port: process.env.DB_PORT || 5433,
+            port: process.env.DB_PORT || 5432,
         });
     });
 
@@ -125,7 +125,7 @@ describe('Database Connection', () => {
             host: 'localhost',
             database: 'nonexistent_db',
             password: 'wrong_password',
-            port: process.env.DB_PORT || 5433,
+            port: process.env.DB_PORT || 5432,
         });
 
         await expect(badClient.connect()).rejects.toThrow();

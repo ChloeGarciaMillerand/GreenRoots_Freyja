@@ -8,10 +8,10 @@
     "dev:build:fresh": "docker compose -f docker-compose.yml -f docker-compose.dev.yml build --no-cache && docker compose -f docker-compose.yml -f docker-compose.dev.yml up",
     "dev:down": "docker compose -f docker-compose.yml -f docker-compose.dev.yml down",
     "dev:logs": "docker compose -f docker-compose.yml -f docker-compose.dev.yml logs -f",
-    "prod": "docker compose -f docker-compose.yml -f docker-compose.prod.yml up",
-    "prod:build": "docker compose -f docker-compose.yml -f docker-compose.prod.yml up --build",
-    "prod:build:fresh": "docker compose -f docker-compose.yml -f docker-compose.prod.yml build --no-cache && docker compose -f docker-compose.yml -f docker-compose.prod.yml up",
-    "prod:down": "docker compose -f docker-compose.yml -f docker-compose.prod.yml down",
+    "prod": "docker compose -f docker-compose.prod.yml up",
+    "prod:build": "docker compose -f docker-compose.prod.yml up --build",
+    "prod:build:fresh": "docker compose -f docker-compose.prod.yml build --no-cache && docker compose -f docker-compose.prod.yml up",
+    "prod:down": "docker compose -f docker-compose.prod.yml down",
     "docker:clean": "docker compose down -v --remove-orphans",
     "docker:reset": "docker compose down -v --remove-orphans && docker system prune -f",
     "docker:rebuild": "docker compose down && docker compose build --no-cache",
@@ -29,6 +29,7 @@
   },
   "devDependencies": {
     "@jest/globals": "^30.0.5",
+    "@types/nodemailer": "^7.0.1",
     "concurrently": "^8.2.2",
     "jest": "^30.0.5"
   }

@@ -6,9 +6,10 @@ const userController = {
         try {
             const authService = new AuthService();
             const result = await authService.register(req.body);
+
             res.status(201).json({
                 success: true,
-                message: 'User registered successfully',
+                message: 'User registered successfully. Welcome email sent.',
                 data: result
             });
         } catch (error) {
