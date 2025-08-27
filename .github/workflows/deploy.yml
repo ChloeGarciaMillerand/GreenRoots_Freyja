@@ -189,7 +189,7 @@ jobs:
           EOF
 
           # Check if SSL certificates exist
-          if [ ! -f "./data/certbot/conf/live/greenroots.website/fullchain.pem" ]; then
+          if [ ! -f "./data/certbot/conf/live/greenroots.website-0001/fullchain.pem" ]; then
             echo "SSL certificates not found. Using temporary nginx config and running SSL setup..."
 
             # Use temporary nginx config without SSL
