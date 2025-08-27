@@ -12,9 +12,10 @@ mkdir -p "$DATA_PATH/conf"
 mkdir -p "$DATA_PATH/www"
 
 echo "### Arrêt de nginx si démarré..."
-docker compose -f docker-compose.prod.yml down nginx 2>/dev/null
+docker compose -f docker-compose.prod.yml stop nginx 2>/dev/null
 
 echo "### Création d'un certificat temporaire pour $DOMAIN..."
+mkdir -p "$DATA_PATH/conf/live/$DOMAIN"
 docker compose -f docker-compose.prod.yml run --rm --entrypoint "\
   openssl req -x509 -nodes -newkey rsa:4096 -days 1\
     -keyout '/etc/letsencrypt/live/$DOMAIN/privkey.pem' \
@@ -22,7 +23,7 @@ docker compose -f docker-compose.prod.yml run --rm --entrypoint "\
     -subj '/CN=localhost'" certbot
 
 echo "### Démarrage de nginx..."
-docker compose -f docker-compose.prod.yml up --force-recreate -d nginx
+docker compose -f docker-compose.prod.yml up -d nginx
 
 echo "### Suppression du certificat temporaire..."
 docker compose -f docker-compose.prod.yml run --rm --entrypoint "\

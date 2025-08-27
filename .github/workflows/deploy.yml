@@ -190,9 +190,21 @@ jobs:
 
           # Check if SSL certificates exist
           if [ ! -f "./data/certbot/conf/live/greenroots.website/fullchain.pem" ]; then
-            echo "SSL certificates not found. Running initial SSL setup..."
+            echo "SSL certificates not found. Using temporary nginx config and running SSL setup..."
+
+            # Use temporary nginx config without SSL
+            cp nginx-temp.conf nginx.conf
+
+            # Start services without SSL first
+            docker compose -f docker-compose.prod.yml up -d
+
+            # Run SSL initialization
             chmod +x ./init-letsencrypt.sh
             ./init-letsencrypt.sh
+
+            # Switch to full nginx config with SSL
+            git checkout nginx.conf
+            docker compose -f docker-compose.prod.yml restart nginx
           else
             echo "SSL certificates found. Proceeding with normal deployment..."
           fi
