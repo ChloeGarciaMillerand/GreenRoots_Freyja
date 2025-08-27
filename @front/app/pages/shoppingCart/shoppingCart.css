@@ -28,6 +28,10 @@ tr {
 	gap: 1rem;
 }
 
+.item-description img {
+	max-width: 50%;
+}
+
 .item-name {
 	font-weight: bold;
 }
@@ -112,5 +116,9 @@ tr {
 
 	.container-quantity {
 		flex-direction: row;
+	}
+
+	.item-description img {
+		max-width: 30%;
 	}
 }
