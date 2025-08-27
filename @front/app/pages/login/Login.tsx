@@ -1,7 +1,7 @@
 import type { Route } from "./+types/Login";
 import LoginForm from "~/components/features/forms/login/LoginForm";
 import { getSession, commitSession } from "~/services/sessions.server";
-import { redirect, data } from "react-router";
+import { redirect, data, Link } from "react-router";
 import "./Login.css";
 
 const API_URL = import.meta.env.VITE_API_URL;
@@ -54,6 +54,7 @@ export default function Login() {
 		<main className="login-container">
 			<h1>Connexion</h1>
 			<LoginForm />
+			<Link to="">Mot de passe oublié?</Link>
 		</main>
 	);
 }
