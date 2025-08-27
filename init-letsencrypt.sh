@@ -11,9 +11,6 @@ DATA_PATH="./data/certbot"
 mkdir -p "$DATA_PATH/conf"
 mkdir -p "$DATA_PATH/www"
 
-echo "### Arrêt de nginx si démarré..."
-docker compose -f docker-compose.prod.yml stop nginx 2>/dev/null
-
 echo "### Création d'un certificat temporaire pour $DOMAIN..."
 mkdir -p "$DATA_PATH/conf/live/$DOMAIN"
 docker compose -f docker-compose.prod.yml run --rm --entrypoint "\
@@ -22,14 +19,7 @@ docker compose -f docker-compose.prod.yml run --rm --entrypoint "\
     -out '/etc/letsencrypt/live/$DOMAIN/fullchain.pem' \
     -subj '/CN=localhost'" certbot
 
-echo "### Démarrage de nginx..."
-docker compose -f docker-compose.prod.yml up -d nginx
-
-echo "### Suppression du certificat temporaire..."
-docker compose -f docker-compose.prod.yml run --rm --entrypoint "\
-  rm -Rf /etc/letsencrypt/live/$DOMAIN && \
-  rm -Rf /etc/letsencrypt/archive/$DOMAIN && \
-  rm -Rf /etc/letsencrypt/renewal/$DOMAIN.conf" certbot
+echo "### Nginx doit déjà être démarré par le workflow..."
 
 echo "### Demande du vrai certificat Let's Encrypt..."
 docker compose -f docker-compose.prod.yml run --rm --entrypoint "\
@@ -41,7 +31,13 @@ docker compose -f docker-compose.prod.yml run --rm --entrypoint "\
     --agree-tos \
     --force-renewal" certbot
 
-echo "### Rechargement de nginx..."
-docker compose -f docker-compose.prod.yml exec nginx nginx -s reload
+echo "### Vérification que le certificat a été créé..."
+if [ ! -f "$DATA_PATH/conf/live/$DOMAIN/fullchain.pem" ]; then
+  echo "ERREUR: Le certificat Let's Encrypt n'a pas été créé !"
+  echo "Vérifiez que le domaine $DOMAIN pointe bien vers ce serveur"
+  exit 1
+fi
+
+echo "### Le workflow va redémarrer nginx avec la vraie config SSL..."
 
 echo "### Configuration SSL terminée pour $DOMAIN !"
