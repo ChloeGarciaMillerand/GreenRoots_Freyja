@@ -32,7 +32,7 @@ export function Header(props: { user: User | null }) {
 				<NavbarDesktop className="navbar-desktop" />
 				{/* account and cart */}
 				<div className="header-account-cart">
-					<Link to="/">
+					<Link to="/shopping-cart">
 						<img src={iconCart} alt="Panier" />
 					</Link>
 					<ul className="navlinks">
