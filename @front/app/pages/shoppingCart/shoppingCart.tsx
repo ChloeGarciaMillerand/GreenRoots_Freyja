@@ -28,7 +28,6 @@ export async function action(args: Route.ActionArgs) {
 	// check if a user is logged in
 	const session = await getSession(args.request.headers.get("Cookie"));
 	const token = session.get("token");
-	console.log("Token:", token);
 	// if not, redirect to the login page
 	if (!token) {
 		return redirect("/login");
@@ -57,10 +56,8 @@ export async function action(args: Route.ActionArgs) {
 		return new Response("Erreur de parsing JSON", { status: 400 });
 	}
 
-	console.log(items);
-
 	// save the cart to the backend
-	const response = await fetch(`${API_URL}/api/orders`, {
+	const response = await fetch(`${API_URL}/orders`, {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",
@@ -71,6 +68,7 @@ export async function action(args: Route.ActionArgs) {
 
 	if (!response.ok) {
 		const result = await response.json().catch(() => null);
+		console.log(response);
 		const message =
 			result?.message || "Erreur lors de l'enregistrement de la commande.";
 		return new Response(message, { status: 500 });
