@@ -188,13 +188,22 @@ jobs:
           DB_PORT=${{ secrets.DB_PORT || '5432' }}
           EOF
 
-          # Stop only backend and frontend (keep database running)
+          # Check if SSL certificates exist
+          if [ ! -f "./data/certbot/conf/live/greenroots.cloud/fullchain.pem" ]; then
+            echo "SSL certificates not found. Running initial SSL setup..."
+            chmod +x ./init-letsencrypt.sh
+            ./init-letsencrypt.sh
+          else
+            echo "SSL certificates found. Proceeding with normal deployment..."
+          fi
+          
+          # Stop only backend and frontend (keep database, nginx, certbot running)
           docker compose -f docker-compose.prod.yml stop backend frontend
 
           # Rebuild backend and frontend
           docker compose -f docker-compose.prod.yml build --no-cache backend frontend
 
-          # Start all services (database will stay running if already up)
+          # Start all services (database, nginx, certbot will stay running if already up)
           docker compose -f docker-compose.prod.yml up -d
 
           # Clean up unused images
