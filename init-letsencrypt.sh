@@ -11,15 +11,11 @@ DATA_PATH="./data/certbot"
 mkdir -p "$DATA_PATH/conf"
 mkdir -p "$DATA_PATH/www"
 
-echo "### Création d'un certificat temporaire pour $DOMAIN..."
-mkdir -p "$DATA_PATH/conf/live/$DOMAIN"
+echo "### Suppression des anciens certificats si ils existent..."
 docker compose -f docker-compose.prod.yml run --rm --entrypoint "\
-  openssl req -x509 -nodes -newkey rsa:4096 -days 1\
-    -keyout '/etc/letsencrypt/live/$DOMAIN/privkey.pem' \
-    -out '/etc/letsencrypt/live/$DOMAIN/fullchain.pem' \
-    -subj '/CN=localhost'" certbot
-
-echo "### Nginx doit déjà être démarré par le workflow..."
+  rm -rf /etc/letsencrypt/live/$DOMAIN* \
+  && rm -rf /etc/letsencrypt/archive/$DOMAIN* \
+  && rm -rf /etc/letsencrypt/renewal/$DOMAIN*.conf" certbot
 
 echo "### Demande du vrai certificat Let's Encrypt..."
 docker compose -f docker-compose.prod.yml run --rm --entrypoint "\
@@ -29,7 +25,7 @@ docker compose -f docker-compose.prod.yml run --rm --entrypoint "\
     -d www.$DOMAIN \
     --rsa-key-size 4096 \
     --agree-tos \
-    --force-renewal" certbot
+    --cert-name $DOMAIN" certbot
 
 echo "### Vérification que le certificat a été créé..."
 if [ ! -f "$DATA_PATH/conf/live/$DOMAIN/fullchain.pem" ]; then
