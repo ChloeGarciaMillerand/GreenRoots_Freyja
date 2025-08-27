@@ -4,11 +4,12 @@ INSERT INTO localization (country, continent) VALUES
                                                   ('Madagascar', 'Afrique'),
                                                   ('Brésil', 'Amérique du Sud');
 
-INSERT INTO tree (name, description, price) VALUES
-                                                ('Chêne', 'Arbre robuste pour climats tempérés', 15.50),
-                                                ('Baobab', 'Arbre emblématique de Madagascar', 25.00),
-                                                ('Eucalyptus', 'Croissance rapide, bon pour reforestation', 12.00),
-                                                ('Palissandre', 'Bois précieux, espèce protégée', 45.00);
+INSERT INTO tree (name, description, price, image) VALUES
+                                                ('Chêne', 'Le chêne est un arbre majestueux, reconnu pour sa longévité et ses feuilles lobées. Il pousse dans les régions tempérées et peut atteindre plusieurs dizaines de mètres. Ses glands nourrissent les animaux et son bois solide sert à la construction, au mobilier et aux tonneaux. Il favorise biodiversité et ombre.', 15.50, '/assets/images/trees/chene.webp'),
+                                                ('Baobab', 'Le baobab est un arbre majestueux surnommé « arbre de vie ». Son tronc massif stocke l’eau pour survivre aux sécheresses. Ses feuilles, fruits et écorce sont utilisés en alimentation et médecine traditionnelle. Il fournit de l’ombre, nourrit de nombreuses espèces et joue un rôle vital dans l’écosystème.', 25.00, '/assets/images/trees/baobab.webp'),
+                                                ('Eucalyptus', 'L’eucalyptus est un arbre originaire d’Australie, reconnu pour sa croissance rapide et ses feuilles aromatiques. Son bois sert à la construction et au papier, tandis que ses feuilles produisent des huiles essentielles aux vertus médicinales. Il offre un habitat pour la faune et contribue à la biodiversité.', 30.00, '/assets/images/trees/eucalyptus.webp'),
+
+                                                ('Palissandre', 'Le palissandre est un arbre tropical réputé pour son bois dense, dur et coloré. Utilisé pour les meubles, l’ébénisterie et les instruments de musique, il se distingue par sa durabilité et son esthétique. Il contribue aussi à la biodiversité en offrant habitat et nourriture à de nombreuses espèces.', 45.00, '/assets/images/trees/palissandre.webp');
 
 INSERT INTO project (localization_id, name, description) VALUES
                                                              (1, 'Reforestation Bretagne', 'Replantation après tempête'),
@@ -56,32 +57,35 @@ INSERT INTO localization (country, continent) VALUES
 ('Mali', 'Afrique');
 
 -- Arbres pour reforestation (espèces locales menacées)
-INSERT INTO tree (name, description, price) VALUES
+INSERT INTO tree (name, description, price, image) VALUES
 -- Asie (déforestation tropicale)
-('Dipterocarpus', 'Géant de la forêt tropicale indonésienne', 45.00),
-('Teck birman', 'Espèce native du Myanmar en danger', 38.00),
-('Narra philippin', 'Arbre national des Philippines', 42.00),
+('Dipterocarpus', 'Le Dipterocarpus est un grand arbre tropical d’Asie du Sud-Est, souvent dominant dans les forêts primaires. Son bois dense est utilisé pour la construction et le mobilier, et sa résine possède des vertus médicinales. Il joue un rôle écologique crucial en offrant nourriture et abri à de nombreuses espèces.', 45.00, '/assets/images/trees/dipterocarpus.webp'),
+('Teck birman', 'Le Dipterocarpus est un grand arbre tropical d’Asie du Sud-Est, souvent dominant dans les forêts primaires. Son bois dense est utilisé pour la construction et le mobilier, et sa résine possède des vertus médicinales. Il joue un rôle écologique crucial en offrant nourriture et abri à de nombreuses espèces.', 38.00, '/assets/images/trees/teck-birman.webp'),
+('Narra philippin', 'Le Narra philippin est un arbre tropical des Philippines, apprécié pour son bois dur et rougeâtre utilisé en mobilier et construction. Ses fleurs parfumées attirent les pollinisateurs, et il contribue à l’ombre, à la biodiversité et à la beauté des paysages tropicaux.', 42.00, '/assets/images/trees/narratree.webp'),
 
 -- Amérique du Sud (Amazonie)
-('Acajou du Brésil', 'Bois précieux amazonien surexploité', 55.00),
-('Cecropia', 'Arbre pionnier pour régénération rapide', 25.00),
-('Pau-brasil', 'Arbre emblématique du Brésil', 48.00),
+('Acajou du Brésil', 'L’acajou du Brésil est un arbre tropical d’Amérique du Sud, réputé pour son bois rouge profond et durable. Utilisé en meubles et instruments, il fournit nourriture et abri à la faune et joue un rôle important dans la biodiversité des forêts tropicales.', 55.00, '/assets/images/trees/acajou-bresil.webp'),
+('Cecropia', 'Le Cecropia est un arbre tropical d’Amérique centrale et du Sud, à croissance rapide et grandes feuilles caractéristiques. Il sert de refuge et de nourriture pour de nombreux animaux et contribue à la régénération des forêts et à la biodiversité.', 25.00, '/assets/images/trees/cecropia.webp'),
+('Pau-brasil', 'Le Pau-brasil est un arbre tropical du Brésil, célèbre pour son bois rouge utilisé historiquement en teinture et ébénisterie. Il favorise la biodiversité, offre de l’ombre et un habitat à la faune, et est aujourd’hui protégé en raison de sa raréfaction.
+', 48.00, '/assets/images/trees/pau-brasil.webp'),
 
 -- Amérique du Nord (forêt boréale)
-('Épinette noire', 'Conifère boréal post-incendie', 28.00),
-('Peuplier faux-tremble', 'Régénération après perturbations', 22.00),
+('Épinette noire', 'L’épinette noire est un conifère robuste, typique des régions froides et humides du nord. Avec ses aiguilles courtes, vert foncé, et ses cônes brunâtres, elle est facilement reconnaissable. Elle pousse lentement mais vit très longtemps, ce qui en fait un arbre essentiel dans les forêts boréales. Son bois léger mais solide est très utilisé pour la construction, le papier et même les instruments de musique.', 28.00, '/assets/images/trees/conifer.webp'),
+('Peuplier faux-tremble', 'Le peuplier faux-tremble est un arbre à croissance rapide des régions tempérées. Ses feuilles légères créent un doux bruissement au vent. Il fournit du bois pour la construction, des habitats pour la faune et aide à la stabilisation des sols.', 22.00, '/assets/images/trees/peuplier-faux-tremble.webp'),
 
 -- Australie (bushland)
-('Eucalyptus à gomme rouge', 'Résistant aux incendies', 35.00),
-('Banksia géant', 'Endémique Australie-Occidentale', 32.00),
+('Eucalyptus à gomme rouge', 'L’eucalyptus à gomme rouge est un arbre australien remarquable pour son écorce rouge et ses feuilles aromatiques. Il produit une résine riche utilisée en médecine et industrie. Son bois sert à la construction et au mobilier, et il offre habitat et nourriture à la faune tout en contribuant à la biodiversité.', 35.00, '/assets/images/trees/eucalyptus-rouge.webp'),
+('Banksia géant', 'Le Banksia géant est un arbre australien aux fleurs spectaculaires et nectar riche. Il attire abeilles et oiseaux, offre un habitat à la faune locale et son bois sert parfois pour la construction ou l’artisanat. Il joue un rôle écologique dans la régénération des sols.', 32.00, '/assets/images/trees/banksia-geant.webp'),
 
 -- Europe (forêts dégradées)
-('Chêne de Roumanie', 'Restauration forêts des Carpates', 30.00),
-('Chêne-liège', 'Écosystème méditerranéen menacé', 40.00),
+('Chêne de Roumanie', 'Les chênes de Roumanie sont de grands arbres robustes et longeviques, avec des feuilles lobées caractéristiques. Leurs glands nourrissent de nombreux animaux et leur bois solide sert à la construction et au mobilier. Ils offrent ombre, favorisent la biodiversité et symbolisent force et longévité.
+', 30.00, '/assets/images/trees/chene-roumanie.webp'),
+('Chêne-liège', 'Le chêne-liège est un arbre méditerranéen connu pour son écorce épaisse utilisée pour fabriquer le liège. Il vit longtemps, fournit ombre et habitat, contribue à la biodiversité forestière et offre un bois solide pour certains usages.
+', 40.00, '/assets/images/trees/chene-liege.webp'),
 
 -- Afrique (Grande Muraille Verte)
-('Balanites', 'Résistant sécheresse, fruits nutritifs', 20.00),
-('Prosopis', 'Fixateur d''azote anti-désertification', 18.00);
+('Balanites', 'Le Balanites est un arbre africain adapté aux régions arides. Ses fruits nutritifs servent à l’alimentation humaine et animale, son bois est utilisé localement, et il fournit ombre et abri, tout en aidant à stabiliser les sols secs.', 20.00, '/assets/images/trees/balanites.webp'),
+('Prosopis', 'Le Prosopis est un arbre robuste des régions arides, souvent appelé mesquite. Il fixe l’azote dans le sol, produit bois et fourrage, offre ombre et habitat à la faune, et aide à lutter contre l’érosion dans les zones désertiques ou semi-arides.', 18.00, '/assets/images/trees/prosopis.webp');
 
 -- Projets de reforestation urgents
 INSERT INTO project (localization_id, name, description) VALUES
