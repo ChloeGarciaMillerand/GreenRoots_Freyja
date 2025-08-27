@@ -195,6 +195,10 @@ jobs:
             # Use temporary nginx config without SSL
             cp nginx-temp.conf nginx.conf
 
+            # Create certbot directories before starting services
+            mkdir -p ./data/certbot/conf
+            mkdir -p ./data/certbot/www
+
             # Start services without SSL first
             docker compose -f docker-compose.prod.yml up -d
 
@@ -207,6 +211,9 @@ jobs:
             docker compose -f docker-compose.prod.yml restart nginx
           else
             echo "SSL certificates found. Proceeding with normal deployment..."
+            # Ensure certbot directories exist for normal deployment too
+            mkdir -p ./data/certbot/conf
+            mkdir -p ./data/certbot/www
           fi
           
           # Stop only backend and frontend (keep database, nginx, certbot running)

@@ -3,11 +3,6 @@
 # Configuration
 DOMAIN="greenroots.website"
 EMAIL="contact@greenroots.website" # Remplacez par votre email
-DATA_PATH="./data/certbot"
-
-# Création des dossiers
-mkdir -p "$DATA_PATH/conf"
-mkdir -p "$DATA_PATH/www"
 
 echo "### Demande du certificat Let's Encrypt..."
 docker compose -f docker-compose.prod.yml run --rm --entrypoint "\
@@ -20,9 +15,10 @@ docker compose -f docker-compose.prod.yml run --rm --entrypoint "\
     --cert-name $DOMAIN" certbot
 
 echo "### Vérification que le certificat a été créé..."
-if [ ! -f "$DATA_PATH/conf/live/$DOMAIN/fullchain.pem" ]; then
+if ! docker compose -f docker-compose.prod.yml exec -T certbot test -f "/etc/letsencrypt/live/$DOMAIN/fullchain.pem"; then
   echo "ERREUR: Le certificat Let's Encrypt n'a pas été créé !"
-  echo "Vérifiez que le domaine $DOMAIN pointe bien vers ce serveur"
+  echo "Logs certbot:"
+  docker compose -f docker-compose.prod.yml logs certbot | tail -10
   exit 1
 fi
 
