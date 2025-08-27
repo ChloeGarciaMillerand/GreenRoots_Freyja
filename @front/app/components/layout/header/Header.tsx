@@ -9,11 +9,11 @@ import iconCart from "../../../../assets/icons/iconCart.svg";
 
 export function Header(props: { user: any }) {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
-
+	
 	const toggleMenu = () => {
 		setIsMenuOpen(!isMenuOpen);
 	};
-
+	
 	const closeMenu = () => {
 		setIsMenuOpen(false);
 	};
@@ -44,26 +44,34 @@ export function Header(props: { user: any }) {
 								<div className="account-trigger" onClick={toggleMenu}>
 									<img src={iconAccount} alt="Compte personnel" />
 								</div>
-								{(isMenuOpen) && (
+								{isMenuOpen && (
 									<ul className="account-submenu">
 										{props.user ? (
 											<>
 												<li>
-													<Link to="/" onClick={closeMenu}>{props.user.email}</Link>
+													<Link to="/" onClick={closeMenu}>
+														{props.user.email}
+													</Link>
 												</li>
 												<li>
 													<Form method="post" action="/logout">
-														<button type="submit">Se déconnecter</button>
+														<button type="submit" onClick={closeMenu}>
+															Se déconnecter
+														</button>
 													</Form>
 												</li>
 											</>
 										) : (
 											<>
 												<li>
-													<Link to="/login" onClick={closeMenu}>Se connecter</Link>
+													<Link to="/login" onClick={closeMenu}>
+														Se connecter
+													</Link>
 												</li>
 												<li>
-													<Link to="/register" onClick={closeMenu}>S'inscrire</Link>
+													<Link to="/register" onClick={closeMenu}>
+														S'inscrire
+													</Link>
 												</li>
 											</>
 										)}

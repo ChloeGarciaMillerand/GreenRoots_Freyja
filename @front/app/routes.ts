@@ -7,5 +7,6 @@ export default [
 	route("tree/:id", "pages/tree/tree.tsx"),
 	route("login", "pages/login/Login.tsx"),
 	route("logout", "pages/logout.tsx"),
+	route("register", "pages/register/register.tsx"),
 	route("about", "pages/about/about.tsx"),
 ] satisfies RouteConfig;

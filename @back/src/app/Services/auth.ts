@@ -3,13 +3,12 @@
 import * as argon2 from "argon2";
 import { UserModel } from "../Models/userModel.js";
 import type {
-	User,
-	UserRole,
 	AuthTokenPayload,
 	LoginRequest,
 	RegisterRequest,
 	AuthResponse,
 } from "../../@types/Auth.js";
+import { type User, UserRole } from "../../@types/User.js";
 
 export class AuthService {
 	private readonly JWT_SECRET = process.env.JWT_SECRET || "your-secret-key";
