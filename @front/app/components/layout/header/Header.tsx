@@ -6,8 +6,9 @@ import { Form, Link } from "react-router";
 import logo from "../../../../assets/icons/logo.svg";
 import iconAccount from "../../../../assets/icons/iconAccount.svg";
 import iconCart from "../../../../assets/icons/iconCart.svg";
+import type { User } from "@types";
 
-export function Header(props: { user: any }) {
+export function Header(props: { user: User | null }) {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
 
 	const toggleMenu = () => {
