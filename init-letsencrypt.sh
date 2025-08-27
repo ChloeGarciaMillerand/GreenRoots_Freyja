@@ -3,21 +3,13 @@
 # Configuration
 DOMAIN="greenroots.website"
 EMAIL="contact@greenroots.website" # Remplacez par votre email
-
-# Chemin vers les données certbot
 DATA_PATH="./data/certbot"
 
 # Création des dossiers
 mkdir -p "$DATA_PATH/conf"
 mkdir -p "$DATA_PATH/www"
 
-echo "### Suppression des anciens certificats si ils existent..."
-docker compose -f docker-compose.prod.yml run --rm --entrypoint "\
-  rm -rf /etc/letsencrypt/live/$DOMAIN* \
-  && rm -rf /etc/letsencrypt/archive/$DOMAIN* \
-  && rm -rf /etc/letsencrypt/renewal/$DOMAIN*.conf" certbot
-
-echo "### Demande du vrai certificat Let's Encrypt..."
+echo "### Demande du certificat Let's Encrypt..."
 docker compose -f docker-compose.prod.yml run --rm --entrypoint "\
   certbot certonly --webroot -w /var/www/certbot \
     --email $EMAIL \
