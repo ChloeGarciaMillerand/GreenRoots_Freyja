@@ -43,5 +43,6 @@ const idValidation = [
 orderRouter.post('/api/orders', requireAuth, createOrderValidation, ordersController.create);
 orderRouter.put('/api/orders/:id/status', requireAuth, idValidation, statusValidation, ordersController.updateStatus);
 orderRouter.get('/api/orders/:id', requireAuth, idValidation, ordersController.show);
+orderRouter.get('/api/orders', requireAuth, ordersController.getUserOrders);
 
 export { orderRouter };
