@@ -4,5 +4,5 @@ export const continents = [
 	{ label: "Amérique du Nord", value: "amerique-nord" },
 	{ label: "Amérique du Sud", value: "amerique-sud" },
 	{ label: "Afrique", value: "afrique" },
-	{ label: "Australie", value: "australie" }
+	{ label: "Océanie", value: "oceanie" }
 ];

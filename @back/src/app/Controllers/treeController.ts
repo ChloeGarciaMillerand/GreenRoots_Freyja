@@ -89,7 +89,7 @@ const treeController = {
                 'amerique-nord': 'Amérique du Nord',
                 'amerique-sud': 'Amérique du Sud',
                 'afrique': 'Afrique',
-                'australie': 'Australie'
+                'oceanie': 'Océanie'  // Changé de 'australie': 'Australie'
             };
 
             const continent = continentMapping[continentParam.toLowerCase()];
