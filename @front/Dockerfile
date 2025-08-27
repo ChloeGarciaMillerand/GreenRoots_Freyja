@@ -12,10 +12,16 @@ COPY . .
 
 RUN pnpm run build
 
-FROM nginx:alpine
+FROM node:22-slim
 
-COPY --from=builder /app/dist /usr/share/nginx/html
+RUN corepack enable
 
-EXPOSE 80
+WORKDIR /app
 
-CMD ["nginx", "-g", "daemon off;"]
+COPY --from=builder /app/build ./build
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/package.json ./
+
+EXPOSE 3000
+
+CMD ["pnpm", "run", "start"]
