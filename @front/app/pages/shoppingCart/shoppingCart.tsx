@@ -7,6 +7,8 @@ import "./shoppingCart.css";
 import { QuantitySelector } from "~/components/shared/components/quantitySelector/quantitySelector";
 import { useState } from "react";
 
+import type { Item } from "@types";
+
 import iconTrash from "~/../assets/icons/iconTrash.svg";
 
 const priceFormatter = new Intl.NumberFormat("fr-FR", {
@@ -26,19 +28,37 @@ export async function action(args: Route.ActionArgs) {
 	// check if a user is logged in
 	const session = await getSession(args.request.headers.get("Cookie"));
 	const token = session.get("token");
+	console.log("Token:", token);
 	// if not, redirect to the login page
 	if (!token) {
 		return redirect("/login");
 	}
 	// if yes, retrieve the formData
-	const formData = await args.request.formData();
+
 	// to test after reset db
 	//const formData = await args.request.json();
 	//const items = formData.items;
-	const items = formData.get("items");
-	if (!items) {
+	const formData = await args.request.formData();
+	const rawItems = formData.get("items");
+	if (!rawItems) {
 		return new Response("Panier vide ou invalide", { status: 400 });
 	}
+	let items: Item;
+	try {
+		const parsedItems = JSON.parse(rawItems.toString());
+
+		// On filtre chaque item pour ne garder que les 3 champs requis
+		items = parsedItems.map((item: Item) => ({
+			tree_id: item.tree_id,
+			quantity: item.quantity,
+			price: item.price,
+		}));
+	} catch (e) {
+		return new Response("Erreur de parsing JSON", { status: 400 });
+	}
+
+	console.log(items);
+
 	// save the cart to the backend
 	const response = await fetch(`${API_URL}/api/orders`, {
 		method: "POST",
@@ -90,7 +110,7 @@ const ShoppingCartList = () => {
 					</tr>
 				</thead>
 				<tbody>
-					{shoppingCart.items.map((item) => (
+					{shoppingCart.items.map((item: Item) => (
 						<ShoppingCartItem
 							key={item.tree_id}
 							item={item}
@@ -114,7 +134,7 @@ const ShoppingCartList = () => {
 			<div className="validation-button-container">
 				<button
 					className="validation-button"
-					type="submit"
+					type="button"
 					onClick={() => {
 						const formData = new FormData();
 						formData.append("items", JSON.stringify(shoppingCart.items));

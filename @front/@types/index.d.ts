@@ -14,3 +14,9 @@ export type User = {
 	password: string;
 	role: string;
 };
+
+export type Item = {
+	tree_id: number;
+	quantity: string;
+	price: number;
+};
