@@ -7,10 +7,13 @@ import "./shoppingCart.css";
 import { QuantitySelector } from "~/components/shared/components/quantitySelector/quantitySelector";
 import { useState } from "react";
 
-import type { Item } from "@types";
+import type { Item, ShoppingCart } from "@types";
 
 import iconTrash from "~/../assets/icons/iconTrash.svg";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
+// format the price
 const priceFormatter = new Intl.NumberFormat("fr-FR", {
 	style: "currency",
 	currency: "EUR",
@@ -22,8 +25,7 @@ const Currency = ({ value }: CurrencyProps) => {
 
 type CurrencyProps = { value: number };
 
-const API_URL = import.meta.env.VITE_API_URL;
-
+// action by clicking on validate the cart
 export async function action(args: Route.ActionArgs) {
 	// check if a user is logged in
 	const session = await getSession(args.request.headers.get("Cookie"));
@@ -46,7 +48,7 @@ export async function action(args: Route.ActionArgs) {
 	try {
 		const parsedItems = JSON.parse(rawItems.toString());
 
-		// On filtre chaque item pour ne garder que les 3 champs requis
+		// each item is filtered to retain only the three required fields by backend
 		items = parsedItems.map((item: Item) => ({
 			tree_id: item.tree_id,
 			quantity: item.quantity,
@@ -79,7 +81,8 @@ export async function action(args: Route.ActionArgs) {
 	return redirect("/result.url");
 }
 
-export default function ShoppingCart() {
+// page shopping cart
+export default function ShoppingCartPage() {
 	return (
 		<main className="shopping-cart">
 			<div>
@@ -92,8 +95,9 @@ export default function ShoppingCart() {
 	);
 }
 
+// table of items in shopping cart
 const ShoppingCartList = () => {
-	const [shoppingCart, setShoppingCart] = useState(() => cartService.getCart());
+	const [shoppingCart, { updateItem, removeItem }] = useShoppingCart();
 
 	const submit = useSubmit();
 
@@ -112,9 +116,10 @@ const ShoppingCartList = () => {
 						<ShoppingCartItem
 							key={item.tree_id}
 							item={item}
-							onUpdate={() => {
-								setShoppingCart(cartService.getCart());
+							onUpdate={(quantity) => {
+								updateItem(item.tree_id, quantity);
 							}}
+							onRemove={() => removeItem(item.tree_id)}
 						/>
 					))}
 				</tbody>
@@ -147,10 +152,16 @@ const ShoppingCartList = () => {
 	);
 };
 
+// describe one item of the cart
 const ShoppingCartItem = ({
 	item,
 	onUpdate,
-}: { item: any; onUpdate: () => void }) => {
+	onRemove,
+}: {
+	item: Item;
+	onUpdate: (quantity: number) => void;
+	onRemove: () => void;
+}) => {
 	return (
 		<tr>
 			<td className="item-description">
@@ -162,16 +173,14 @@ const ShoppingCartItem = ({
 					<QuantitySelector
 						value={item.quantity}
 						onChange={async (value) => {
-							await cartService.updateItem(item.tree_id, value);
-							onUpdate();
+							onUpdate(value);
 						}}
 					/>
 					<button
 						type="button"
 						className="icon-button"
 						onClick={async () => {
-							await cartService.removeItem(item.tree_id);
-							onUpdate();
+							onRemove();
 						}}
 					>
 						<img src={iconTrash} alt="supprimer" className="icon-trash" />
@@ -184,3 +193,26 @@ const ShoppingCartItem = ({
 		</tr>
 	);
 };
+
+// hook to remove or delete an item
+function useShoppingCart(): [
+	ShoppingCart,
+	{
+		updateItem(tree_id: number, quantity: number): void;
+		removeItem(tree_id: number): void;
+	},
+] {
+	const [shoppingCart, setShoppingCart] = useState(() => cartService.getCart());
+
+	async function updateItem(tree_id: number, quantity: number) {
+		await cartService.updateItem(tree_id, quantity);
+		setShoppingCart(cartService.getCart());
+	}
+
+	async function removeItem(tree_id: number) {
+		await cartService.removeItem(tree_id);
+		setShoppingCart(cartService.getCart());
+	}
+
+	return [shoppingCart, { updateItem, removeItem }];
+}

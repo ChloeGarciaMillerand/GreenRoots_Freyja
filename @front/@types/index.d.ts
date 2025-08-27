@@ -17,6 +17,10 @@ export type User = {
 
 export type Item = {
 	tree_id: number;
-	quantity: string;
+	quantity: number;
 	price: number;
+	image: string;
+	name: string;
 };
+
+export type ShoppingCart = { items: Item[]; total: number };
