@@ -1,5 +1,5 @@
 import type { QueryResult } from 'pg';
-import type { Order } from '../../@types/Order.js';
+import type { Order, OrderWithDetailsAndPayment, PaginatedOrders } from '../../@types/Order.js';
 import DatabaseService from '../Services/database.js';
 
 class OrderModel {
@@ -105,7 +105,7 @@ class OrderModel {
     }
 
     // Get orders with pagination
-    async findWithPagination(limit: number = 10, offset: number = 0): Promise<{orders: Order[], total: number}> {
+    async findWithPagination(limit: number = 10, offset: number = 0): Promise<PaginatedOrders> {
         try {
             // Get total count
             const countQuery = `SELECT COUNT(*) as total FROM "order"`;
@@ -147,7 +147,7 @@ class OrderModel {
     }
 
     // Get order with order lines
-    async findByIdWithOrderLinesAndPayment(id: number): Promise<any | null> {
+    async findByIdWithOrderLinesAndPayment(id: number): Promise<OrderWithDetailsAndPayment | null> {
         try {
             const query = `
                 SELECT 
