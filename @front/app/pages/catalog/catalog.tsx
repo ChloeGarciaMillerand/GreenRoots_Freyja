@@ -92,7 +92,7 @@ export default function Catalog(props: Route.ComponentProps) {
 		'amerique-nord': 'Amérique du Nord',
 		'amerique-sud': 'Amérique du Sud',
 		'afrique': 'Afrique',
-		'australie': 'Australie'
+		'oceanie': 'Océanie'
 	};
 
 	const continentName = loaderData.continent
