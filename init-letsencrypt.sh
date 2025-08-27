@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Configuration
-DOMAIN="greenroots.cloud"
-EMAIL="contact@greenroots.cloud" # Remplacez par votre email
+DOMAIN="greenroots.website"
+EMAIL="contact@greenroots.website" # Remplacez par votre email
 
 # Chemin vers les données certbot
 DATA_PATH="./data/certbot"

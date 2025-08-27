@@ -38,8 +38,8 @@ docker compose -f docker-compose.prod.yml up -d
 ## 🔧 Configuration
 
 ### Domaines supportés
-- `greenroots.cloud` (principal)
-- `www.greenroots.cloud` (alias)
+- `greenroots.website` (principal)
+- `www.greenroots.website` (alias)
 
 ### Ports utilisés
 - **Port 80** : HTTP (redirection vers HTTPS)
@@ -62,9 +62,9 @@ Les certificats sont automatiquement renouvelés :
 ## 🌐 Accès
 
 Une fois configuré :
-- **Application** : https://greenroots.cloud
-- **API** : https://greenroots.cloud/api
-- **Redirection automatique** : http://greenroots.cloud → https://greenroots.cloud
+- **Application** : https://greenroots.website
+- **API** : https://greenroots.website/api
+- **Redirection automatique** : http://greenroots.website → https://greenroots.website
 
 ## 🛠️ Dépannage
 

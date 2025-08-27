@@ -189,7 +189,7 @@ jobs:
           EOF
 
           # Check if SSL certificates exist
-          if [ ! -f "./data/certbot/conf/live/greenroots.cloud/fullchain.pem" ]; then
+          if [ ! -f "./data/certbot/conf/live/greenroots.website/fullchain.pem" ]; then
             echo "SSL certificates not found. Running initial SSL setup..."
             chmod +x ./init-letsencrypt.sh
             ./init-letsencrypt.sh
