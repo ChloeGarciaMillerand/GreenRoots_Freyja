@@ -23,7 +23,7 @@ CREATE TABLE tree (
     tree_id SERIAL PRIMARY KEY,
     name TEXT NOT NULL,
     description TEXT,
-    price DECIMAL(5, 2),
+    price DECIMAL(10, 2),
     image TEXT,
     created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
@@ -83,7 +83,7 @@ CREATE TABLE order_line (
     tree_id INTEGER NOT NULL,
     order_id INTEGER NOT NULL,
     quantity INTEGER NOT NULL CHECK (quantity > 0),
-    price DECIMAL(5, 2) NOT NULL,
+    price DECIMAL(10, 2) NOT NULL,
     CONSTRAINT fk_tree_order FOREIGN KEY (tree_id)
         REFERENCES tree(tree_id)
         ON DELETE RESTRICT,
@@ -110,7 +110,7 @@ CREATE TABLE payment_transaction (
     payment_transaction_id SERIAL PRIMARY KEY,
     order_id INTEGER NOT NULL,
     stripe_payment_id TEXT,
-    amount DECIMAL(5, 2) NOT NULL,
+    amount DECIMAL(10, 2) NOT NULL,
     status TEXT CHECK (status IN ('pending', 'completed', 'failed', 'refunded')),
     created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
