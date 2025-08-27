@@ -167,6 +167,39 @@ const paymentController = {
         }
     },
 
+    async getPaymentHistory(req: Request, res: Response) {
+        try {
+            const { user } = req;
+            const limit = parseInt(req.query.limit as string) || 10;
+            const offset = parseInt(req.query.offset as string) || 0;
+
+            if (!user) {
+                return res.status(401).json({
+                    error: 'User not authenticated'
+                });
+            }
+
+            if (typeof user.user_id !== 'number') {
+                return res.status(400).json({
+                    error: 'Invalid user ID'
+                });
+            }
+
+            const paymentHistory = await paymentModel.getPaymentHistoryByUserId(
+                user.user_id,
+                limit,
+                offset
+            );
+
+            res.json(paymentHistory);
+        } catch (error) {
+            console.error('Error getting payment history:', error);
+            res.status(500).json({
+                error: 'Failed to get payment history'
+            });
+        }
+    },
+
     // Route de test pour simuler le paiement sans front
     async testPayment(req: Request, res: Response) {
         try {

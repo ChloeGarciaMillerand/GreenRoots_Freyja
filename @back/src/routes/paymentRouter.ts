@@ -43,5 +43,6 @@ paymentRouter.post('/api/payments/create-intent', requireAuth, createPaymentInte
 paymentRouter.post('/api/payments/test', requireAuth, testPaymentValidation, paymentController.testPayment);
 paymentRouter.post('/api/payments/webhook', paymentController.webhook); // No validation for webhook (Stripe handles it)
 paymentRouter.get('/api/payments/status/:order_id', requireAuth, paymentStatusValidation, paymentController.getPaymentStatus);
+paymentRouter.get('/api/payments/history', requireAuth, paymentController.getPaymentHistory);
 
 export { paymentRouter };

@@ -1,5 +1,7 @@
 import type { QueryResult } from 'pg';
-import type { PaymentTransaction } from '../../@types/PaymentTransaction.js';
+import type { 
+    PaymentHistoryItem
+} from '../../@types/PaymentTransaction.js';
 import DatabaseService from '../Services/database.js';
 
 class PaymentModel {
@@ -133,6 +135,49 @@ class PaymentModel {
             return result.rows;
         } catch (error) {
             throw new Error(`Error getting all payments by order ID: ${error}`);
+        }
+    }
+
+    // Get payment history for a user
+    async getPaymentHistoryByUserId(userId: number, limit: number = 10, offset: number = 0): Promise<{
+        payments: PaymentHistoryItem[];
+        total: number;
+    }> {
+        try {
+            // Get total count
+            const countQuery = `
+                SELECT COUNT(*) as total 
+                FROM payment_transaction pt
+                INNER JOIN "order" o ON pt.order_id = o.order_id
+                WHERE o.user_id = $1
+            `;
+            const countResult = await this.db.query(countQuery, [userId]);
+            const total = parseInt(countResult.rows[0].total);
+
+            // Get paginated results
+            const query = `
+                SELECT 
+                    pt.payment_transaction_id,
+                    pt.order_id,
+                    pt.amount,
+                    pt.status,
+                    pt.created_at,
+                    pt.stripe_payment_id
+                FROM payment_transaction pt
+                INNER JOIN "order" o ON pt.order_id = o.order_id
+                WHERE o.user_id = $1
+                ORDER BY pt.created_at DESC
+                LIMIT $2 OFFSET $3
+            `;
+            
+            const result: QueryResult<PaymentHistoryItem> = await this.db.query(query, [userId, limit, offset]);
+            
+            return {
+                payments: result.rows,
+                total
+            };
+        } catch (error) {
+            throw new Error(`Error getting payment history: ${error}`);
         }
     }
 }
