@@ -28,7 +28,7 @@ tr {
 	gap: 1rem;
 }
 
-.item-description img {
+.item-image {
 	max-width: 50%;
 }
 
@@ -118,7 +118,7 @@ tr {
 		flex-direction: row;
 	}
 
-	.item-description img {
+	.item-image {
 		max-width: 30%;
 	}
 }

@@ -136,7 +136,7 @@ const ShoppingCartItem = ({
 	return (
 		<tr>
 			<td className="item-description">
-				<img src={item.image} alt={item.name} />
+				<img className="item-image" src={item.image} alt={item.name} />
 				<span className="item-name">{item.name}</span>
 			</td>
 			<td className="item-quantity">
