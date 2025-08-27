@@ -147,16 +147,18 @@ class OrderModel {
     }
 
     // Get order with order lines
-    async findByIdWithOrderLines(id: number): Promise<any | null> {
+    async findByIdWithOrderLinesAndPayment(id: number): Promise<any | null> {
         try {
             const query = `
                 SELECT 
                     o.order_id, o.user_id, o.status, o.created_at as order_created_at, o.updated_at as order_updated_at,
-                    ol.order_line_id, ol.tree_id, ol.quantity, ol.price_per_unit,
-                    t.name as tree_name, t.description as tree_description, t.image as tree_image
+                    ol.order_line_id, ol.tree_id, ol.quantity, ol.price,
+                    t.name as tree_name, t.description as tree_description, t.image as tree_image,
+                    pt.payment_transaction_id, pt.stripe_payment_id, pt.amount, pt.status as payment_status, pt.created_at as payment_created_at
                 FROM "order" o
                 LEFT JOIN order_line ol ON o.order_id = ol.order_id
                 LEFT JOIN tree t ON ol.tree_id = t.tree_id
+                LEFT JOIN payment_transaction pt ON o.order_id = pt.order_id
                 WHERE o.order_id = $1
                 ORDER BY ol.order_line_id
             `;
@@ -179,14 +181,21 @@ class OrderModel {
                         order_line_id: row.order_line_id,
                         tree_id: row.tree_id,
                         quantity: row.quantity,
-                        price_per_unit: row.price_per_unit,
+                        price: row.price,
                         tree: {
                             tree_id: row.tree_id,
                             name: row.tree_name,
                             description: row.tree_description,
                             image: row.tree_image
                         }
-                    }))
+                    })),
+                payment_transaction: firstRow.payment_transaction_id ? {
+                    payment_transaction_id: firstRow.payment_transaction_id,
+                    stripe_payment_id: firstRow.stripe_payment_id,
+                    amount: firstRow.amount,
+                    status: firstRow.payment_status,
+                    created_at: firstRow.payment_created_at
+                } : null
             };
 
             return order;

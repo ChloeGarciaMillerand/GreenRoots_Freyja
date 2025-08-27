@@ -16,20 +16,15 @@ const ordersController = {
     async show(req: Request, res: Response) {
         try {
             const { id } = req.params;
-            const order = await orderModel.findByIdWithOrderLines(Number(id));
-            
+            const order = await orderModel.findByIdWithOrderLinesAndPayment(Number(id));
+
             if (!order) {
                 return res.status(404).json({
                     error: 'Order not found'
                 });
             }
 
-            const payment = await paymentModel.findByOrderId(Number(id));
-
-            res.json({
-                ...order,
-                payment
-            });
+            res.json(order);
         } catch (error) {
             console.error('Error getting order:', error);
             res.status(500).json({
