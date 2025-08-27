@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { ordersController } from "../app/Controllers/ordersController.js";
 import { body, param } from 'express-validator';
 import { handleValidationErrors } from '../app/Middleware/validation.js';
+import { requireAuth } from '../app/Middleware/auth.middleware.js';
 
 const orderRouter = Router();
 
@@ -39,8 +40,8 @@ const idValidation = [
   handleValidationErrors
 ];
 
-orderRouter.post('/api/orders', createOrderValidation, ordersController.create);
-orderRouter.put('/api/orders/:id/status', idValidation, statusValidation, ordersController.updateStatus);
-orderRouter.get('/api/orders/:id', idValidation, ordersController.show);
+orderRouter.post('/api/orders', requireAuth, createOrderValidation, ordersController.create);
+orderRouter.put('/api/orders/:id/status', requireAuth, idValidation, statusValidation, ordersController.updateStatus);
+orderRouter.get('/api/orders/:id', requireAuth, idValidation, ordersController.show);
 
 export { orderRouter };

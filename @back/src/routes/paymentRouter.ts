@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { body, param } from 'express-validator';
 import { paymentController } from '../app/Controllers/paymentController.js';
 import { handleValidationErrors } from '../app/Middleware/validation.js';
+import { requireAuth } from '../app/Middleware/auth.middleware.js';
 
 const paymentRouter: Router = Router();
 
@@ -45,10 +46,10 @@ const paymentStatusValidation = [
   handleValidationErrors
 ];
 
-paymentRouter.post('/api/payments/create-intent', createPaymentIntentValidation, paymentController.createPaymentIntent);
-paymentRouter.post('/api/payments/confirm', confirmPaymentValidation, paymentController.confirmPayment);
-paymentRouter.post('/api/payments/test', testPaymentValidation, paymentController.testPayment);
+paymentRouter.post('/api/payments/create-intent', requireAuth, createPaymentIntentValidation, paymentController.createPaymentIntent);
+paymentRouter.post('/api/payments/confirm', requireAuth, confirmPaymentValidation, paymentController.confirmPayment);
+paymentRouter.post('/api/payments/test', requireAuth, testPaymentValidation, paymentController.testPayment);
 paymentRouter.post('/api/payments/webhook', paymentController.webhook); // No validation for webhook (Stripe handles it)
-paymentRouter.get('/api/payments/status/:order_id', paymentStatusValidation, paymentController.getPaymentStatus);
+paymentRouter.get('/api/payments/status/:order_id', requireAuth, paymentStatusValidation, paymentController.getPaymentStatus);
 
 export { paymentRouter };
