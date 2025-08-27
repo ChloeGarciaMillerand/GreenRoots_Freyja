@@ -7,9 +7,6 @@ import { requireAuth } from '../app/Middleware/auth.middleware.js';
 const orderRouter = Router();
 
 const createOrderValidation = [
-  body('user_id')
-    .isInt({ min: 1 })
-    .withMessage('Valid user ID is required'),
   body('items')
     .isArray({ min: 1 })
     .withMessage('Items must be a non-empty array'),

@@ -2,17 +2,33 @@ import type { Request, Response } from 'express';
 import stripe from '../Services/stripeService.js';
 import { paymentModel } from '../Models/paymentModel.js';
 import { orderLineModel } from '../Models/orderLineModel.js';
+import { orderModel } from '../Models/orderModel.js';
 import { PaymentStatus } from '../../@types/PaymentTransaction.js';
 
 const paymentController = {
     async createPaymentIntent(req: Request, res: Response) {
         try {
             const { currency = 'eur', order_id, payment_method_types } = req.body;
+            const { user } = req;
 
             if (!order_id) {
-                return res.status(400).json({
-                    error: 'Order ID is required'
-                });
+              return res.status(400).json({
+                error: 'Order ID is required'
+              });
+            }
+
+            const order = await orderModel.findById(order_id);
+
+            if (!order) {
+              return res.status(404).json({
+                error: 'Order not found'
+              });
+            }
+
+            if (user?.role !== 'admin' && order.user_id !== user?.user_id) {
+              return res.status(403).json({
+                error: 'Access denied: You can only create payments for your own orders'
+              });
             }
 
             const amount = await orderLineModel.calculateOrderTotal(order_id);
@@ -59,7 +75,6 @@ const paymentController = {
             });
         }
     },
-
 
     async webhook(req: Request, res: Response) {
         const stripeSignature = req.headers['stripe-signature'];
@@ -113,10 +128,25 @@ const paymentController = {
     async getPaymentStatus(req: Request, res: Response) {
         try {
             const { order_id } = req.params;
+            const { user } = req;
 
             if (!order_id) {
                 return res.status(400).json({
                     error: 'Order ID is required'
+                });
+            }
+
+            const order = await orderModel.findById(Number(order_id));
+
+            if (!order) {
+                return res.status(404).json({
+                    error: 'Order not found'
+                });
+            }
+
+            if (user?.role !== 'admin' && order.user_id !== user?.user_id) {
+                return res.status(403).json({
+                    error: 'Access denied: You can only view payment status for your own orders'
                 });
             }
 

@@ -16,11 +16,18 @@ const ordersController = {
     async show(req: Request, res: Response) {
         try {
             const { id } = req.params;
+            const { user } = req;
             const order = await orderModel.findByIdWithOrderLinesAndPayment(Number(id));
 
             if (!order) {
                 return res.status(404).json({
                     error: 'Order not found'
+                });
+            }
+
+            if (user?.role !== 'admin' && order.user_id !== user?.user_id) {
+                return res.status(403).json({
+                    error: 'Access denied: You can only view your own orders'
                 });
             }
 
@@ -35,11 +42,12 @@ const ordersController = {
 
     async create(req: Request, res: Response) {
         try {
-            const { user_id, items } = req.body;
+            const { user } = req;
+            const { items } = req.body;
 
-            if (!user_id || !items?.length) {
+            if (!user || !user.user_id || !items?.length) {
                 return res.status(400).json({
-                    error: 'User ID and items are required'
+                    error: 'User and items are required'
                 });
             }
 
@@ -54,7 +62,7 @@ const ordersController = {
 
             // Create the order
             const order = await orderModel.create({
-                user_id,
+                user_id: user.user_id,
                 status: OrderStatus.PENDING
             });
 
@@ -84,10 +92,18 @@ const ordersController = {
         try {
             const { id } = req.params;
             const { status } = req.body;
+            const { user } = req;
 
             if (!status) {
                 return res.status(400).json({
                     error: 'Status is required'
+                });
+            }
+
+            // Seuls les admins peuvent modifier le statut des commandes
+            if (user?.role !== 'admin') {
+                return res.status(403).json({
+                    error: 'Access denied: Only administrators can update order status'
                 });
             }
 
