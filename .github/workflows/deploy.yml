@@ -2,7 +2,7 @@ name: Deploy GreenRoots
 
 on:
   push:
-    branches: [ main, feat-deploy ]  # Ajoutez votre branche ici
+    branches: [ main ]
   pull_request:
     branches: [ main ]
 
@@ -153,7 +153,7 @@ jobs:
   deploy:
     needs: [test, build-and-push]
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/feat-deploy'
+    if: github.ref == 'refs/heads/main'
 
     environment: production
 
