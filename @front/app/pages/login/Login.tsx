@@ -1,10 +1,14 @@
 import type { Route } from "./+types/Login";
 import LoginForm from "~/components/features/forms/login/LoginForm";
 import { getSession, commitSession } from "~/services/sessions.server";
-import { redirect } from "react-router";
+import { redirect, data } from "react-router";
 import "./Login.css";
 
 const API_URL = import.meta.env.VITE_API_URL;
+
+type Errors = {
+	form?: string;
+};
 
 export async function action({ request }: Route.ActionArgs) {
 	const session = await getSession(request.headers.get("Cookie"));
@@ -25,12 +29,15 @@ export async function action({ request }: Route.ActionArgs) {
 	});
 
 	if (!response.ok) {
-		console.error("Login failed");
-		return;
+		const errors: Errors = {
+			form: "Email ou mot de passe incorrect",
+		};
+
+		return data({ errors }, { status: 401 });
 	}
 
-	const data = await response.json();
-	const token = data.data.token;
+	const dataJson = await response.json();
+	const token = dataJson.data.token;
 
 	session.set("token", token);
 
