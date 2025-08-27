@@ -60,33 +60,6 @@ const paymentController = {
         }
     },
 
-    async confirmPayment(req: Request, res: Response) {
-        try {
-            const { payment_intent_id } = req.body;
-
-            if (!payment_intent_id) {
-                return res.status(400).json({
-                    error: 'Payment intent ID is required'
-                });
-            }
-
-            const paymentIntent = await stripe.paymentIntents.retrieve(payment_intent_id);
-
-            await paymentModel.updateByStripeId(payment_intent_id, {
-                status: paymentIntent.status === 'succeeded' ? PaymentStatus.COMPLETED : PaymentStatus.FAILED
-            });
-
-            res.json({
-                status: paymentIntent.status,
-                payment_intent_id
-            });
-        } catch (error) {
-            console.error('Error confirming payment:', error);
-            res.status(500).json({
-                error: 'Failed to confirm payment'
-            });
-        }
-    },
 
     async webhook(req: Request, res: Response) {
         const stripeSignature = req.headers['stripe-signature'];

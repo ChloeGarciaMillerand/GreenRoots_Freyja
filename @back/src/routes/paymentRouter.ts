@@ -22,13 +22,6 @@ const createPaymentIntentValidation = [
   handleValidationErrors
 ];
 
-// Validation for confirming payment
-const confirmPaymentValidation = [
-  body('payment_intent_id')
-    .notEmpty()
-    .withMessage('Payment intent ID is required'),
-  handleValidationErrors
-];
 
 // Validation for test payment
 const testPaymentValidation = [
@@ -47,7 +40,6 @@ const paymentStatusValidation = [
 ];
 
 paymentRouter.post('/api/payments/create-intent', requireAuth, createPaymentIntentValidation, paymentController.createPaymentIntent);
-paymentRouter.post('/api/payments/confirm', requireAuth, confirmPaymentValidation, paymentController.confirmPayment);
 paymentRouter.post('/api/payments/test', requireAuth, testPaymentValidation, paymentController.testPayment);
 paymentRouter.post('/api/payments/webhook', paymentController.webhook); // No validation for webhook (Stripe handles it)
 paymentRouter.get('/api/payments/status/:order_id', requireAuth, paymentStatusValidation, paymentController.getPaymentStatus);
