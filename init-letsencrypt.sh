@@ -4,6 +4,13 @@
 DOMAIN="greenroots.website"
 EMAIL="contact@greenroots.website" # Remplacez par votre email
 
+echo "### Nettoyage des anciens certificats cassés..."
+docker compose -f docker-compose.prod.yml exec -T certbot rm -f /etc/letsencrypt/renewal/greenroots.website.conf || true
+docker compose -f docker-compose.prod.yml exec -T certbot rm -rf /etc/letsencrypt/live/greenroots.website || true
+docker compose -f docker-compose.prod.yml exec -T certbot rm -rf /etc/letsencrypt/live/greenroots.website-* || true
+docker compose -f docker-compose.prod.yml exec -T certbot rm -rf /etc/letsencrypt/archive/greenroots.website* || true
+docker compose -f docker-compose.prod.yml exec -T certbot rm -f /etc/letsencrypt/renewal/greenroots.website-*.conf || true
+
 echo "### Demande du certificat Let's Encrypt..."
 docker compose -f docker-compose.prod.yml run --rm --entrypoint "\
   certbot certonly --webroot -w /var/www/certbot \
