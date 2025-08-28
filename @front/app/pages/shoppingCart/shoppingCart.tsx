@@ -75,6 +75,10 @@ export async function action(args: Route.ActionArgs) {
 			result?.message || "Erreur lors de l'enregistrement de la commande.";
 		return new Response(message, { status: 500 });
 	}
+
+  const {urlSession} = await response.json();
+
+  return redirect(urlSession);
 }
 
 // page shopping cart

@@ -2,7 +2,6 @@ import 'dotenv/config';
 import type { Request, Response } from "express";
 import { orderModel } from "../Models/orderModel.js";
 import { orderLineModel } from "../Models/orderLineModel.js";
-import { paymentModel } from "../Models/paymentModel.js";
 import { OrderStatus } from "../../@types/Order.js";
 import stripe from "../Services/stripeService.js";
 import { TreeModel } from "../Models/treeModel.js";
@@ -109,7 +108,13 @@ const ordersController = {
 				cancel_url: `${redirectCheckoutPage}?canceled=true`,
 			});
 
-			res.redirect(303, session.url);
+			if (!session.url) {
+				return res.status(500).json({
+					error: "Failed to create Stripe checkout session",
+				});
+			}
+
+      res.status(201).json({ urlSession: session.url });
 		} catch (error) {
 			console.error("Error creating order:", error);
 			res.status(500).json({
