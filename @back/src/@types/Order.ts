@@ -1,10 +1,9 @@
 
 enum OrderStatus {
     PENDING = 'pending',
-    CONFIRMED = 'confirmed',
-    SHIPPED = 'shipped',
-    DELIVERED = 'delivered',
-    CANCELLED = 'cancelled',
+    PROCESSING = 'processing',
+    COMPLETED = 'completed',
+    CANCELLED = 'cancelled'
 }
 
 interface Order {
