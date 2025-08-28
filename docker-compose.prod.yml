@@ -35,12 +35,14 @@ services:
       context: ./@front
       args:
         - VITE_API_URL=${VITE_API_URL}
+        - REDIRECT_CHECKOUT_PAGE=${REDIRECT_CHECKOUT_PAGE}
     ports:
       - "3000:3000"
     depends_on:
       - backend
     environment:
       - VITE_API_URL=${VITE_API_URL}
+      - REDIRECT_CHECKOUT_PAGE=${REDIRECT_CHECKOUT_PAGE}
 
   nginx:
     image: nginx:alpine

@@ -186,6 +186,7 @@ jobs:
           STRIPE_PUBLIC_KEY=${{ secrets.STRIPE_PUBLIC_KEY }}
           STRIPE_SECRET_KEY=${{ secrets.STRIPE_SECRET_KEY }}
           STRIPE_WEBHOOK_SECRET=${{ secrets.STRIPE_WEBHOOK_SECRET }}
+          REDIRECT_CHECKOUT_PAGE=${{ secrets.REDIRECT_CHECKOUT_PAGE }}
           DB_PORT=${{ secrets.DB_PORT || '5432' }}
           EOF
 
