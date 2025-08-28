@@ -97,11 +97,25 @@ const paymentController = {
                 case 'payment_intent.succeeded':
                     const paymentIntent = event.data.object as any;
 
-                    await paymentModel.updateByStripeId(paymentIntent.id, {
-                        status: PaymentStatus.COMPLETED
-                    });
+                    // Vérifier si la transaction existe déjà
+                    const existingPayment = await paymentModel.findByStripeId(paymentIntent.id);
+                    
+                    if (existingPayment) {
+                        // Mettre à jour la transaction existante
+                        await paymentModel.updateByStripeId(paymentIntent.id, {
+                            status: PaymentStatus.COMPLETED
+                        });
+                    } else {
+                        // Créer une nouvelle transaction
+                        await paymentModel.create({
+                            order_id: paymentIntent.metadata.order_id,
+                            stripe_payment_id: paymentIntent.id,
+                            amount: paymentIntent.amount / 100,
+                            status: PaymentStatus.COMPLETED
+                        });
+                    }
 
-                    await orderModel.updateStatusByStripeId(paymentIntent.id, {
+                    await orderModel.updateById(paymentIntent.metadata.order_id, {
                         status: OrderStatus.COMPLETED
                     });
 
@@ -111,12 +125,26 @@ const paymentController = {
                 case 'payment_intent.payment_failed':
                     const failedPayment = event.data.object as any;
 
-                    await paymentModel.updateByStripeId(failedPayment.id, {
-                      status: PaymentStatus.FAILED
-                    });
+                    // Vérifier si la transaction existe déjà
+                    const existingFailedPayment = await paymentModel.findByStripeId(failedPayment.id);
+                    
+                    if (existingFailedPayment) {
+                        // Mettre à jour la transaction existante
+                        await paymentModel.updateByStripeId(failedPayment.id, {
+                            status: PaymentStatus.FAILED
+                        });
+                    } else {
+                        // Créer une nouvelle transaction
+                        await paymentModel.create({
+                            order_id: failedPayment.metadata.order_id,
+                            stripe_payment_id: failedPayment.id,
+                            amount: failedPayment.amount / 100,
+                            status: PaymentStatus.FAILED
+                        });
+                    }
 
-                    await orderModel.updateStatusByStripeId(paymentIntent.id, {
-                      status: OrderStatus.CANCELLED
+                    await orderModel.updateById(failedPayment.metadata.order_id, {
+                        status: OrderStatus.CANCELLED
                     });
 
                     console.log(`Payment failed: ${failedPayment.id}`);
