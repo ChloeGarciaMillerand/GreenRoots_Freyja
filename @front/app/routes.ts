@@ -9,4 +9,5 @@ export default [
 	route("register", "pages/register/register.tsx"),
 	route("about", "pages/about/about.tsx"),
 	route("shopping-cart", "pages/shoppingCart/shoppingCart.tsx"),
+	route("success", "pages/stripeRedirect/success.tsx"),
 ] satisfies RouteConfig;
