@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useSearchParams } from "react-router";
 import { Link } from "react-router";
 import { cartService } from "~/services/cartService";
+import "./sucess.css";
 
 export default function SuccessPage() {
 	const [searchParams] = useSearchParams();
@@ -16,7 +17,7 @@ export default function SuccessPage() {
 	}, [isSuccess]);
 
 	return (
-		<div>
+		<main className="success-error-container">
 			{/* if payment successfull */}
 			{isSuccess === "true" && (
 				<>
@@ -25,7 +26,9 @@ export default function SuccessPage() {
 						Merci pour votre commande. Vous recevrez un mail de confirmation
 						avec les détails de votre commande.
 					</p>
-					<Link to="/">Retour à l'accueil</Link>
+					<Link className="error-success-link" to="/">
+						Retour à l'accueil
+					</Link>
 				</>
 			)}
 			{/* if payment failed */}
@@ -36,10 +39,11 @@ export default function SuccessPage() {
 						Une erreur est survenue lors du traitement de votre paiement.
 						Veuillez réessayer.
 					</p>
-					<Link to="/">Retour à l'accueil</Link>
+					<Link className="error-success-link" to="/shopping-cart">
+						Retour au panier
+					</Link>
 				</>
 			)}
-			u
-		</div>
+		</main>
 	);
 }
