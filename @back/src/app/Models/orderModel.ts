@@ -93,6 +93,29 @@ class OrderModel {
         }
     }
 
+   async updateStatusByStripeId(stripeId: string, orderData: Partial<Omit<Order, 'order_id' | 'created_at' | 'updated_at'>>): Promise<Order | null> {
+       try {
+           if (!orderData.status) {
+              throw new Error('Status field is required');
+           }
+
+           const query = `
+            UPDATE "order" 
+            SET status = $1, 
+                updated_at = NOW()
+            FROM payment_transaction pt 
+            WHERE "order".order_id = pt.order_id 
+              AND pt.stripe_payment_id = $2
+            RETURNING "order".order_id, "order".user_id, "order".status, "order".created_at, "order".updated_at;
+           `;
+
+           const result: QueryResult<Order> = await this.db.query(query, [orderData.status, stripeId]);
+           return result.rows[0] || null;
+       } catch (error) {
+           throw new Error(`Error updating order with Stripe ID ${stripeId}: ${error}`);
+       }
+   }
+
     // Delete order by ID
     async deleteById(id: number): Promise<boolean> {
         try {
