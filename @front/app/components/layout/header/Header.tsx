@@ -9,11 +9,11 @@ import iconCart from "../../../../assets/icons/iconCart.svg";
 
 export function Header(props: { user: any }) {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
-	
+
 	const toggleMenu = () => {
 		setIsMenuOpen(!isMenuOpen);
 	};
-	
+
 	const closeMenu = () => {
 		setIsMenuOpen(false);
 	};
@@ -51,6 +51,11 @@ export function Header(props: { user: any }) {
 												<li>
 													<Link to="/" onClick={closeMenu}>
 														{props.user.email}
+													</Link>
+												</li>
+												<li>
+													<Link to="/orders" onClick={closeMenu}>
+														Mes commandes
 													</Link>
 												</li>
 												<li>

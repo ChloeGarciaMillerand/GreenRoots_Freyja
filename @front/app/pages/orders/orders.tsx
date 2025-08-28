@@ -1,7 +1,113 @@
-import React, { useState } from 'react';
-import './orders.css';
+import { Link, redirect } from "react-router";
+import type { Route } from "./+types/orders";
+import { getSession } from "~/services/sessions.server";
+import { useState } from "react";
 
-// Types pour TypeScript
+import "./orders.css";
+
+export function meta() {
+    return [
+        {
+            title: "GreenRoots - Mes commandes",
+        },
+        {
+            name: "description",
+            content: "Consultez et suivez l'évolution de vos commandes d'arbres parrainés.",
+        },
+    ];
+}
+
+export async function loader(params: Route.LoaderArgs) {
+    // Check authentication first
+    const session = await getSession(params.request.headers.get("Cookie"));
+    const token = session.get("token");
+
+    if (!token) {
+        // Redirect to login if not authenticated
+        throw redirect("/login");
+    }
+
+    const apiUrl = import.meta.env.VITE_API_URL;
+    const url = new URL(params.request.url);
+    const limitParam = url.searchParams.get("limit");
+    const limit = limitParam ? Number.parseInt(limitParam) : 3;
+    const pageParam = url.searchParams.get("page");
+    const page = pageParam ? Number.parseInt(pageParam) : 1;
+
+    try {
+        const response = await fetch(`${apiUrl}/orders?limit=${limit}&page=${page}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (response.status === 401) {
+            // Token expired or invalid, redirect to login
+            throw redirect("/login");
+        }
+
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+        }
+
+        const json = await response.json();
+
+        // Transformer les données pour correspondre à l'interface frontend
+        const adaptedOrders = json.data.map((order: any) => ({
+            id: order.order_id,
+            number: `CMD-${order.order_id.toString().padStart(4, '0')}`,
+            date: new Date(order.created_at).toLocaleDateString('fr-FR'),
+            status: getStatusLabel(order.status),
+            total: calculateOrderTotal(order.order_lines),
+            items: order.order_lines?.map((line: any) => ({
+                product: `${line.tree?.name} - ${line.tree?.projects?.[0]?.name}`,
+                quantity: line.quantity,
+                unitPrice: `${line.price}€`,
+                totalPrice: `${(line.price * line.quantity).toFixed(2)}€`
+            })) || []
+        }));
+
+        return {
+            orders: adaptedOrders,
+            pages: json.pagination.pages,
+            page: json.pagination.page,
+            limit
+        };
+
+    } catch (error) {
+        // Re-throw redirect responses
+        if (error instanceof Response && error.status === 302) {
+            throw error;
+        }
+
+        console.error('Orders loader error:', error);
+        return {
+            orders: [],
+            pages: 1,
+            page,
+            limit
+        };
+    }
+}
+
+// Helper functions
+function getStatusLabel(status: string): string {
+    const statusMap: Record<string, string> = {
+        'pending': 'En cours',
+        'processing': 'En préparation',
+        'completed': 'Livré',
+        'cancelled': 'Annulé'
+    };
+    return statusMap[status] || status;
+}
+
+function calculateOrderTotal(orderLines: any[]): string {
+    const total = orderLines?.reduce((sum, line) => sum + (line.price * line.quantity), 0) || 0;
+    return `${total.toFixed(2)}€`;
+}
+
+// Types
 interface OrderItem {
     product: string;
     quantity: number;
@@ -18,184 +124,7 @@ interface Order {
     items: OrderItem[];
 }
 
-// Données d'exemple pour les commandes basées sur la vraie BDD
-const mockOrders: Order[] = [
-    {
-        id: 1,
-        number: "CMD-2024-001",
-        date: "15/08/2024",
-        status: "En cours",
-        total: "89.50€",
-        items: [
-            { product: "Chêne - Reforestation Bretagne", quantity: 2, unitPrice: "15.50€", totalPrice: "31.00€" },
-            { product: "Eucalyptus - Reforestation Bretagne", quantity: 2, unitPrice: "30.00€", totalPrice: "60.00€" }
-        ]
-    },
-    {
-        id: 2,
-        number: "CMD-2024-002",
-        date: "12/08/2024",
-        status: "Livré",
-        total: "125.00€",
-        items: [
-            { product: "Baobab - Sauvegarde Baobabs", quantity: 5, unitPrice: "25.00€", totalPrice: "125.00€" }
-        ]
-    },
-    {
-        id: 3,
-        number: "CMD-2024-003",
-        date: "10/08/2024",
-        status: "En préparation",
-        total: "135.00€",
-        items: [
-            { product: "Palissandre - Sauvegarde Baobabs", quantity: 3, unitPrice: "45.00€", totalPrice: "135.00€" }
-        ]
-    },
-    {
-        id: 4,
-        number: "CMD-2024-004",
-        date: "08/08/2024",
-        status: "Annulé",
-        total: "90.00€",
-        items: [
-            { product: "Dipterocarpus - Bornéo Emergency", quantity: 2, unitPrice: "45.00€", totalPrice: "90.00€" }
-        ]
-    },
-    {
-        id: 5,
-        number: "CMD-2024-005",
-        date: "05/08/2024",
-        status: "Livré",
-        total: "152.00€",
-        items: [
-            { product: "Teck birman - Myanmar Forest Rescue", quantity: 4, unitPrice: "38.00€", totalPrice: "152.00€" }
-        ]
-    },
-    {
-        id: 6,
-        number: "CMD-2024-006",
-        date: "02/08/2024",
-        status: "En cours",
-        total: "126.00€",
-        items: [
-            { product: "Narra philippin - Philippines Coral Triangle", quantity: 3, unitPrice: "42.00€", totalPrice: "126.00€" }
-        ]
-    },
-    {
-        id: 7,
-        number: "CMD-2024-007",
-        date: "30/07/2024",
-        status: "Livré",
-        total: "110.00€",
-        items: [
-            { product: "Acajou du Brésil - Amazonie Colombienne", quantity: 2, unitPrice: "55.00€", totalPrice: "110.00€" }
-        ]
-    },
-    {
-        id: 8,
-        number: "CMD-2024-008",
-        date: "28/07/2024",
-        status: "En préparation",
-        total: "189.00€",
-        items: [
-            { product: "Cecropia - Amazonie Colombienne", quantity: 3, unitPrice: "25.00€", totalPrice: "75.00€" },
-            { product: "Épinette noire - Forêt Boréale Canada", quantity: 2, unitPrice: "28.00€", totalPrice: "56.00€" },
-            { product: "Peuplier faux-tremble - Californie Post-Feux", quantity: 2, unitPrice: "22.00€", totalPrice: "44.00€" }
-        ]
-    },
-    {
-        id: 9,
-        number: "CMD-2024-009",
-        date: "25/07/2024",
-        status: "Livré",
-        total: "105.00€",
-        items: [
-            { product: "Eucalyptus à gomme rouge - Bushfire Recovery", quantity: 3, unitPrice: "35.00€", totalPrice: "105.00€" }
-        ]
-    },
-    {
-        id: 10,
-        number: "CMD-2024-010",
-        date: "22/07/2024",
-        status: "En cours",
-        total: "140.00€",
-        items: [
-            { product: "Chêne-liège - Montado Portugais", quantity: 2, unitPrice: "40.00€", totalPrice: "80.00€" },
-            { product: "Balanites - Sahel Vert Sénégal", quantity: 3, unitPrice: "20.00€", totalPrice: "60.00€" }
-        ]
-    }
-];
-
-// Composant pour une commande individuelle dans la liste
-const OrderItem: React.FC<{ order: Order; onViewDetails: (order: Order) => void }> = ({ order, onViewDetails }) => {
-    return (
-        <div className="order-item">
-            <div className="order-item-content">
-                <div className="order-item-info">
-                    <div className="order-item-main">
-                        <span className="order-number">{order.number}</span>
-                        <span className="order-date">{order.date}</span>
-                        <span className="order-total">{order.total}</span>
-                    </div>
-                    <div className={`order-status status-${order.status.toLowerCase().replace(' ', '-')}`}>
-                        {order.status}
-                    </div>
-                </div>
-                <button
-                    onClick={() => onViewDetails(order)}
-                    className="order-details-btn"
-                >
-                    Voir le détail
-                </button>
-            </div>
-        </div>
-    );
-};
-
-// Composant liste des commandes avec pagination
-const OrdersList: React.FC<{
-    orders: Order[];
-    onViewDetails: (order: Order) => void;
-    currentPage: number;
-    totalPages: number;
-    onPageChange: (page: number) => void;
-}> = ({ orders, onViewDetails, currentPage, totalPages, onPageChange }) => {
-    const ordersPerPage = 3;
-    const startIndex = (currentPage - 1) * ordersPerPage;
-    const displayedOrders = orders.slice(startIndex, startIndex + ordersPerPage);
-
-    return (
-        <div className="orders-list">
-            <h1 className="orders-title">Mes Commandes</h1>
-
-            {displayedOrders.map(order => (
-                <OrderItem key={order.id} order={order} onViewDetails={onViewDetails} />
-            ))}
-
-            <div className="pagination">
-                {currentPage > 1 && (
-                    <button
-                        onClick={() => onPageChange(currentPage - 1)}
-                        className="pagination-btn"
-                    >
-                        Page précédente
-                    </button>
-                )}
-
-                {currentPage < totalPages && (
-                    <button
-                        onClick={() => onPageChange(currentPage + 1)}
-                        className="pagination-btn"
-                    >
-                        Page suivante
-                    </button>
-                )}
-            </div>
-        </div>
-    );
-};
-
-// Composant détail d'une commande
+// Order Detail Component
 const OrderDetail: React.FC<{ order: Order; onBack: () => void }> = ({ order, onBack }) => (
     <div className="order-detail">
         <div className="order-detail-header">
@@ -243,53 +172,95 @@ const OrderDetail: React.FC<{ order: Order; onBack: () => void }> = ({ order, on
     </div>
 );
 
-// Composant principal
-const Orders: React.FC = () => {
-    const [currentView, setCurrentView] = useState<'orders' | 'detail'>('orders');
-    const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
-    const [currentPage, setCurrentPage] = useState<number>(1);
-
-    const handleViewDetails = (order: Order) => {
-        setSelectedOrder(order);
-        setCurrentView('detail');
-    };
-
-    const handleBack = () => {
-        setCurrentView('orders');
-        setSelectedOrder(null);
-    };
-
-    const handlePageChange = (newPage: number) => {
-        setCurrentPage(newPage);
-    };
-
-    const ordersPerPage = 3;
-    const totalPages = Math.ceil(mockOrders.length / ordersPerPage);
-
+// Order Item Component
+const OrderItem: React.FC<{ order: Order; onViewDetails: (order: Order) => void }> = ({ order, onViewDetails }) => {
     return (
-        <div className="orders-container">
-            <div className="orders-modal">
-                <main className="orders-main">
-                    {currentView === 'orders' ? (
-                        <OrdersList
-                            orders={mockOrders}
-                            onViewDetails={handleViewDetails}
-                            currentPage={currentPage}
-                            totalPages={totalPages}
-                            onPageChange={handlePageChange}
-                        />
-                    ) : (
-                        selectedOrder && (
-                            <OrderDetail
-                                order={selectedOrder}
-                                onBack={handleBack}
-                            />
-                        )
-                    )}
-                </main>
+        <div className="order-item">
+            <div className="order-item-content">
+                <div className="order-item-info">
+                    <div className="order-item-main">
+                        <span className="order-number">{order.number}</span>
+                        <span className="order-date">{order.date}</span>
+                        <span className="order-total">{order.total}</span>
+                    </div>
+                    <div className={`order-status status-${order.status.toLowerCase().replace(' ', '-')}`}>
+                        {order.status}
+                    </div>
+                </div>
+                <button
+                    onClick={() => onViewDetails(order)}
+                    className="order-details-btn"
+                >
+                    Voir le détail
+                </button>
             </div>
         </div>
     );
 };
 
-export default Orders;
+export default function Orders(props: Route.ComponentProps) {
+    const { loaderData } = props;
+    const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
+
+    const handleViewDetails = (order: Order) => {
+        setSelectedOrder(order);
+    };
+
+    const handleBack = () => {
+        setSelectedOrder(null);
+    };
+
+    return (
+        <main className="orders-container">
+            <div className="orders-modal">
+                <div className="orders-main">
+                    {selectedOrder ? (
+                        <OrderDetail order={selectedOrder} onBack={handleBack} />
+                    ) : (
+                        <div className="orders-list">
+                            <h1 className="orders-title">Mes Commandes</h1>
+
+                            {loaderData.orders.length > 0 ? (
+                                <div className="orders-grid">
+                                    {loaderData.orders.map((order) => (
+                                        <OrderItem key={order.id} order={order} onViewDetails={handleViewDetails} />
+                                    ))}
+                                </div>
+                            ) : (
+                                <div className="empty-state">
+                                    <h2>Aucune commande trouvée</h2>
+                                    <p>Vous n'avez pas encore passé de commande.</p>
+                                    <Link to="/catalog" className="navigation-pages-links">
+                                        Découvrir nos arbres
+                                    </Link>
+                                </div>
+                            )}
+
+                            {loaderData.orders.length > 0 && loaderData.pages > 1 && (
+                                <div className="pagination">
+                                    {loaderData.page > 1 && (
+                                        <Link
+                                            to={`?page=${loaderData.page - 1}&limit=${loaderData.limit}`}
+                                            className="navigation-pages-links"
+                                        >
+                                            Page précédente
+                                        </Link>
+                                    )}
+
+                                    {loaderData.page < loaderData.pages && (
+                                        <Link
+                                            to={`?page=${loaderData.page + 1}&limit=${loaderData.limit}`}
+                                            className="navigation-pages-links"
+                                        >
+                                            Page suivante
+                                        </Link>
+                                    )}
+                                </div>
+                            )}
+                        </div>
+                    )}
+                </div>
+            </div>
+        </main>
+    );
+}
