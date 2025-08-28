@@ -4,6 +4,7 @@ import { paymentModel } from '../Models/paymentModel.js';
 import { orderLineModel } from '../Models/orderLineModel.js';
 import { orderModel } from '../Models/orderModel.js';
 import { PaymentStatus } from '../../@types/PaymentTransaction.js';
+import { OrderStatus } from '../../@types/Order.js';
 
 const paymentController = {
     async createPaymentIntent(req: Request, res: Response) {
@@ -95,17 +96,29 @@ const paymentController = {
 
                 case 'payment_intent.succeeded':
                     const paymentIntent = event.data.object as any;
+
                     await paymentModel.updateByStripeId(paymentIntent.id, {
                         status: PaymentStatus.COMPLETED
                     });
+
+                    await orderModel.updateStatusByStripeId(paymentIntent.id, {
+                        status: OrderStatus.COMPLETED
+                    });
+
                     console.log(`Payment succeeded: ${paymentIntent.id}`);
                     break;
 
                 case 'payment_intent.payment_failed':
                     const failedPayment = event.data.object as any;
+
                     await paymentModel.updateByStripeId(failedPayment.id, {
-                        status: PaymentStatus.FAILED
+                      status: PaymentStatus.FAILED
                     });
+
+                    await orderModel.updateStatusByStripeId(paymentIntent.id, {
+                      status: OrderStatus.CANCELLED
+                    });
+
                     console.log(`Payment failed: ${failedPayment.id}`);
                     break;
 
