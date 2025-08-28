@@ -52,6 +52,7 @@ header {
 }
 
 .account-trigger {
+	all: unset;
 	display: flex;
 	align-items: center;
 	cursor: pointer;

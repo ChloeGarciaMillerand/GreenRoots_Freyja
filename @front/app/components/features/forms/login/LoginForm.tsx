@@ -1,9 +1,16 @@
-import { Form } from "react-router";
+import { Form, useActionData } from "react-router";
 import "./LoginForm.css";
 
 function LoginForm() {
+	const actionData = useActionData();
+
 	return (
 		<Form method="POST">
+			{actionData?.errors?.form ? (
+				<p className="register-error-text" role="alert">
+					{actionData?.errors?.form}
+				</p>
+			) : null}
 			<div className="form-container">
 				<div className="field">
 					<label htmlFor="email">Email:</label>
