@@ -9,21 +9,23 @@ import type { TreeCardProps } from "@types";
 export function meta() {
 	return [
 		{
-			title: "GreenRoots - plantez des arbres pour lutter contre la déforestation",
+			title:
+				"GreenRoots - plantez des arbres pour lutter contre la déforestation",
 		},
 		{
 			name: "description",
-			content: "Parrainez un arbre dans un de nos projets de notre reforestation à travers le monde",
+			content:
+				"Parrainez un arbre dans un de nos projets de notre reforestation à travers le monde",
 		},
 	];
 }
 
 // Loader Remix -> s'exécute côté serveur
 export async function loader() {
-	const apiUrl = "http://localhost:3001"; // service docker backend
+	const apiUrl = import.meta.env.VITE_API_URL; // service docker backend
 
 	try {
-		const response = await fetch(`${apiUrl}/api/trees/homepage?limit=3`);
+		const response = await fetch(`${apiUrl}/trees/homepage?limit=3`);
 
 		if (!response.ok) {
 			throw new Error(`HTTP ${response.status}`);
@@ -50,7 +52,10 @@ export async function loader() {
 		return { trees: transformedTrees };
 	} catch (err) {
 		console.error("Error fetching trees in loader:", err);
-		return { trees: [], error: err instanceof Error ? err.message : "Erreur inconnue" };
+		return {
+			trees: [],
+			error: err instanceof Error ? err.message : "Erreur inconnue",
+		};
 	}
 }
 
@@ -83,7 +88,9 @@ export default function Home({ loaderData }: Route.ComponentProps) {
 				<div className="tree-card-container">
 					<ul>
 						{error ? (
-							<li><p>Erreur: {error}</p></li>
+							<li>
+								<p>Erreur: {error}</p>
+							</li>
 						) : trees.length > 0 ? (
 							trees.map((tree: TreeCardProps) => (
 								<li key={tree.tree_id}>
@@ -98,7 +105,9 @@ export default function Home({ loaderData }: Route.ComponentProps) {
 								</li>
 							))
 						) : (
-							<li><p>Aucun arbre disponible pour le moment.</p></li>
+							<li>
+								<p>Aucun arbre disponible pour le moment.</p>
+							</li>
 						)}
 					</ul>
 				</div>

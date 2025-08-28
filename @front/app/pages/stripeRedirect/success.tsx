@@ -6,10 +6,10 @@ import { cartService } from "~/services/cartService";
 export default function SuccessPage() {
 	const [searchParams] = useSearchParams();
 	const isSuccess = searchParams.get("success");
-	const isCanceled = searchParams.get("canceled");
+	const isError = searchParams.get("error");
 
 	useEffect(() => {
-		if (isSuccess) {
+		if (isSuccess === "true") {
 			// if payment successfull -> delete cart
 			cartService.clearCart();
 		}
@@ -18,21 +18,28 @@ export default function SuccessPage() {
 	return (
 		<div>
 			{/* if payment successfull */}
-			{isSuccess && <h2>Commande confirmée!</h2>}
-			{isSuccess && (
-				<p>
-					Merci pour votre commande. Vous recevrez un mail de confirmation avec
-					les détails de votre commande.
-				</p>
+			{isSuccess === "true" && (
+				<>
+					<h2>Commande confirmée!</h2>
+					<p>
+						Merci pour votre commande. Vous recevrez un mail de confirmation
+						avec les détails de votre commande.
+					</p>
+					<Link to="/">Retour à l'accueil</Link>
+				</>
 			)}
-			<Link to="/">Retour à l'accueil</Link>
-
 			{/* if payment failed */}
-			{isCanceled && <h2>Commande non confirmée...</h2>}
-			{isCanceled && (
-				<p>Nous sommes désolés, le paiement n'a pas été validé.</p>
+			{isError === "true" && (
+				<>
+					<h2>Une erreur est survenue</h2>
+					<p>
+						Une erreur est survenue lors du traitement de votre paiement.
+						Veuillez réessayer.
+					</p>
+					<Link to="/">Retour à l'accueil</Link>
+				</>
 			)}
-			<Link to="/shopping-cart">Retour au panier</Link>
+			u
 		</div>
 	);
 }

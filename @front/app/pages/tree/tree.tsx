@@ -29,11 +29,11 @@ export function meta() {
 }
 
 export async function loader(args: Route.LoaderArgs) {
-	const apiUrl = "http://backend:3001";
+	const apiUrl = import.meta.env.VITE_API_URL;
 	const { params } = args;
 	const treeId = params.id;
 
-	const response = await fetch(`${apiUrl}/api/trees/${treeId}`);
+	const response = await fetch(`${apiUrl}/trees/${treeId}`);
 	const json = await response.json();
 
 	const tree = json.data;

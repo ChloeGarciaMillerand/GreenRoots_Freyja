@@ -22,7 +22,7 @@ export function meta() {
 }
 
 export async function loader(params: Route.LoaderArgs) {
-	const apiUrl = "http://localhost:3001";
+	const apiUrl = import.meta.env.VITE_API_URL;
 
 	// get the url params
 	const url = new URL(params.request.url);
@@ -39,10 +39,10 @@ export async function loader(params: Route.LoaderArgs) {
 
 	const continent = params.params.continent;
 
-	let treeApiUrl = `${apiUrl}/api/trees`;
+	let treeApiUrl = `${apiUrl}/trees`;
 
 	if (continent) {
-		treeApiUrl = `${apiUrl}/api/trees/continent/${continent}`;
+		treeApiUrl = `${apiUrl}/trees/continent/${continent}`;
 	}
 
 	try {
@@ -62,8 +62,8 @@ export async function loader(params: Route.LoaderArgs) {
 			name: tree.name,
 			price: tree.price,
 			image: tree.image,
-			localization: tree.projects?.[0]?.localization?.country || 'Non spécifié',
-			project_name: tree.projects?.[0]?.name || 'Projet général'
+			localization: tree.projects?.[0]?.localization?.country || "Non spécifié",
+			project_name: tree.projects?.[0]?.name || "Projet général",
 		}));
 
 		// access to pages = total number of available pages
@@ -71,13 +71,13 @@ export async function loader(params: Route.LoaderArgs) {
 
 		return { trees: adaptedTrees, pages, page, limit, continent };
 	} catch (error) {
-		console.error('Loader error:', error);
+		console.error("Loader error:", error);
 		return {
 			trees: [],
 			pages: 1,
 			page,
 			limit,
-			continent
+			continent,
 		};
 	}
 }
@@ -87,12 +87,12 @@ export default function Catalog(props: Route.ComponentProps) {
 
 	// Mapping pour afficher les noms français des continents
 	const continentNames: Record<string, string> = {
-		'europe': 'Europe',
-		'asie': 'Asie',
-		'amerique-nord': 'Amérique du Nord',
-		'amerique-sud': 'Amérique du Sud',
-		'afrique': 'Afrique',
-		'oceanie': 'Océanie'
+		europe: "Europe",
+		asie: "Asie",
+		"amerique-nord": "Amérique du Nord",
+		"amerique-sud": "Amérique du Sud",
+		afrique: "Afrique",
+		oceanie: "Océanie",
 	};
 
 	const continentName = loaderData.continent
@@ -101,7 +101,7 @@ export default function Catalog(props: Route.ComponentProps) {
 
 	const pageTitle = continentName
 		? `Nos arbres - ${continentName}`
-		: 'Nos arbres - Monde entier';
+		: "Nos arbres - Monde entier";
 
 	return (
 		<main>
