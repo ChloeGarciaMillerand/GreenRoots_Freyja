@@ -25,6 +25,7 @@ CREATE TABLE tree (
     description TEXT,
     price DECIMAL(10, 2),
     image TEXT,
+    price_id TEXT,
     created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
 );
