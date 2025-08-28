@@ -20,7 +20,7 @@ export function meta() {
 
 // Loader Remix -> s'exécute côté serveur
 export async function loader() {
-	const apiUrl = "http://backend:3001"; // service docker backend
+	const apiUrl = "http://localhost:3001"; // service docker backend
 
 	try {
 		const response = await fetch(`${apiUrl}/api/trees/homepage?limit=3`);

@@ -16,6 +16,7 @@ export type User = {
 };
 
 export type Item = {
+	map(arg0: (item: any) => { price: any; quantity: any }): unknown;
 	tree_id: number;
 	quantity: number;
 	price: number;

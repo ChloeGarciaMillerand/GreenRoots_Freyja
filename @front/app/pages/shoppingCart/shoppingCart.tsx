@@ -5,7 +5,7 @@ import { getSession } from "~/services/sessions.server";
 import type { Route } from "./+types/shoppingCart";
 import "./shoppingCart.css";
 import { QuantitySelector } from "~/components/shared/components/quantitySelector/quantitySelector";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import type { Item, ShoppingCart } from "@types";
 
@@ -75,14 +75,27 @@ export async function action(args: Route.ActionArgs) {
 			result?.message || "Erreur lors de l'enregistrement de la commande.";
 		return new Response(message, { status: 500 });
 	}
-
-	const order = await response.json();
-	// redirect to Stripe Url
-	return redirect("/result.url");
 }
 
 // page shopping cart
 export default function ShoppingCartPage() {
+	const [message, setMessage] = useState("");
+	// redirect to Stripe Url
+
+	useEffect(() => {
+		const query = new URLSearchParams(window.location.search);
+
+		if (query.get("success")) {
+			setMessage("Order placed! You will receive an email confirmation.");
+		}
+
+		if (query.get("canceled")) {
+			setMessage(
+				"Order canceled -- continue to shop around and checkout when you're ready.",
+			);
+		}
+	}, []);
+
 	return (
 		<main className="shopping-cart">
 			<div>
