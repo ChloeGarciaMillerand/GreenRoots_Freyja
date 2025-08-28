@@ -1,3 +1,8 @@
+INSERT INTO "user" (first_name, last_name, email, password, role) VALUES
+('Jean', 'Dupont', 'jean@email.com', '$argon2id$v=19$m=65536,t=3,p=1$48vM+BWMFWxYYzEq5ou6DQ$G+bv1ZAR4jD1atT3htKPVsG+O7qDzmHQ+mLZ8nxg5TE', 'client'),
+('Marie', 'Martin', 'marie@email.com', '$argon2id$v=19$m=65536,t=3,p=1$CLey8gljg72Dsc/HJISuPA$TQIR6DvYVyVS5UXhwvF8dHTd4J/uzGGHTkL4GzsMnSM', 'client'),
+('Admin', 'Site', 'admin@greenroots.website', '$argon2id$v=19$m=65536,t=3,p=1$3DMAh7YpWf1ukFCctNiZ2g$rdZHJ65A5j/YGfn7jOxNTYmODNxYfRv8pPOz/qmdrNQ', 'admin');
+
 INSERT INTO localization (country, continent) VALUES
                                                   ('France', 'Europe'),
                                                   ('Madagascar', 'Afrique'),
