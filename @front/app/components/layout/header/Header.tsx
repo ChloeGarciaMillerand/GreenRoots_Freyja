@@ -60,6 +60,11 @@ export function Header(props: { user: User | null }) {
 													</Link>
 												</li>
 												<li>
+													<Link to="/orders" onClick={closeMenu}>
+														Mes commandes
+													</Link>
+												</li>
+												<li>
 													<Form method="post" action="/logout">
 														<button
 															type="submit"

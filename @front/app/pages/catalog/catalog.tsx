@@ -22,7 +22,8 @@ export function meta() {
 }
 
 export async function loader(params: Route.LoaderArgs) {
-	const apiUrl = "http://backend:3001";
+	// Use environment variable for API URL
+	const apiUrl = import.meta.env.VITE_API_URL;
 
 	// get the url params
 	const url = new URL(params.request.url);
@@ -39,10 +40,10 @@ export async function loader(params: Route.LoaderArgs) {
 
 	const continent = params.params.continent;
 
-	let treeApiUrl = `${apiUrl}/api/trees`;
+	let treeApiUrl = `${apiUrl}/trees`;
 
 	if (continent) {
-		treeApiUrl = `${apiUrl}/api/trees/continent/${continent}`;
+		treeApiUrl = `${apiUrl}/trees/continent/${continent}`;
 	}
 
 	try {
