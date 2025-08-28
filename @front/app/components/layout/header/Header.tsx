@@ -6,14 +6,15 @@ import { Form, Link } from "react-router";
 import logo from "../../../../assets/icons/logo.svg";
 import iconAccount from "../../../../assets/icons/iconAccount.svg";
 import iconCart from "../../../../assets/icons/iconCart.svg";
+import type { User } from "@types";
 
-export function Header(props: { user: any }) {
+export function Header(props: { user: User | null }) {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
-	
+
 	const toggleMenu = () => {
 		setIsMenuOpen(!isMenuOpen);
 	};
-	
+
 	const closeMenu = () => {
 		setIsMenuOpen(false);
 	};
@@ -41,9 +42,14 @@ export function Header(props: { user: any }) {
 								onMouseEnter={() => setIsMenuOpen(true)}
 								onMouseLeave={closeMenu}
 							>
-								<div className="account-trigger" onClick={toggleMenu}>
+								<button
+									className="account-trigger"
+									onClick={toggleMenu}
+									type="submit"
+									aria-label="Ouvrir le menu utilisateur"
+								>
 									<img src={iconAccount} alt="Compte personnel" />
-								</div>
+								</button>
 								{isMenuOpen && (
 									<ul className="account-submenu">
 										{props.user ? (
@@ -55,7 +61,11 @@ export function Header(props: { user: any }) {
 												</li>
 												<li>
 													<Form method="post" action="/logout">
-														<button type="submit" onClick={closeMenu}>
+														<button
+															type="submit"
+															onMouseDown={(e) => e.stopPropagation()}
+															onClick={() => setTimeout(closeMenu, 100)}
+														>
 															Se déconnecter
 														</button>
 													</Form>
