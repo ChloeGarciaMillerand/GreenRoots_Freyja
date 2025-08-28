@@ -56,15 +56,15 @@ class OrderModel {
     }
 
     // Update order by ID
-    async updateById(id: number, orderData: Partial<Omit<Order, 'order_id' | 'created_at' | 'updated_at'>>): Promise<Order | null> {
+    async updateById(id: number, orderData: Partial<Omit<Order, 'user_id' | 'created_at' | 'updated_at'>>): Promise<Order | null> {
         try {
             const updateFields: string[] = [];
             const values: any[] = [];
             let paramCount = 1;
 
-            if (orderData.user_id !== undefined) {
-                updateFields.push(`user_id = $${paramCount++}`);
-                values.push(orderData.user_id);
+            if (orderData.order_id !== undefined) {
+                updateFields.push(`order_id = $${paramCount++}`);
+                values.push(orderData.order_id);
             }
 
             if (orderData.status !== undefined) {
