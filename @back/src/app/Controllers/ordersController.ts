@@ -104,6 +104,11 @@ const ordersController = {
 			const session = await stripe.checkout.sessions.create({
 				line_items,
 				mode: "payment",
+        payment_intent_data: {
+          metadata: {
+            order_id: order.order_id!
+          }
+        },
 				success_url: `${redirectCheckoutPage}?success=true`,
 				cancel_url: `${redirectCheckoutPage}?canceled=true`,
 			});
