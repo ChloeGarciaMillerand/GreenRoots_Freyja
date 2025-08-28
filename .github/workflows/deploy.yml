@@ -173,6 +173,7 @@ jobs:
 
           # Create/update .env file with production values
           cat > .env << EOF
+          VITE_API_URL=${{ secrets.VITE_API_URL }}
           NODE_ENV=production
           POSTGRES_DB=${{ secrets.POSTGRES_DB }}
           POSTGRES_USER=${{ secrets.POSTGRES_USER }}
