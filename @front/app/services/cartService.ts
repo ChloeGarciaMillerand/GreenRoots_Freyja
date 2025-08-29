@@ -1,7 +1,7 @@
 class CartService {
     constructor() {
         this.STORAGE_KEY = 'greenroots_cart';
-        this.API_BASE = 'http://backend:3001/api/cart';
+        this.API_BASE = `${import.meta.env.VITE_API_URL}/api/cart`;
     }
 
     // log cart contents
