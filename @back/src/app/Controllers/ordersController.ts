@@ -164,26 +164,46 @@ const ordersController = {
 		}
 	},
 
-	// Lister les commandes de l'utilisateur connecté
-	async getUserOrders(req: Request, res: Response) {
-		try {
-			const { user } = req;
+    // Lister les commandes de l'utilisateur connecté avec pagination
+    async getUserOrders(req: Request, res: Response) {
+        try {
+            const { user } = req;
 
-			if (!user || !user.user_id) {
-				return res.status(401).json({
-					error: "User authentication required",
-				});
-			}
+            if (!user || !user.user_id) {
+                return res.status(401).json({
+                    error: 'User authentication required'
+                });
+            }
 
-			const orders = await orderModel.findByUserId(user.user_id);
-			res.json(orders);
-		} catch (error) {
-			console.error("Error getting user orders:", error);
-			res.status(500).json({
-				error: "Failed to retrieve user orders",
-			});
-		}
-	},
+            // Récupération des paramètres de pagination
+            const limit = parseInt(req.query.limit as string) || 3;
+            const page = parseInt(req.query.page as string) || 1;
+            const offset = (page - 1) * limit;
+
+            // Récupérer toutes les commandes avec détails
+            const allOrders = await orderModel.findByUserIdWithDetails(user.user_id);
+
+            // Appliquer la pagination
+            const total = allOrders.length;
+            const pages = Math.ceil(total / limit);
+            const paginatedOrders = allOrders.slice(offset, offset + limit);
+
+            res.json({
+                data: paginatedOrders,
+                pagination: {
+                    page,
+                    limit,
+                    total,
+                    pages
+                }
+            });
+        } catch (error) {
+            console.error('Error getting user orders:', error);
+            res.status(500).json({
+                error: 'Failed to retrieve user orders'
+            });
+        }
+    }
 };
 
 export { ordersController };

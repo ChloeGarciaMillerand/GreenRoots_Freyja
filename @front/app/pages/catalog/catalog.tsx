@@ -22,6 +22,7 @@ export function meta() {
 }
 
 export async function loader(params: Route.LoaderArgs) {
+	// Use environment variable for API URL
 	const apiUrl = import.meta.env.VITE_API_URL;
 
 	// get the url params
