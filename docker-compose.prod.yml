@@ -29,18 +29,27 @@ services:
       - STRIPE_PUBLIC_KEY=${STRIPE_PUBLIC_KEY}
       - STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY}
       - STRIPE_WEBHOOK_SECRET=${STRIPE_WEBHOOK_SECRET}
+      - REDIRECT_CHECKOUT_PAGE=${REDIRECT_CHECKOUT_PAGE}
+      - SMTP_HOST=${SMTP_HOST}
+      - SMTP_PORT=${SMTP_PORT}
+      - EMAIL_USER=${EMAIL_USER}
+      - EMAIL_PASS=${EMAIL_PASS}
+      - EMAIL_FROM=${EMAIL_FROM}
+      - EMAIL_FROM_NAME=${EMAIL_FROM_NAME}
 
   frontend:
     build:
       context: ./@front
       args:
         - VITE_API_URL=${VITE_API_URL}
+        - REDIRECT_CHECKOUT_PAGE=${REDIRECT_CHECKOUT_PAGE}
     ports:
       - "3000:3000"
     depends_on:
       - backend
     environment:
       - VITE_API_URL=${VITE_API_URL}
+      - REDIRECT_CHECKOUT_PAGE=${REDIRECT_CHECKOUT_PAGE}
 
   nginx:
     image: nginx:alpine

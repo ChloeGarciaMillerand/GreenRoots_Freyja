@@ -4,6 +4,12 @@ import { paymentModel } from '../Models/paymentModel.js';
 import { orderLineModel } from '../Models/orderLineModel.js';
 import { orderModel } from '../Models/orderModel.js';
 import { PaymentStatus } from '../../@types/PaymentTransaction.js';
+import { OrderStatus } from '../../@types/Order.js';
+import { UserModel } from '../Models/userModel.js';
+import { EmailService } from '../Services/email.service.js';
+
+const userModel = new UserModel();
+const emailService = new EmailService();
 
 const paymentController = {
     async createPaymentIntent(req: Request, res: Response) {
@@ -95,17 +101,84 @@ const paymentController = {
 
                 case 'payment_intent.succeeded':
                     const paymentIntent = event.data.object as any;
-                    await paymentModel.updateByStripeId(paymentIntent.id, {
-                        status: PaymentStatus.COMPLETED
+
+                    // Vérifier si la transaction existe déjà
+                    const existingPayment = await paymentModel.findByStripeId(paymentIntent.id);
+
+                    if (existingPayment) {
+                        // Mettre à jour la transaction existante
+                        await paymentModel.updateByStripeId(paymentIntent.id, {
+                            status: PaymentStatus.COMPLETED
+                        });
+                    } else {
+                        // Créer une nouvelle transaction
+                        await paymentModel.create({
+                            order_id: paymentIntent.metadata.order_id,
+                            stripe_payment_id: paymentIntent.id,
+                            amount: paymentIntent.amount / 100,
+                            status: PaymentStatus.COMPLETED
+                        });
+                    }
+
+                    const order = await orderModel.updateById(paymentIntent.metadata.order_id, {
+                        status: OrderStatus.COMPLETED
                     });
+
+                    if (order) {
+                      const user = await userModel.findById(order.user_id);
+                      if (user && user.email) {
+                        const orderLines = await orderLineModel.findByOrderIdWithTreeDetails(order.order_id!);
+                        const totalAmount = await orderLineModel.calculateOrderTotal(order.order_id!);
+
+                        try {
+                            const emailResult = await emailService.sendInvoiceEmail({
+                                email: user.email,
+                                firstName: user.first_name,
+                                lastName: user.last_name,
+                                orderId: order.order_id!,
+                                paymentIntentId: paymentIntent.id,
+                                orderLines: orderLines,
+                                totalAmount: totalAmount
+                            });
+
+                            if (emailResult.success) {
+                              console.log('Email de facture envoyé avec succès:', emailResult.messageId);
+                            }
+                        } catch (emailError) {
+                            console.error('Erreur envoi email de facture:', emailError);
+                        }
+                      }
+                    }
+
                     console.log(`Payment succeeded: ${paymentIntent.id}`);
+                    console.log('paymentIntent', paymentIntent);
                     break;
 
                 case 'payment_intent.payment_failed':
                     const failedPayment = event.data.object as any;
-                    await paymentModel.updateByStripeId(failedPayment.id, {
-                        status: PaymentStatus.FAILED
+
+                    // Vérifier si la transaction existe déjà
+                    const existingFailedPayment = await paymentModel.findByStripeId(failedPayment.id);
+                    
+                    if (existingFailedPayment) {
+                        // Mettre à jour la transaction existante
+                        await paymentModel.updateByStripeId(failedPayment.id, {
+                            status: PaymentStatus.FAILED
+                        });
+                    } else {
+                        // Créer une nouvelle transaction
+                        await paymentModel.create({
+                            order_id: failedPayment.metadata.order_id,
+                            stripe_payment_id: failedPayment.id,
+                            amount: failedPayment.amount / 100,
+                            status: PaymentStatus.FAILED
+                        });
+                    }
+
+                    await orderModel.updateById(failedPayment.metadata.order_id, {
+                        status: OrderStatus.CANCELLED
                     });
+
                     console.log(`Payment failed: ${failedPayment.id}`);
                     break;
 

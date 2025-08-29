@@ -213,6 +213,28 @@ class TreeModel {
         }
     }
 
+    async findByIdForCheckout(id: number): Promise<any | null> {
+        try {
+            const query = `
+                SELECT
+                    t.tree_id,
+                    t.price,
+                    t.price_id
+                FROM tree t
+                WHERE t.tree_id = $1
+            `;
+            const result = await this.db.query(query, [id]);
+
+            if (result.rows.length === 0) {
+                return null;
+            }
+
+            return result.rows[0];
+        } catch (error) {
+            throw new Error(`Error fetching tree with ID ${id} for checkout: ${error}`);
+        }
+    }
+
     // Get a specific tree with its projects and localizations
     async findByIdWithProjectsAndLocalizations(id: number): Promise<any | null> {
         try {
@@ -312,8 +334,6 @@ class TreeModel {
             `;
             const result = await this.db.query(query, [continent]);
 
-            console.log(`Raw query result: ${result.rows.length} rows`); // Debug log
-
             // Group the results by tree to avoid duplication
             const treesMap = new Map();
 
@@ -351,7 +371,6 @@ class TreeModel {
             });
 
             const finalResult = Array.from(treesMap.values());
-            console.log(`Grouped result: ${finalResult.length} trees`); // Debug log
             return finalResult;
         } catch (error) {
             throw new Error(`Error fetching trees by continent ${continent}: ${error}`);
