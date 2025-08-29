@@ -70,7 +70,6 @@ export async function action(args: Route.ActionArgs) {
 
 	if (!response.ok) {
 		const result = await response.json().catch(() => null);
-		console.log(response);
 		const message =
 			result?.message || "Erreur lors de l'enregistrement de la commande.";
 		return new Response(message, { status: 500 });

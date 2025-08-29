@@ -334,8 +334,6 @@ class TreeModel {
             `;
             const result = await this.db.query(query, [continent]);
 
-            console.log(`Raw query result: ${result.rows.length} rows`); // Debug log
-
             // Group the results by tree to avoid duplication
             const treesMap = new Map();
 
@@ -373,7 +371,6 @@ class TreeModel {
             });
 
             const finalResult = Array.from(treesMap.values());
-            console.log(`Grouped result: ${finalResult.length} trees`); // Debug log
             return finalResult;
         } catch (error) {
             throw new Error(`Error fetching trees by continent ${continent}: ${error}`);

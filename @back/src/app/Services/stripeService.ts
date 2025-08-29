@@ -3,8 +3,6 @@ import "dotenv/config";
 
 const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
 
-console.log(stripeSecretKey);
-
 if (!stripeSecretKey) {
 	throw new Error("STRIPE_SECRET_KEY must be defined in your .env file");
 }
