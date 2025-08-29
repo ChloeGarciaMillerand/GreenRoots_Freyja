@@ -1,7 +1,7 @@
 class CartService {
     constructor() {
         this.STORAGE_KEY = 'greenroots_cart';
-        this.API_BASE = 'http://localhost:3001/api/cart';
+        this.API_BASE = 'http://backend:3001/api/cart';
     }
 
     // log cart contents
