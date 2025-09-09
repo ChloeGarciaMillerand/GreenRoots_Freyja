@@ -1,7 +1,8 @@
 # GreenRoots
 
-GreenRoots est déployé depuis un autre répertoire, à cette adresse:
-https://greenroots.website/
+🔗 **Accès au site** : [https://greenroots.website/](https://greenroots.website/)
+
+(GreenRoots est déployé depuis un autre répertoire partagé)
 
 ## Présentation
 
@@ -10,19 +11,20 @@ Les utilisateurs, clients particuliers ou collectivités, peuvent acheter des ar
 
 ![mockup](./conception/UI/mockup/jpg/greenroots_mockup.jpg)
 
-## Technologies et outils utilisée
+### 🛠️ Technologies utilisées
 
-- Backend: Express, Node.js
-- Base de données: PostgreSQL
-- Front: React, React Router, CSS
-- Test: Vitest, Jest, Playwright
-- Tooling: Vite
-- Paiement: Stripe
-- Déploiement: Digital Ocean
+- **Backend** : Node.js, Express
+- **Base de données** : PostgreSQL
+- **Frontend** : React, React Router, CSS
+- **Tests** : Vitest, Jest, Playwright
+- **Tooling** : Vite
+- **Paiement** : Stripe
+- **Déploiement** : DigitalOcean
 
 ## Commandes Docker
 
 Ce projet utilise Docker Compose avec différentes configurations pour les environnements de développement et de production.
+Des scripts `pnpm run` facilitent la gestion des services.
 
 ### Environnement de développement
 
