@@ -7,7 +7,7 @@ import {projectRouter} from "./projectRouter.js";
 import {localizationRouter} from "./localizationRouter.js";
 import { paymentRouter } from "./paymentRouter.js";
 
-const router = Router();
+const router:Router = Router();
 
 router.get('/', (req, res) => {
     res.json({

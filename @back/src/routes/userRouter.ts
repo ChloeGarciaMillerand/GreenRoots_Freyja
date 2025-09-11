@@ -9,7 +9,7 @@ import {
 } from "../app/Middleware/auth.middleware.js";
 import { handleValidationErrors } from "../app/Middleware/validation.js";
 
-const userRouter = Router();
+const userRouter:Router = Router();
 
 // =====================================
 // VALIDATION RULES
