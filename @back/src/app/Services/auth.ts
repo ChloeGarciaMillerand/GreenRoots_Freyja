@@ -87,7 +87,7 @@ export class AuthService {
 			last_name: userData.last_name,
 			email: userData.email,
 			password: hashedPassword,
-			phone_number: userData.phone_number || null,
+			...(userData.phone_number ? { phone_number: userData.phone_number } : {}),
 			role: userData.role || UserRole.CLIENT,
 		};
 
