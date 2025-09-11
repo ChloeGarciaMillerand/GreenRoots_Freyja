@@ -83,7 +83,12 @@ class UserModel {
                 userData.role || UserRole.CLIENT
             ];
             const result: QueryResult<User> = await this.db.query(query, values);
-            return result.rows[0];
+            const user = result.rows[0];
+            if (!user) {
+                throw new Error('Failed to insert user: no result returned');
+            }
+
+            return user;
         } catch (error) {
             throw new Error(`Error creating user: ${error}`);
         }
