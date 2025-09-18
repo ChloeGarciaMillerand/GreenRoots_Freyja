@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { treeController } from '../app/Controllers/treeController.js'
 
-const treeRouter = Router();
+const treeRouter:Router = Router();
 
 treeRouter.get('/api/trees', treeController.index);
 treeRouter.get('/api/trees/homepage', treeController.homepage);
