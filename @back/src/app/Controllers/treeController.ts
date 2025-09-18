@@ -39,7 +39,14 @@ const treeController = {
 
     async show(req: Request, res: Response) {
         try {
-            const id = parseInt(req.params.id);
+            const idParam = req.params.id;
+            
+            if (!idParam) {
+                throw new Error("Missing id param");
+            }
+
+            const id = parseInt(idParam);
+
 
             if (isNaN(id)) {
                 return res.status(400).json({
