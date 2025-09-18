@@ -5,14 +5,16 @@ type QuantitySelectorProps = {
 	onChange: (value: number) => void;
 	disabled?: boolean;
 	max?: number;
+	id?: string;
 };
 
 export const QuantitySelector = ({
-									 value,
-									 onChange,
-									 disabled = false,
-									 max = 99,
-								 }: QuantitySelectorProps) => {
+		value,
+		onChange,
+		disabled = false,
+		max = 99,
+		id,
+}: QuantitySelectorProps) => {
 	const increment = () => {
 		if (value < max) {
 			onChange(value + 1);
@@ -44,6 +46,7 @@ export const QuantitySelector = ({
 				−
 			</button>
 			<input
+				id={id}
 				type="number"
 				className="quantity-input"
 				value={value}
