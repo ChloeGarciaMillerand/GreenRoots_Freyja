@@ -46,7 +46,7 @@ export async function loader(args: Route.LoaderArgs) {
 export default function Tree(props: Route.ComponentProps) {
 	const { tree, project } = props.loaderData;
 
-	// État local
+	// local state
 	const [quantity, setQuantity] = useState(1);
 	const [isAddingToCart, setIsAddingToCart] = useState(false);
 	const [cartMessage, setCartMessage] = useState<string | null>(null);
@@ -55,7 +55,7 @@ export default function Tree(props: Route.ComponentProps) {
 	const navigation = useNavigation();
 	const isSubmitting = navigation.formAction === "/add-to-shopping-cart";
 
-	// Gestion du panier
+	// manage cart
 	const handleAddToCart = async () => {
 		setIsAddingToCart(true);
 		setCartMessage(null);
@@ -82,7 +82,7 @@ export default function Tree(props: Route.ComponentProps) {
 
 	return (
 		<main className="tree-page">
-			{/* Section principale : produit */}
+			{/* main section : product */}
 			<section className="tree-product">
 				<div className="tree-image-container">
 					<img
@@ -122,7 +122,7 @@ export default function Tree(props: Route.ComponentProps) {
 						<span className="price-unit">par arbre</span>
 					</div>
 
-					{/* Messages du panier */}
+					{/* cart messages */}
 					{cartMessage && (
 						<div
 							className="cart-message cart-success"

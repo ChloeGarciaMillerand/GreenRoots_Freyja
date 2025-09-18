@@ -57,7 +57,7 @@ export async function loader(params: Route.LoaderArgs) {
 		// waits for the JSON response from the server and converts it into a JavaScript object
 		const json = await response.json();
 
-		// Transformer les données pour correspondre à TreeCardProps
+		// transform data to match TreeCardProps
 		const adaptedTrees = json.data.map((tree: any) => ({
 			tree_id: tree.tree_id,
 			name: tree.name,
