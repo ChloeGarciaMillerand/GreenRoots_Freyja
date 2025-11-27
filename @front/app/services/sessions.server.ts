@@ -14,6 +14,12 @@ const { getSession, commitSession, destroySession } =
       // a Cookie from `createCookie` or the CookieOptions to create one
       cookie: {
         name: "__session",
+        httpOnly: true,
+        secure: true,     
+        sameSite: "lax", 
+        path: "/",   
+        maxAge: 60 * 60 * 24 * 7,
+        secrets: [process.env.SESSION_SECRET || "big-secret"],
       },
     },
   );
