@@ -1,5 +1,5 @@
 import type { QueryResult } from 'pg';
-import type { Tree } from '../../@types/Tree.js';
+import type { Tree, TreeProjectRow } from '../../@types/Tree.js';
 import DatabaseService from '../Services/database.js'; // Adjust path as needed
 
 class TreeModel {
@@ -280,8 +280,8 @@ class TreeModel {
                 created_at: firstRow.tree_created_at,
                 updated_at: firstRow.tree_updated_at,
                 projects: result.rows
-                    .filter(row => row.project_id !== null)
-                    .map(row => ({
+                    .filter((row: TreeProjectRow) => row.project_id !== null)
+                    .map((row: TreeProjectRow) => ({
                         project_id: row.project_id,
                         name: row.project_name,
                         description: row.project_description,
