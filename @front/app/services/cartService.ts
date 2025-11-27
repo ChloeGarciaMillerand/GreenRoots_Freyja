@@ -1,4 +1,16 @@
+type CartLogDetails = {
+  item?: string;
+  old_quantity?: number;
+  new_quantity?: number;
+  added?: number;
+  removed_quantity?: number;
+  reason?: string;
+  [key: string]: any; // pour rester flexible
+};
+
 class CartService {
+    private STORAGE_KEY: string;
+
     constructor() {
         this.STORAGE_KEY = 'greenroots_cart';
     }
@@ -8,7 +20,7 @@ class CartService {
     }
 
     // log cart contents
-    logCartContents(action, details = null) {
+    logCartContents(action: string, details?: CartLogDetails | null ) {
         const cart = this.getCart();
         console.log(`\n=== CART ${action.toUpperCase()} ===`);
         console.log(`Total items: ${this.getItemCount()}`);
@@ -18,7 +30,7 @@ class CartService {
             console.log('Cart is empty');
         } else {
             console.log('Cart contents:');
-            cart.items.forEach((item, index) => {
+            cart.items.forEach((item: { name: any; quantity: number; price: number; }, index: number) => {
                 console.log(`  ${index + 1}. ${item.name}`);
                 console.log(`     Quantity: ${item.quantity}`);
                 console.log(`     Price: €${item.price}`);
@@ -52,7 +64,7 @@ class CartService {
     }
 
     // Save cart to localStorage
-    saveCart(cart) {
+    saveCart(cart: { items: any; total?: any; lastUpdated?: any; }) {
         try {
             const cartData = {
                 items: cart.items,
@@ -65,12 +77,12 @@ class CartService {
     }
 
     // Calculate total price
-    calculateTotal(items) {
-        return items.reduce((total, item) => total + (item.price * item.quantity), 0);
+    calculateTotal(items: any[]) {
+        return items.reduce((total: number, item: { price: number; quantity: number; }) => total + (item.price * item.quantity), 0);
     }
 
     // Add item to cart with API validation
-    async addItem(tree_id, quantity) {
+    async addItem(tree_id: number, quantity: number) {
         try {
             // Convert to numbers to ensure correct data types
             const numericTreeId = Number(tree_id);
@@ -101,7 +113,7 @@ class CartService {
 
             // If validation successful, add to localStorage
             const cart = this.getCart();
-            const existingItemIndex = cart.items.findIndex(item => item.tree_id === numericTreeId);
+            const existingItemIndex = cart.items.findIndex((item: { tree_id: number; }) => item.tree_id === numericTreeId);
 
             if (existingItemIndex > -1) {
                 // Update existing item quantity
@@ -150,15 +162,17 @@ class CartService {
 
         } catch (error) {
             console.error('Error adding item to cart:', error);
-            return {
-                success: false,
-                error: error.message
-            };
+            if (error instanceof Error) {
+                return {
+                    success: false,
+                    error: error.message
+                };
+            }
         }
     }
 
     // Update item quantity with API validation
-    async updateItem(tree_id, quantity) {
+    async updateItem(tree_id: number, quantity: number) {
         try {
             // Convert to numbers to ensure correct data types
             const numericTreeId = Number(tree_id);
@@ -186,7 +200,7 @@ class CartService {
 
             // Update localStorage
             const cart = this.getCart();
-            const itemIndex = cart.items.findIndex(item => item.tree_id === numericTreeId);
+            const itemIndex = cart.items.findIndex((item: { tree_id: number; }) => item.tree_id === numericTreeId);
 
             if (itemIndex > -1) {
                 const item = cart.items[itemIndex];
@@ -228,15 +242,17 @@ class CartService {
 
         } catch (error) {
             console.error('Error updating cart item:', error);
-            return {
-                success: false,
-                error: error.message
-            };
+            if (error instanceof Error) {
+                return {
+                    success: false,
+                    error: error.message
+                };
+            }
         }
     }
 
     // Remove item from cart with API validation
-    async removeItem(tree_id) {
+    async removeItem(tree_id: number) {
         try {
             // Convert to number to ensure correct data type
             const numericTreeId = Number(tree_id);
@@ -248,7 +264,7 @@ class CartService {
 
             // Get item details before removal for logging
             const cart = this.getCart();
-            const itemToRemove = cart.items.find(item => item.tree_id === numericTreeId);
+            const itemToRemove = cart.items.find((item: { tree_id: number; }) => item.tree_id === numericTreeId);
 
             // Validate with API
             const response = await fetch(`${this.API_BASE}/${numericTreeId}`, {
@@ -262,7 +278,7 @@ class CartService {
             }
 
             // Remove from localStorage
-            cart.items = cart.items.filter(item => item.tree_id !== numericTreeId);
+            cart.items = cart.items.filter((item: { tree_id: number; }) => item.tree_id !== numericTreeId);
             cart.total = this.calculateTotal(cart.items);
             this.saveCart(cart);
 
@@ -280,10 +296,12 @@ class CartService {
 
         } catch (error) {
             console.error('Error removing cart item:', error);
-            return {
-                success: false,
-                error: error.message
-            };
+            if (error instanceof Error) {
+                return {
+                    success: false,
+                    error: error.message
+                };
+            }
         }
     }
 
@@ -300,7 +318,7 @@ class CartService {
             }
 
             // Prepare cart items for validation
-            const cartItems = cart.items.map(item => ({
+            const cartItems = cart.items.map((item: { tree_id: any; quantity: any; price: any; }) => ({
                 tree_id: item.tree_id,
                 quantity: item.quantity,
                 cart_price: item.price
@@ -342,22 +360,24 @@ class CartService {
 
         } catch (error) {
             console.error('Error validating cart:', error);
-            return {
-                success: false,
-                error: error.message
-            };
+            if (error instanceof Error) {
+                return {
+                    success: false,
+                    error: error.message
+                };
+            }
         }
     }
 
     // Handle validation errors by updating cart
-    async handleValidationErrors(validationResult) {
+    async handleValidationErrors(validationResult: { valid_items: string | any[]; invalid_items: any; }) {
         const cart = this.getCart();
         const updatedItems = [];
         const removedItems = [];
 
         // Keep only valid items and update prices
         for (const validItem of validationResult.valid_items) {
-            const cartItem = cart.items.find(item => item.tree_id === validItem.tree_id);
+            const cartItem = cart.items.find((item: { tree_id: any; }) => item.tree_id === validItem.tree_id);
             if (cartItem) {
                 cartItem.price = validItem.current_price;
                 updatedItems.push(cartItem);
@@ -366,7 +386,7 @@ class CartService {
 
         // Track removed items
         for (const invalidItem of validationResult.invalid_items) {
-            const cartItem = cart.items.find(item => item.tree_id === invalidItem.tree_id);
+            const cartItem = cart.items.find((item: { tree_id: any; }) => item.tree_id === invalidItem.tree_id);
             if (cartItem) {
                 removedItems.push({
                     name: cartItem.name,
@@ -396,7 +416,7 @@ class CartService {
                 return { success: true, cart };
             }
 
-            const tree_ids = cart.items.map(item => item.tree_id);
+            const tree_ids = cart.items.map((item: { tree_id: any; }) => item.tree_id);
             const response = await fetch(`${this.API_BASE}/trees?tree_ids=${tree_ids.join(',')}`);
 
             const result = await response.json();
@@ -406,11 +426,11 @@ class CartService {
             }
 
             // Update cart items with current prices
-            const treesMap = new Map(result.trees.map(tree => [tree.tree_id, tree]));
+            const treesMap = new Map(result.trees.map((tree: { tree_id: any; }) => [tree.tree_id, tree]));
             let pricesChanged = false;
-            const priceChanges = [];
+            const priceChanges: { item: any; old_price: any; new_price: any; }[] = [];
 
-            cart.items.forEach(item => {
+            cart.items.forEach((item: { tree_id: unknown; price: number; name: any; image: any; }) => {
                 const currentTree = treesMap.get(item.tree_id);
                 if (currentTree && Math.abs(item.price - currentTree.price) > 0.01) {
                     priceChanges.push({
@@ -445,10 +465,12 @@ class CartService {
 
         } catch (error) {
             console.error('Error refreshing cart prices:', error);
-            return {
-                success: false,
-                error: error.message
-            };
+            if (error instanceof Error) {
+                return {
+                    success: false,
+                    error: error.message
+                };
+            }
         }
     }
 
@@ -471,7 +493,7 @@ class CartService {
     // Get item count
     getItemCount() {
         const cart = this.getCart();
-        return cart.items.reduce((count, item) => count + item.quantity, 0);
+        return cart.items.reduce((count: any, item: { quantity: any; }) => count + item.quantity, 0);
     }
 
     // Get cart total
