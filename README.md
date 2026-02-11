@@ -4,6 +4,19 @@
 
 (GreenRoots est déployé depuis un autre répertoire partagé)
 
+📄 **Présentation complète du projet** : [Voir le PDF](presentation/presentation.pfg)
+
+Pour tout savoir sur GreenRoots:
+
+- cahier des charges
+- architecture et choix techniques
+- organisation et partage des taches
+- conception de la maquette
+- conception de la base de données
+- développement
+- sécurité
+- RGPD
+
 ## Présentation
 
 GreenRoots est une plateforme e-commerce dédiée à la vente d'arbres dans le cadre de projets de reforestation.
