@@ -4,7 +4,7 @@
 
 (GreenRoots est déployé depuis un autre répertoire partagé)
 
-📄 **Présentation complète du projet** : [Voir le PDF](presentation/presentation.pfg)
+📄 **Présentation complète du projet** : [Voir le PDF](presentation/presentation.pdf)
 
 Pour tout savoir sur GreenRoots:
 
